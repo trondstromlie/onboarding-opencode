@@ -81,47 +81,22 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 Dette gjelder kun din bruker og krever ikke admin.
 
-#### 2b — Installer Node.js via Microsoft Store (anbefalt, ingen admin)
+#### 2b — Installer Node.js (ingen admin)
 
-1. Åpne **Microsoft Store** (søk i Start-menyen)
-2. Søk etter **Node.js**
-3. Installer den versjonen som heter **Node.js** (fra Node.js Foundation)
-4. Åpne en **ny** PowerShell og sjekk at det fungerte:
+1. Gå til https://nodejs.org
+2. Klikk på **"Other Downloads"** under den anbefalte versjonen
+3. Under **"Windows"**, last ned **"node-vXX.X.X-win-x64.zip"** (ikke `.msi`-installeren)
+4. Pakk ut ZIP-filen til `C:\Users\DITTBRUKERNAVN\nodejs`
+5. Åpne **Systemegenskaper** → **Avansert** → **Miljøvariabler**
+6. Under **Brukervariabler**, rediger **Path** og legg til:  
+   `C:\Users\DITTBRUKERNAVN\nodejs`
+7. Åpne en **ny** PowerShell og sjekk at det fungerte:
 
 ```powershell
 node --version
 ```
 
 Du skal se noe som `v22.0.0` eller høyere.
-
-> **Alternativ: manuell installasjon uten admin (via NVM)**
->
-> Hvis Microsoft Store ikke er tilgjengelig:
->
-> 1. Last ned NVM for Windows som ZIP-fil fra: https://github.com/coreybutler/nvm-windows/releases  
->    Velg `nvm-noinstall.zip`
-> 2. Pakk ut innholdet til `C:\Users\DITTBRUKERNAVN\nvm`
-> 3. Åpne **Systemegenskaper** → **Avansert** → **Miljøvariabler**
-> 4. Under **Brukervariabler** (ikke systemvariabler), legg til:
->    - Ny variabel: `NVM_HOME` = `C:\Users\DITTBRUKERNAVN\nvm`
->    - Rediger `Path`: legg til `%NVM_HOME%`
-> 5. Åpne en **ny** PowerShell og kjør:
->    ```powershell
->    nvm install 22
->    ```
-> 6. Finn hvilken versjon som ble installert:
->    ```powershell
->    nvm list
->    ```
->    Du ser noe som `22.13.1` — noter dette nummeret.
-> 7. Gå tilbake til **Miljøvariabler** og legg til under **Brukervariabler**:
->    - Ny variabel: `NVM_SYMLINK` = `C:\Users\DITTBRUKERNAVN\nvm\v22.13.1`  
->      *(erstatt `v22.13.1` med versjonen du fant i forrige steg)*
->    - Rediger `Path`: legg til `%NVM_SYMLINK%`
-> 8. Åpne en **ny** PowerShell og sjekk at det fungerte:
->    ```powershell
->    node --version
->    ```
 
 #### 2c — Installer OpenCode
 
