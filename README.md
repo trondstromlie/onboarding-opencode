@@ -108,7 +108,22 @@ Skills er nå tilgjengelige. Prøv å skrive: *"Sett opp GitHub SSH for meg"*
 > **Merk:** Disse instruksjonene er laget for Windows-brukere uten administratortilgang.  
 > Alt installeres i din egen brukerprofil — ingen admin-rettigheter nødvendig.
 
-#### Steg 1 — Installer Node.js via Microsoft Store (anbefalt, ingen admin)
+#### Steg 1 — Tillat kjøring av scripts i PowerShell
+
+Windows blokkerer som standard kjøring av scripts. Dette må gjøres én gang.
+
+1. Åpne **PowerShell** (søk etter "PowerShell" i Start-menyen)
+2. Lim inn og kjør:
+
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+3. Svar `J` eller `Y` hvis du blir spurt om å bekrefte.
+
+Dette gjelder kun din bruker og krever ikke admin.
+
+#### Steg 2 — Installer Node.js via Microsoft Store (anbefalt, ingen admin)
 
 1. Åpne **Microsoft Store** (søk i Start-menyen)
 2. Søk etter **Node.js**
@@ -143,14 +158,14 @@ Du skal se noe som `v22.0.0` eller høyere.
 >      `C:\Users\DITTBRUKERNAVN\nvm\v22.x.x`  
 >      (erstatt `v22.x.x` med den faktiske versjonen som ble installert)
 
-#### Steg 2 — Installer OpenCode
+#### Steg 3 — Installer OpenCode
 
 Last ned fra: https://opencode.ai  
 Velg Windows-versjonen og kjør installeren.
 
 Hvis du ikke har admin: velg "Install for me only" (kun for meg) hvis du får det valget.
 
-#### Steg 3 — Installer skills
+#### Steg 4 — Installer skills
 
 Åpne **PowerShell** og kjør:
 
@@ -160,7 +175,7 @@ npx opencode-setup
 
 Første gang kan det ta litt tid fordi `npx` laster ned verktøyet. Følg instruksjonene som vises.
 
-#### Steg 4 — Start OpenCode
+#### Steg 5 — Start OpenCode
 
 Åpne PowerShell, naviger til en mappe du jobber i, og skriv:
 
