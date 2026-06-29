@@ -274,3 +274,45 @@ echo "default-cache-ttl 28800" >> ~/.gnupg/gpg-agent.conf
 echo "max-cache-ttl 28800" >> ~/.gnupg/gpg-agent.conf
 gpgconf --kill gpg-agent
 ```
+
+---
+
+## Steg 9 — Gjensidige npm-pakker (.npmrc)
+
+For å kunne installere Gjensidige sine interne npm-pakker (f.eks. `@gjensidige/builders-components`) må du legge inn GitHub-tokenet ditt i `.npmrc`.
+
+Bruk det samme tokenet du lagde i Steg 3 (det som starter med `ghp_`).
+
+**Mac/Linux:**
+```bash
+echo "@gjensidige:registry=https://npm.pkg.github.com" >> ~/.npmrc
+echo "//npm.pkg.github.com/:_authToken=TOKENET_DITT" >> ~/.npmrc
+```
+
+**Windows (PowerShell):**
+```powershell
+Add-Content $env:USERPROFILE\.npmrc "@gjensidige:registry=https://npm.pkg.github.com"
+Add-Content $env:USERPROFILE\.npmrc "//npm.pkg.github.com/:_authToken=TOKENET_DITT"
+```
+
+Bytt ut `TOKENET_DITT` med ditt faktiske token (f.eks. `ghp_xxxxxxxxxxxxxxxxxxxxxx`).
+
+Bekreft at filen ble riktig:
+
+**Mac/Linux:**
+```bash
+cat ~/.npmrc
+```
+
+**Windows:**
+```powershell
+Get-Content $env:USERPROFILE\.npmrc
+```
+
+Du skal se:
+```
+@gjensidige:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=ghp_xxxxxxxxxxxxxxxxxxxxxx
+```
+
+> **Viktig:** Pass på at tokenet har `read:packages`-tilgang på GitHub, og at SSO er autorisert for Gjensidige-organisasjonen (se Steg 4). Uten SSO-autorisering vil du få 401-feil når du kjører `npm install`.
