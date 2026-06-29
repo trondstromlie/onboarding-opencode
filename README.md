@@ -11,9 +11,8 @@ Før du gjør noe annet, må du ha disse tilgangene på plass. Be lederen din be
 
 | Tilgangspakke | Hvorfor du trenger den |
 |---------------|------------------------|
-| **GitHub Team: Claims New** (`ROLE_AAD_GITHUB_CLAIMS_NEW`) | Gir deg medlemskap i Gjensidige-organisasjonen på GitHub og tilgang til Claims-teamets repoer |
 | **GitHub Team: Copilot Users** (`ROLE_AAD_GITHUB_COPILOT_USERS`) | Gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode |
-| **Azure: GenAI Small Consumer (Prod)** (`ROLE_AAD_GENAI-SMALL-CONSUMER`) | Gir tilgang til GenAI-tjenestene som OpenCode bruker |
+| **GitHub Team: Claims New** (`ROLE_AAD_GITHUB_CLAIMS_NEW`) | Gir deg tilgang til Claims-teamets repoer på GitHub |
 
 > Tilgangene kan ta litt tid å bli aktivert. Fortsett gjerne med installasjon mens du venter.
 
