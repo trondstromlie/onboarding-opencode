@@ -7,7 +7,7 @@ Når skills er installert, kan du be OpenCode om å sette opp GitHub, koble til 
 
 ## Steg 1 — Søk om tilganger
 
-Før du gjør noe annet, må du ha disse tilgangene på plass. Be lederen din bestille dem via Gjensidiges tilgangsportal.
+Før du gjør noe annet, må du ha disse tilgangene på plass. Søk om tilgang selv på **https://myaccess.microsoft.com/**
 
 | Tilgangspakke | Påkrevd | Hvorfor du trenger den |
 |---------------|---------|------------------------|
