@@ -277,30 +277,21 @@ gpgconf --kill gpg-agent
 
 ---
 
-## Steg 9 — Organisasjonens npm-pakker (.npmrc)
+## Steg 9 — Gjensidige npm-pakker (.npmrc)
 
-For å kunne installere organisasjonens interne npm-pakker må du legge inn GitHub-tokenet ditt i `.npmrc`, sammen med organisasjonens npm-scope.
+For å kunne installere Gjensidige sine interne npm-pakker må du legge inn GitHub-tokenet ditt i `.npmrc`.
 
-Spør brukeren:
-
-> **Hva heter organisasjonen din på GitHub?**
-> Slik finner du det:
-> 1. Gå til [github.com](https://github.com) og logg inn
-> 2. Klikk på profilbildet øverst til høyre
-> 3. Velg **"Your organizations"**
-> 4. Navnet på organisasjonen vises i listen — det er dette du skal bruke
-
-Bruk det samme tokenet du lagde i Steg 3 (det som starter med `ghp_`), og erstatt `ORGANISASJON` med organisasjonsnavnet.
+Bruk det samme tokenet du lagde i Steg 3 (det som starter med `ghp_`).
 
 **Mac/Linux:**
 ```bash
-echo "@ORGANISASJON:registry=https://npm.pkg.github.com" >> ~/.npmrc
+echo "@gjensidige:registry=https://npm.pkg.github.com" >> ~/.npmrc
 echo "//npm.pkg.github.com/:_authToken=TOKENET_DITT" >> ~/.npmrc
 ```
 
 **Windows (PowerShell):**
 ```powershell
-Add-Content $env:USERPROFILE\.npmrc "@ORGANISASJON:registry=https://npm.pkg.github.com"
+Add-Content $env:USERPROFILE\.npmrc "@gjensidige:registry=https://npm.pkg.github.com"
 Add-Content $env:USERPROFILE\.npmrc "//npm.pkg.github.com/:_authToken=TOKENET_DITT"
 ```
 
