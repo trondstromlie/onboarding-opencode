@@ -147,16 +147,24 @@ Du skal se noe som `v22.0.0` eller høyere.
 > 3. Åpne **Systemegenskaper** → **Avansert** → **Miljøvariabler**
 > 4. Under **Brukervariabler** (ikke systemvariabler), legg til:
 >    - Ny variabel: `NVM_HOME` = `C:\Users\DITTBRUKERNAVN\nvm`
->    - Ny variabel: `NVM_SYMLINK` = `C:\Users\DITTBRUKERNAVN\nodejs`
->    - Rediger `Path`: legg til `%NVM_HOME%` og `%NVM_SYMLINK%`
+>    - Rediger `Path`: legg til `%NVM_HOME%`
 > 5. Åpne en **ny** PowerShell og kjør:
 >    ```powershell
 >    nvm install 22
 >    ```
-> 6. Fordi NVM på Windows uten admin ikke kan lage symbolkoblinger, må du peke direkte til Node:
->    - Legg til hele stien til node.exe i Path, f.eks.:  
->      `C:\Users\DITTBRUKERNAVN\nvm\v22.x.x`  
->      (erstatt `v22.x.x` med den faktiske versjonen som ble installert)
+> 6. Finn hvilken versjon som ble installert:
+>    ```powershell
+>    nvm list
+>    ```
+>    Du ser noe som `22.13.1` — noter dette nummeret.
+> 7. Gå tilbake til **Miljøvariabler** og legg til under **Brukervariabler**:
+>    - Ny variabel: `NVM_SYMLINK` = `C:\Users\DITTBRUKERNAVN\nvm\v22.13.1`  
+>      *(erstatt `v22.13.1` med versjonen du fant i forrige steg)*
+>    - Rediger `Path`: legg til `%NVM_SYMLINK%`
+> 8. Åpne en **ny** PowerShell og sjekk at det fungerte:
+>    ```powershell
+>    node --version
+>    ```
 
 #### Steg 3 — Installer OpenCode
 
