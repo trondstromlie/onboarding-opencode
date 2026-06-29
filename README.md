@@ -48,7 +48,7 @@ brew install node
 node --version
 ```
 
-Du skal se noe som `v22.0.0` eller høyere.
+Du skal se noe som `v24.0.0` eller høyere.
 
 #### 2b — Installer OpenCode
 
@@ -87,7 +87,7 @@ Dette gjelder kun din bruker og krever ikke admin.
 1. Åpne nettleseren din og gå til https://nodejs.org
 2. Du ser en stor grønn knapp — klikk på den lille lenken **"Other Downloads"** som er rett under knappen
 3. Du kommer til en ny side. Scroll ned til du ser overskriften **"Windows"**
-4. Klikk på lenken som heter noe sånt som **`node-v22.x.x-win-x64.zip`**  
+4. Klikk på lenken som heter noe sånt som **`node-v24.x.x-win-x64.zip`**  
    *(pass på at det står `.zip` på slutten — ikke `.msi`)*
 5. Filen lastes ned til **Nedlastinger**-mappen din. Vent til den er ferdig.
 
@@ -95,7 +95,7 @@ Dette gjelder kun din bruker og krever ikke admin.
 
 1. Åpne **Filutforsker** (det gule mappeikonet på oppgavelinjen nederst på skjermen)
 2. Klikk på **"Nedlastinger"** i menyen til venstre
-3. Du skal se en fil som heter noe som `node-v22.x.x-win-x64.zip` — den har et glidelåsikon
+3. Du skal se en fil som heter noe som `node-v24.x.x-win-x64.zip` — den har et glidelåsikon
 4. **Høyreklikk** på filen
 5. Velg **"Pakk ut alle..."** fra menyen som dukker opp
 6. Et vindu åpner seg. Der står det en mappe-sti. **Slett det som står der** og skriv inn:  
@@ -140,7 +140,7 @@ Dette gjelder kun din bruker og krever ikke admin.
 node --version
 ```
 
-Du skal se noe som `v22.0.0` eller høyere. Hvis du ser det — bra, Node.js er installert!
+Du skal se noe som `v24.0.0` eller høyere. Hvis du ser det — bra, Node.js er installert!
 
 #### 2c — Installer OpenCode
 
