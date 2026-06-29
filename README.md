@@ -90,7 +90,7 @@ Dette gjelder kun din bruker og krever ikke admin.
 
 **Del 2 — Pakk ut filen**
 
-1. Åpne **Filutforsker** (det gule mappeikonet på oppgavelinjen nederst på skjermen)
+1. Åpne **Filutforsker** (trykk på mappeikonet på oppgavelinjen nederst på skjermen, eller trykk **Windows-tast + E**)
 2. Klikk på **"Nedlastinger"** i menyen til venstre
 3. Du skal se en fil som heter noe som `node-v24.x.x-win-x64.zip` — den har et glidelåsikon
 4. **Høyreklikk** på filen
@@ -141,10 +141,14 @@ Du skal se noe som `v24.0.0` eller høyere. Hvis du ser det — bra, Node.js er 
 
 #### 2c — Installer OpenCode
 
-Last ned fra: https://opencode.ai  
-Velg Windows-versjonen og kjør installeren.
+1. Åpne **PowerShell**
+2. Kjør denne kommandoen:
 
-Hvis du ikke har admin: velg "Install for me only" (kun for meg) hvis du får det valget.
+```powershell
+npm install -g opencode-ai
+```
+
+Vent til installasjonen er ferdig. Du skal se at pakken lastes ned og installeres.
 
 ---
 
