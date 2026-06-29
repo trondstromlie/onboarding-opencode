@@ -120,17 +120,17 @@ Dette gjelder kun din bruker og krever ikke admin.
 **Del 4 — Legg til i miljøvariabler**
 
 1. Klikk på **Start-menyen** (Windows-ikonet nederst til venstre)
-2. Skriv `miljøvariabler` og trykk Enter
-3. Klikk på **"Rediger systemmiljøvariabler"**
-4. Et vindu åpner seg — klikk på knappen **"Miljøvariabler..."** nederst til høyre
-5. Under **"Brukervariabler for DITTBRUKERNAVN"** (øverste halvdel av vinduet), finn linjen som heter **"Path"**
-6. Klikk på **"Path"** slik at den blir markert (blå)
-7. Klikk på **"Rediger..."**
-8. Et nytt vindu åpner seg med en liste. Klikk på **"Ny"** øverst til høyre
-9. Skriv inn stien til nodejs-mappen, f.eks.:  
+2. Skriv `rediger miljøvariabler for kontoen din` og trykk Enter
+3. Et vindu åpner seg med to seksjoner — du skal kun bruke den **øverste** seksjonen som heter **"Brukervariabler for DITTBRUKERNAVN"**  
+   *(ikke rør den nederste seksjonen som heter "Systemvariabler")*
+4. Finn linjen som heter **"Path"** i den øverste listen
+5. Klikk på **"Path"** slik at den blir markert (blå)
+6. Klikk på **"Rediger..."**
+7. Et nytt vindu åpner seg med en liste. Klikk på **"Ny"** øverst til høyre
+8. Skriv inn stien til nodejs-mappen, f.eks.:  
    `C:\Users\DITTBRUKERNAVN\nodejs`  
    *(bytt ut `DITTBRUKERNAVN` med ditt brukernavn)*
-10. Klikk **"OK"** — og **"OK"** igjen i alle vinduene som er åpne
+9. Klikk **"OK"** — og **"OK"** igjen i alle vinduene som er åpne
 
 **Del 5 — Verifiser installasjonen**
 
