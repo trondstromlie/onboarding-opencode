@@ -9,10 +9,10 @@ Når skills er installert, kan du be OpenCode om å sette opp GitHub, koble til 
 
 Før du gjør noe annet, må du ha disse tilgangene på plass. Be lederen din bestille dem via Gjensidiges tilgangsportal.
 
-| Tilgangspakke | Hvorfor du trenger den |
-|---------------|------------------------|
-| **GitHub Team: Copilot Users** (`ROLE_AAD_GITHUB_COPILOT_USERS`) | Gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode |
-| **GitHub Team: Claims New** (`ROLE_AAD_GITHUB_CLAIMS_NEW`) | Gir deg tilgang til Claims-teamets repoer på GitHub |
+| Tilgangspakke | Påkrevd | Hvorfor du trenger den |
+|---------------|---------|------------------------|
+| **GitHub Team: Copilot Users** (`ROLE_AAD_GITHUB_COPILOT_USERS`) | Påkrevd | Gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode |
+| **GitHub Team: Claims New** (`ROLE_AAD_GITHUB_CLAIMS_NEW`) | Anbefalt | Gir deg tilgang til Claims-teamets repoer på GitHub. Finn tilgangspakken for ditt team i tilgangsportalen hvis du ikke er i Claims |
 
 > Tilgangene kan ta litt tid å bli aktivert. Fortsett gjerne med installasjon mens du venter.
 
