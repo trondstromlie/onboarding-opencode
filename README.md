@@ -12,7 +12,7 @@ Før du gjør noe annet, må du ha disse tilgangene på plass. Be lederen din be
 | Tilgangspakke | Påkrevd | Hvorfor du trenger den |
 |---------------|---------|------------------------|
 | **GitHub Team: Copilot Users** (`ROLE_AAD_GITHUB_COPILOT_USERS`) | Påkrevd | Gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode |
-| **GitHub Team: Claims New** (`ROLE_AAD_GITHUB_CLAIMS_NEW`) | Anbefalt | Gir deg tilgang til Claims-teamets repoer på GitHub. Finn tilgangspakken for ditt team i tilgangsportalen hvis du ikke er i Claims |
+| **GitHub Team: [ditt team]** | Anbefalt | Gir deg tilgang til teamets repoer på GitHub. Søk opp `GitHub Team` i tilgangsportalen for å finne riktig tilgangspakke for ditt team |
 
 > Tilgangene kan ta litt tid å bli aktivert. Fortsett gjerne med installasjon mens du venter.
 
