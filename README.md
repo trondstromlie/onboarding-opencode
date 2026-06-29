@@ -5,51 +5,29 @@ Når skills er installert, kan du be OpenCode om å sette opp GitHub, koble til 
 
 ---
 
-## Hva er skills?
+## Steg 1 — Søk om tilganger
 
-Skills er instruksjoner som hjelper OpenCode å veilede deg gjennom kompliserte oppsett steg for steg.  
-Etter installasjon kan du for eksempel skrive:
+Før du gjør noe annet, må du ha disse tilgangene på plass. Be lederen din bestille dem via Gjensidiges tilgangsportal.
 
-> *"Sett opp GitHub SSH for meg"*
+| Tilgangspakke | Hvorfor du trenger den |
+|---------------|------------------------|
+| **GitHub Team: Claims New** (`ROLE_AAD_GITHUB_CLAIMS_NEW`) | Gir deg medlemskap i Gjensidige-organisasjonen på GitHub og tilgang til Claims-teamets repoer |
+| **GitHub Team: Copilot Users** (`ROLE_AAD_GITHUB_COPILOT_USERS`) | Gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode |
+| **Azure: GenAI Small Consumer (Prod)** (`ROLE_AAD_GENAI-SMALL-CONSUMER`) | Gir tilgang til GenAI-tjenestene som OpenCode bruker |
 
-... og OpenCode vil guide deg gjennom hele prosessen.
-
-### Skills som følger med:
-
-| Skill | Hva den gjør |
-|-------|-------------|
-| `github-setup` | Setter opp SSH-nøkkel, kobler til GitHub, SSO og signerte commits |
-| `install-mcp` | Kobler OpenCode til GitHub, Jira og/eller Figma |
-| `piwik-mcp` | Kobler OpenCode til Piwik Pro for analytics-data |
+> Tilgangene kan ta litt tid å bli aktivert. Fortsett gjerne med installasjon mens du venter.
 
 ---
 
-## Tilganger du trenger
+## Steg 2 — Installer Node.js og OpenCode
 
-Før du starter, sjekk at du har tilgang til følgende. Ta kontakt med din leder eller IT hvis du mangler noe.
-
-### GitHub
-- En konto på [github.com](https://github.com)
-- Tilgangspakken **"GitHub Team: Claims New"** (`ROLE_AAD_GITHUB_CLAIMS_NEW`)
-  — gir deg medlemskap i Gjensidige-organisasjonen på GitHub og tilgang til Claims-teamets repoer
-- Tilgangspakken **"GitHub Team: Copilot Users"** (`ROLE_AAD_GITHUB_COPILOT_USERS`)
-  — gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode
-- Tilgangspakken **"Azure: GenAI Small Consumer (Prod)"** (`ROLE_AAD_GENAI-SMALL-CONSUMER`)
-  — gir tilgang til GenAI-tjenestene som OpenCode bruker
-
-> Be din leder bestille disse tilgangspakkene via Gjensidiges tilgangsportal.
-
----
-
-## Forutsetninger — installer dette først
-
-Verktøyet krever **Node.js** og **OpenCode**. Følg instruksjonene for ditt operativsystem:
+Følg instruksjonene for ditt operativsystem:
 
 ---
 
 ### Mac
 
-#### Steg 1 — Installer Node.js
+#### 2a — Installer Node.js
 
 1. Åpne **Terminal** (søk etter "Terminal" i Spotlight, eller finn den i Programmer → Verktøy)
 2. Lim inn denne kommandoen og trykk Enter:
@@ -73,33 +51,13 @@ node --version
 
 Du skal se noe som `v22.0.0` eller høyere.
 
-#### Steg 2 — Installer OpenCode
+#### 2b — Installer OpenCode
 
 ```
 brew install opencode
 ```
 
 Eller last ned fra: https://opencode.ai
-
-#### Steg 3 — Installer skills
-
-Lim inn og kjør denne kommandoen i Terminal:
-
-```
-npx opencode-setup
-```
-
-Følg instruksjonene som vises. Du kan velge hvilke skills du vil installere, eller installere alle.
-
-#### Steg 4 — Start OpenCode
-
-Åpne en ny terminal, naviger til en mappe du jobber i, og skriv:
-
-```
-opencode
-```
-
-Skills er nå tilgjengelige. Prøv å skrive: *"Sett opp GitHub SSH for meg"*
 
 ---
 
@@ -108,7 +66,7 @@ Skills er nå tilgjengelige. Prøv å skrive: *"Sett opp GitHub SSH for meg"*
 > **Merk:** Disse instruksjonene er laget for Windows-brukere uten administratortilgang.  
 > Alt installeres i din egen brukerprofil — ingen admin-rettigheter nødvendig.
 
-#### Steg 1 — Tillat kjøring av scripts i PowerShell
+#### 2a — Tillat kjøring av scripts i PowerShell
 
 Windows blokkerer som standard kjøring av scripts. Dette må gjøres én gang.
 
@@ -123,13 +81,12 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 Dette gjelder kun din bruker og krever ikke admin.
 
-#### Steg 2 — Installer Node.js via Microsoft Store (anbefalt, ingen admin)
+#### 2b — Installer Node.js via Microsoft Store (anbefalt, ingen admin)
 
 1. Åpne **Microsoft Store** (søk i Start-menyen)
 2. Søk etter **Node.js**
 3. Installer den versjonen som heter **Node.js** (fra Node.js Foundation)
-4. Åpne **PowerShell** (søk etter "PowerShell" i Start-menyen)
-5. Sjekk at det fungerte:
+4. Åpne en **ny** PowerShell og sjekk at det fungerte:
 
 ```powershell
 node --version
@@ -166,32 +123,56 @@ Du skal se noe som `v22.0.0` eller høyere.
 >    node --version
 >    ```
 
-#### Steg 3 — Installer OpenCode
+#### 2c — Installer OpenCode
 
 Last ned fra: https://opencode.ai  
 Velg Windows-versjonen og kjør installeren.
 
 Hvis du ikke har admin: velg "Install for me only" (kun for meg) hvis du får det valget.
 
-#### Steg 4 — Installer skills
+---
 
-Åpne **PowerShell** og kjør:
+## Steg 3 — Installer skills
 
+**Mac:**
+```
+npx opencode-setup
+```
+
+**Windows (PowerShell):**
 ```powershell
 npx opencode-setup
 ```
 
-Første gang kan det ta litt tid fordi `npx` laster ned verktøyet. Følg instruksjonene som vises.
+Første gang kan det ta litt tid fordi `npx` laster ned verktøyet. Følg instruksjonene som vises. Du kan velge hvilke skills du vil installere, eller installere alle.
 
-#### Steg 5 — Start OpenCode
+---
 
-Åpne PowerShell, naviger til en mappe du jobber i, og skriv:
+## Steg 4 — Start OpenCode
 
+**Mac:** Åpne Terminal, naviger til en mappe du jobber i, og skriv:
+```
+opencode
+```
+
+**Windows:** Åpne PowerShell, naviger til en mappe du jobber i, og skriv:
 ```powershell
 opencode
 ```
 
 Skills er nå tilgjengelige. Prøv å skrive: *"Sett opp GitHub SSH for meg"*
+
+---
+
+## Hva er skills?
+
+Skills er instruksjoner som hjelper OpenCode å veilede deg gjennom kompliserte oppsett steg for steg.
+
+| Skill | Hva den gjør |
+|-------|-------------|
+| `github-setup` | Setter opp SSH-nøkkel, kobler til GitHub, SSO og signerte commits |
+| `install-mcp` | Kobler OpenCode til GitHub, Jira og/eller Figma |
+| `piwik-mcp` | Kobler OpenCode til Piwik Pro for analytics-data |
 
 ---
 
@@ -225,4 +206,4 @@ Ja! Etter at du har installert skills, kan du skrive hva du trenger hjelp med og
 
 ## Problemer?
 
-Ta kontakt med din lokale tekniske kontaktperson, eller åpne et issue på GitHub-repositoriet for dette verktøyet.
+Ta kontakt med **Trond Strøm-Lie** på Slack: `@Trond Strøm-Lie`
