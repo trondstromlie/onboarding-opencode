@@ -83,20 +83,65 @@ Dette gjelder kun din bruker og krever ikke admin.
 
 #### 2b — Installer Node.js (ingen admin)
 
-1. Gå til https://nodejs.org
-2. Klikk på **"Other Downloads"** under den anbefalte versjonen
-3. Under **"Windows"**, last ned **"node-vXX.X.X-win-x64.zip"** (ikke `.msi`-installeren)
-4. Pakk ut ZIP-filen til `C:\Users\DITTBRUKERNAVN\nodejs`
-5. Åpne **Systemegenskaper** → **Avansert** → **Miljøvariabler**
-6. Under **Brukervariabler**, rediger **Path** og legg til:  
-   `C:\Users\DITTBRUKERNAVN\nodejs`
-7. Åpne en **ny** PowerShell og sjekk at det fungerte:
+**Del 1 — Last ned Node.js**
+
+1. Åpne nettleseren din og gå til https://nodejs.org
+2. Du ser en stor grønn knapp — klikk på den lille lenken **"Other Downloads"** som er rett under knappen
+3. Du kommer til en ny side. Scroll ned til du ser overskriften **"Windows"**
+4. Klikk på lenken som heter noe sånt som **`node-v22.x.x-win-x64.zip`**  
+   *(pass på at det står `.zip` på slutten — ikke `.msi`)*
+5. Filen lastes ned til **Nedlastinger**-mappen din. Vent til den er ferdig.
+
+**Del 2 — Pakk ut filen**
+
+1. Åpne **Filutforsker** (det gule mappeikonet på oppgavelinjen nederst på skjermen)
+2. Klikk på **"Nedlastinger"** i menyen til venstre
+3. Du skal se en fil som heter noe som `node-v22.x.x-win-x64.zip` — den har et glidelåsikon
+4. **Høyreklikk** på filen
+5. Velg **"Pakk ut alle..."** fra menyen som dukker opp
+6. Et vindu åpner seg. Der står det en mappe-sti. **Slett det som står der** og skriv inn:  
+   `C:\Users\DITTBRUKERNAVN\nodejs`  
+   *(bytt ut `DITTBRUKERNAVN` med ditt eget brukernavn — det samme som står i adressefeltet i Filutforsker)*
+7. Klikk **"Pakk ut"**
+8. Vent til utpakkingen er ferdig. Det åpner seg kanskje en ny mappe automatisk — det er OK.
+
+**Del 3 — Sjekk at mappen er riktig**
+
+1. Åpne **Filutforsker** igjen
+2. Klikk på **"Denne PCen"** i menyen til venstre
+3. Dobbeltklikk på **"Lokal disk (C:)"**
+4. Dobbeltklikk på **"Brukere"**
+5. Dobbeltklikk på mappen med ditt brukernavn
+6. Du skal nå se en mappe som heter **"nodejs"**
+7. Dobbeltklikk på den — du skal se en fil som heter **`node.exe`** inne i mappen  
+   *(hvis du ser en mappe inni mappen med samme navn, åpne den mappen også — `node.exe` skal ligge der)*  
+   *(noter den fulle stien du ser i adressefeltet øverst i Filutforsker — du trenger den i neste steg)*
+
+**Del 4 — Legg til i miljøvariabler**
+
+1. Klikk på **Start-menyen** (Windows-ikonet nederst til venstre)
+2. Skriv `miljøvariabler` og trykk Enter
+3. Klikk på **"Rediger systemmiljøvariabler"**
+4. Et vindu åpner seg — klikk på knappen **"Miljøvariabler..."** nederst til høyre
+5. Under **"Brukervariabler for DITTBRUKERNAVN"** (øverste halvdel av vinduet), finn linjen som heter **"Path"**
+6. Klikk på **"Path"** slik at den blir markert (blå)
+7. Klikk på **"Rediger..."**
+8. Et nytt vindu åpner seg med en liste. Klikk på **"Ny"** øverst til høyre
+9. Skriv inn stien til nodejs-mappen, f.eks.:  
+   `C:\Users\DITTBRUKERNAVN\nodejs`  
+   *(bytt ut `DITTBRUKERNAVN` med ditt brukernavn)*
+10. Klikk **"OK"** — og **"OK"** igjen i alle vinduene som er åpne
+
+**Del 5 — Verifiser installasjonen**
+
+1. Åpne en **ny** PowerShell (viktig at det er et nytt vindu!)
+2. Skriv inn og trykk Enter:
 
 ```powershell
 node --version
 ```
 
-Du skal se noe som `v22.0.0` eller høyere.
+Du skal se noe som `v22.0.0` eller høyere. Hvis du ser det — bra, Node.js er installert!
 
 #### 2c — Installer OpenCode
 
