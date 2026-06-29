@@ -1,7 +1,7 @@
 # OpenCode Skills — Kom i gang
 
 Dette er et verktøy som installerer ferdige "skills" (hjelpere) til OpenCode på maskinen din.  
-Når skills er installert, kan du be OpenCode om å sette opp GitHub, koble til Jira/Figma, og mer — uten å måtte gjøre noe manuelt.
+Når skills er installert, kan du be OpenCode om å sette opp GitHub, koble til Jira/Figma, og mer — OpenCode veileder deg steg for steg og hjelper deg å finne riktig informasjon underveis.
 
 ---
 
