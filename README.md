@@ -84,12 +84,9 @@ Dette gjelder kun din bruker og krever ikke admin.
 
 **Del 1 — Last ned Node.js**
 
-1. Åpne nettleseren din og gå til https://nodejs.org
-2. Du ser en stor grønn knapp — klikk på den lille lenken **"Other Downloads"** som er rett under knappen
-3. Du kommer til en ny side. Scroll ned til du ser overskriften **"Windows"**
-4. Klikk på lenken som heter noe sånt som **`node-v24.x.x-win-x64.zip`**  
-   *(pass på at det står `.zip` på slutten — ikke `.msi`)*
-5. Filen lastes ned til **Nedlastinger**-mappen din. Vent til den er ferdig.
+1. Gå direkte til denne lenken:  
+   **https://nodejs.org/dist/v24.18.0/node-v24.18.0-win-x64.zip**
+2. Filen lastes ned automatisk til **Nedlastinger**-mappen din. Vent til den er ferdig.
 
 **Del 2 — Pakk ut filen**
 
