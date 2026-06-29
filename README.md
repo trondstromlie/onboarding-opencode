@@ -24,6 +24,23 @@ Etter installasjon kan du for eksempel skrive:
 
 ---
 
+## Tilganger du trenger
+
+Før du starter, sjekk at du har tilgang til følgende. Ta kontakt med din leder eller IT hvis du mangler noe.
+
+### GitHub
+- En konto på [github.com](https://github.com)
+- Tilgangspakken **"GitHub Team: Claims New"** (`ROLE_AAD_GITHUB_CLAIMS_NEW`)
+  — gir deg medlemskap i Gjensidige-organisasjonen på GitHub og tilgang til Claims-teamets repoer
+- Tilgangspakken **"GitHub Team: Copilot Users"** (`ROLE_AAD_GITHUB_COPILOT_USERS`)
+  — gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode
+- Tilgangspakken **"Azure: GenAI Small Consumer (Prod)"** (`ROLE_AAD_GENAI-SMALL-CONSUMER`)
+  — gir tilgang til GenAI-tjenestene som OpenCode bruker
+
+> Be din leder bestille disse tilgangspakkene via Gjensidiges tilgangsportal.
+
+---
+
 ## Forutsetninger — installer dette først
 
 Verktøyet krever **Node.js** og **OpenCode**. Følg instruksjonene for ditt operativsystem:
