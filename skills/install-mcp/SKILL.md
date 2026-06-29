@@ -101,13 +101,20 @@ Si til brukeren:
 Når du har fått tokenet, spør:
 
 > **2. Hvilken e-postadresse bruker du til å logge inn på Jira?**
-> (f.eks. fornavn.etternavn@gjensidige.no)
+> Det er den samme e-postadressen du bruker til å logge på jobben.
+> Slik finner du den:
+> 1. Åpne Jira i nettleseren
+> 2. Klikk på **profilbildet ditt** øverst til høyre
+> 3. E-postadressen vises rett under navnet ditt
 
 Når du har fått eposten, spør:
 
 > **3. Hva heter Jira-domenet ditt?**
-> Det er første del av adressen når du er inne på Jira.
-> Eks: hvis adressen er `gjensidige.atlassian.net` — skriv `gjensidige`
+> Slik finner du det:
+> 1. Åpne Jira i nettleseren
+> 2. Se på adressen i nettleserens adressefelt — den ser slik ut:
+>    `https://DITTDOMENE.atlassian.net/...`
+> 3. Skriv inn bare den første delen — altså det som står før `.atlassian.net`
 
 Når du har alle tre, lagre dem:
 
