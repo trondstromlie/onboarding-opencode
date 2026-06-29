@@ -117,9 +117,8 @@ Dette gjelder kun din bruker og krever ikke admin.
 
 1. Klikk på **Start-menyen** (Windows-ikonet nederst til venstre)
 2. Skriv `rediger miljøvariabler for kontoen din` og trykk Enter
-3. Et vindu åpner seg med to seksjoner — du skal kun bruke den **øverste** seksjonen som heter **"Brukervariabler for DITTBRUKERNAVN"**  
-   *(ikke rør den nederste seksjonen som heter "Systemvariabler")*
-4. Finn linjen som heter **"Path"** i den øverste listen
+3. Et vindu åpner seg — du skal kun bruke seksjonen som heter **"Brukervariabler"** (ikke **"Systemvariabler"**)
+4. Finn linjen som heter **"Path"** i Brukervariabler-listen
 5. Klikk på **"Path"** slik at den blir markert (blå)
 6. Klikk på **"Rediger..."**
 7. Et nytt vindu åpner seg med en liste. Klikk på **"Ny"** øverst til høyre
@@ -180,7 +179,13 @@ opencode
 opencode
 ```
 
-Skills er nå tilgjengelige. Prøv å skrive: *"Sett opp GitHub SSH for meg"*
+Skills er nå tilgjengelige. Skriv én av disse i OpenCode for å komme i gang:
+
+| Hva du vil gjøre | Skriv dette i OpenCode |
+|------------------|------------------------|
+| Sette opp GitHub (SSH, SSO, signerte commits) | `sett opp GitHub` |
+| Koble OpenCode til GitHub, Jira eller Figma | `koble til Jira` / `koble til GitHub` / `koble til Figma` |
+| Koble OpenCode til Piwik Pro | `koble til Piwik Pro` |
 
 ---
 
