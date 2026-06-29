@@ -1,0 +1,158 @@
+#!/usr/bin/env node
+
+import { existsSync, mkdirSync, cpSync, readdirSync, statSync } from "fs";
+import { join, resolve } from "path";
+import { homedir, platform } from "os";
+import { createInterface } from "readline";
+
+const SKILLS_SRC = resolve(new URL("../skills", import.meta.url).pathname);
+const SKILLS_DEST = join(homedir(), ".agents", "skills");
+
+const SKILLS = readdirSync(SKILLS_SRC).filter((f) =>
+  statSync(join(SKILLS_SRC, f)).isDirectory()
+);
+
+const isDryRun = process.argv.includes("--dry-run");
+const isNonInteractive = process.argv.includes("--all");
+
+function log(msg) {
+  console.log(msg);
+}
+
+function ensureDir(dir) {
+  if (!existsSync(dir)) {
+    if (!isDryRun) mkdirSync(dir, { recursive: true });
+    log(`  Oppretter mappe: ${dir}`);
+  }
+}
+
+function installSkill(skillName) {
+  const src = join(SKILLS_SRC, skillName);
+  const dest = join(SKILLS_DEST, skillName);
+
+  if (existsSync(dest)) {
+    log(`  [oppdaterer] ${skillName}`);
+  } else {
+    log(`  [installerer] ${skillName}`);
+  }
+
+  if (!isDryRun) {
+    cpSync(src, dest, { recursive: true });
+  }
+}
+
+function prompt(rl, question) {
+  return new Promise((resolve) => {
+    rl.question(question, (answer) => resolve(answer.trim()));
+  });
+}
+
+async function selectSkills(rl) {
+  log("\nTilgjengelige skills:\n");
+  SKILLS.forEach((s, i) => log(`  [${i + 1}] ${s}`));
+  log(`  [a] Alle skills\n`);
+
+  const answer = await prompt(
+    rl,
+    'Hvilke vil du installere? (f.eks. "1 3" eller "a"): '
+  );
+
+  if (answer.toLowerCase() === "a") return SKILLS;
+
+  const indices = answer
+    .split(/\s+/)
+    .map((n) => parseInt(n) - 1)
+    .filter((i) => i >= 0 && i < SKILLS.length);
+
+  return indices.map((i) => SKILLS[i]);
+}
+
+const LOGO = `
+                              .###############-                              
+                         +##########################-                        
+                     +#  +##############################                     
+                  .####  -################################-                  
+                #######  .###################################                
+              +########   ############+      -#################              
+             ##########   ############        ##################.            
+           +###########   ############        ####################           
+          #############   ###########         +####################          
+         ##############.  ##########-         +#####################         
+        +##############.  #######               -####################        
+        ###############    -###                   ####################       
+       ###############+     ++                     ###################       
+      +###############+                             ###################      
+      #################           +                 ###################      
+      ##################        -##                  ##################.     
+      ##################   ##+#####                   #################-     
+      ##################   ######+              .      ################-     
+      ##################   ######                      ################.     
+      ##################.  ######                #+    ################      
+      ##################+  -####                 -#     ###############      
+       ##################   ####                  #-   +##############       
+       .#################   ####                        +#############       
+        +################   ###-                    #    ############        
+         ################   ###                   -   #  ###########         
+          ###############   ###                       -  ##########          
+           ##############   ###                          #########           
+             ############+  +##                    -############-            
+              ############  .#####-             .+#############              
+                ##########   ######            ##############                
+                  -#######   ######+          #############                  
+                     #####   #######        ############                     
+                        -#   #######        #########                        
+                              +#####         ++                              
+
+       ██████  ███    ██ ██████   ██████   █████  ██████  ██████  ██ ███    ██  ██████  
+      ██    ██ ████   ██ ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ ██ ████   ██ ██       
+      ██    ██ ██ ██  ██ ██████  ██    ██ ███████ ██████  ██   ██ ██ ██ ██  ██ ██   ███ 
+      ██    ██ ██  ██ ██ ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ ██ ██  ██ ██ ██    ██ 
+       ██████  ██   ████ ██████   ██████  ██   ██ ██   ██ ██████  ██ ██   ████  ██████  
+
+                         ███████ ██   ██ ██ ██      ██      ███████                     
+                         ██      ██  ██  ██ ██      ██      ██                          
+                         ███████ █████   ██ ██      ██      ███████                     
+                              ██ ██  ██  ██ ██      ██           ██                     
+                         ███████ ██   ██ ██ ███████ ███████ ███████                     
+`;
+
+async function main() {
+  log(LOGO);
+
+  if (isDryRun) {
+    log("(Tørrkjøring — ingenting blir installert)\n");
+  }
+
+  log(`Installerer til: ${SKILLS_DEST}\n`);
+  ensureDir(SKILLS_DEST);
+
+  let selected = SKILLS;
+
+  if (!isNonInteractive) {
+    const rl = createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    selected = await selectSkills(rl);
+    rl.close();
+  }
+
+  if (selected.length === 0) {
+    log("\nIngen skills valgt. Avslutter.");
+    process.exit(0);
+  }
+
+  log(`\nInstallerer ${selected.length} skill(s)...\n`);
+  selected.forEach(installSkill);
+
+  log("\nFerdig! Start OpenCode på nytt for at skills skal lastes inn.");
+  log(
+    "Skriv f.eks. 'sett opp GitHub SSH' i OpenCode for å bruke github-setup-skill-en.\n"
+  );
+}
+
+main().catch((err) => {
+  console.error("Feil:", err.message);
+  process.exit(1);
+});

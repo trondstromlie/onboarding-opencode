@@ -1,0 +1,17 @@
+{
+  "name": "opencode-setup",
+  "version": "1.0.0",
+  "description": "Installer OpenCode-skills for ikke-utviklere — GitHub, MCP-servere og mer",
+  "bin": {
+    "opencode-setup": "./bin/cli.js"
+  },
+  "scripts": {
+    "test": "node bin/cli.js --dry-run"
+  },
+  "keywords": ["opencode", "skills", "setup", "mcp"],
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  }
+}
