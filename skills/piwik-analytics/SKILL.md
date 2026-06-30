@@ -1,5 +1,5 @@
 ---
-name: piwik-mcp
+name: piwik-analytics
 description: Bruk denne skill-en til å hente og analysere data fra Piwik Pro via MCP. Inneholder website_id-er for alle Gjensidige-apper, custom dimensions, metrikker og spørringssyntaks. Trigger på "Piwik", "besøksstatistikk", "sidevisninger", "sessjoner", "trafikk", "analysere bruk", "hente data fra Piwik", "custom dimensions", "gjensidige.no analytics", "produktdata fra Piwik", "hvor mange bruker", "konverteringsrate", eller når noen vil forstå bruksmønstre for en app uten å kontakte analyseteamet. Bruk også når noen spør om trafikk, besøk eller brukeratferd for gjensidige.no, gouda, intranettet eller mobilappen.
 ---
 

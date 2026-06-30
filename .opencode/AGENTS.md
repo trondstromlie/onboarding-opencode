@@ -17,4 +17,4 @@ Når brukeren ber deg "oppdatere skills" betyr det alltid dette:
 Skills som hører til dette repoet (ikke kopier andre):
 - `github-setup`
 - `install-mcp`
-- `piwik-mcp`
+- `piwik-analytics`
