@@ -48,8 +48,8 @@ ssh-keygen -t ed25519 -C "din@epost.no"
 
 Når terminalen spør:
 - `Enter file in which to save the key` → trykk **Enter** (standard plassering er bra)
-- `Enter passphrase` → velg et passord du husker (eller trykk Enter for ingen passord)
-- `Enter same passphrase again` → gjenta
+- `Enter passphrase` → **velg et passord du husker — dette er påkrevd, ikke trykk Enter uten passord**
+- `Enter same passphrase again` → gjenta passordet
 
 Bekreft at det gikk bra:
 ```bash
@@ -61,7 +61,7 @@ ls ~/.ssh/id_ed25519.pub
 ssh-keygen -t ed25519 -C "din@epost.no"
 ```
 
-Samme svar på spørsmålene som på Mac. Bekreft:
+Samme svar på spørsmålene som på Mac — husk at passphrase er påkrevd. Bekreft:
 ```powershell
 dir $env:USERPROFILE\.ssh\id_ed25519.pub
 ```
