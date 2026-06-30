@@ -1,172 +1,216 @@
 ---
 name: piwik-mcp
-description: Sett opp Piwik Pro MCP-server i OpenCode. Bruk denne skill-en når noen spør om "Piwik", "koble til Piwik Pro", "analytics MCP", "sett opp sporing", "Piwik MCP", "tilgang til Piwik", "se besøksstatistikk i OpenCode", eller ønsker å analysere trafikk og brukeradferd via OpenCode. Trigger også ved "piwik token", "piwik organisasjon", "piwik site id".
+description: Bruk denne skill-en når noen skal hente eller analysere data fra Piwik Pro — for eksempel sidevisninger, sessjoner, bruksmønstre, konvertering, eller trafikk for en spesifikk app. Inneholder nettstedsnavn, website_id-er, dimensjonsnavn, metrikknavn og hvordan man bygger spørringer mot Piwik MCP. Trigger på "Piwik", "besøksstatistikk", "sidevisninger", "sessjoner", "analysere trafikk", "hente data fra Piwik", "custom dimensions", "gjensidige.no analytics", "produktdata fra Piwik", eller når en produkteier vil forstå bruk av en app uten å kontakte analyseteamet.
 ---
 
-# Piwik Pro MCP-oppsett
+# Piwik Pro Analytics
 
-Denne skill-en kobler OpenCode til Piwik Pro slik at du kan spørre om besøksstatistikk, sidetrafikk og brukeradferd direkte i OpenCode.
-
-Gå gjennom stegene i rekkefølge. Still ett spørsmål om gangen.
-
----
-
-## Steg 0 — Finn ut hvilket OS brukeren har
-
-Spør:
-
-> Bruker du **Mac** eller **Windows**?
-
-**Konfig-sti per OS:**
-- Mac: `~/.config/opencode/opencode.jsonc`
-- Windows: `%APPDATA%\opencode\opencode.jsonc` (typisk `C:\Users\<brukernavn>\AppData\Roaming\opencode\opencode.jsonc`)
-
-**Windows-merk:** Tokens legges direkte inn som strenger i konfigen i stedet for som miljøvariabler.
+Denne skill-en gir deg det du trenger for å hente og analysere data fra Piwik Pro via MCP — uten å måtte spørre analyseteamet.
 
 ---
 
-## Steg 1 — Hent Piwik Pro API-token
+## MCP-server
 
-Si til brukeren:
+Piwik Pro MCP kjøres via `uvx` (Python-basert) — ikke `npx`.
 
-> Jeg trenger et Piwik Pro API-token. Slik henter du det:
->
-> 1. Logg inn på Piwik Pro-instansen din
-> 2. Klikk på **brukernavnet ditt** øverst til høyre
-> 3. Velg **"My Profile"** eller **"Settings"**
-> 4. Klikk på **"API Access"** eller **"API tokens"**
-> 5. Klikk **"Generer ny token"** (eller **"Create new token"**)
-> 6. Gi tokenet et navn — f.eks. `opencode`
-> 7. Velg nødvendig tilgang — minst lesetilgang til analytics-data
-> 8. Kopier tokenet som vises — det vises bare én gang!
->
-> Lim tokenet inn her.
+| Innstilling | Verdi |
+|-------------|-------|
+| Kommando (Mac/Linux) | `uvx piwik-pro-mcp` |
+| Kommando (Windows) | `C:\Users\<brukernavn>\.local\bin\uvx.exe piwik-pro-mcp` |
+| Host | `gjensidige.piwik.pro` |
+| Env-variabel host | `PIWIK_PRO_HOST` |
+| Env-variabel klient-ID | `PIWIK_PRO_CLIENT_ID` |
+| Env-variabel hemmelighet | `PIWIK_PRO_CLIENT_SECRET` |
+
+Hvis Piwik MCP ikke er installert enda, bruk `install-mcp`-skillen.
 
 ---
 
-## Steg 2 — Hent Piwik Pro-URL og organisasjons-ID
+## Tilgjengelige apper
 
-Når brukeren har gitt deg tokenet, spør:
+Bruk alltid `website_id` (ikke `app_id`) i alle spørringer.
 
-> Hva er adressen til din Piwik Pro-instans?
-> (f.eks. `https://dittnavn.piwik.pro` eller en intern URL)
-
-Så:
-
-> Hva er organisasjons-ID-en? Du finner den i nettleserens adressefelt når du er inne på instansen.
-> Den ser slik ut: `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` (en lang kode med bindestreker)
+| App                          | website_id                                   |
+|------------------------------|----------------------------------------------|
+| gjensidige.no                | `f7ebd082-fc5d-471e-925e-88e9a8f4284a`       |
+| gjensidige.dk                | `fafaebf4-2b0e-46e9-a6cd-00c97c62ddc9`       |
+| gjensidige.se                | `8b6361f9-5fbb-4227-85cc-edeeccdc1566`       |
+| gjensidige.com               | `407eff76-fbfb-4626-9077-81eb3ee9904e`       |
+| Gjensidige Mobile App - Prod | `f46b195e-b2c5-44bc-91dc-ff48491f21aa`       |
+| testgjensidige.no            | `f8b3c559-e704-44df-a18b-dbae6ad09612`       |
+| testgjensidige.dk            | `ce451e0b-c90d-437a-9a22-18869302184a`       |
+| gouda.no                     | `018efca0-0560-462c-b518-b2c5fb37a0e1`       |
+| gouda.dk                     | `cf31de58-4edb-481b-acef-36d37fc05e3f`       |
+| gouda.fi                     | `82d6533d-331e-4c20-94b4-9bb6dc2bdf3f`       |
+| gouda-rf.se                  | `91251724-0d84-4bed-9cb9-ed78d2aeb718`       |
+| intranet.no                  | `898bb4a2-1929-4c2a-8eba-0f57726793ec`       |
+| intranet.dk                  | `41dd72e8-245e-46f6-8024-5599df494c54`       |
+| intranet.se                  | `f92afe8c-68a3-42aa-a9e1-895d9b7812a2`       |
 
 ---
 
-## Steg 3 — Oppdater OpenCode-konfigen
+## Custom dimensions (gjensidige.no)
 
-Åpne konfig-filen og legg til Piwik Pro MCP:
+Filtrer på applikasjon, modul og scenario via `event_custom_dimension_X`.
 
-**Mac (bruker miljøvariabel):**
+### Applikasjonsdimensjoner
 
-Lagre tokenet først:
-```bash
-echo 'export PIWIK_PRO_CLIENT_ID="TOKEN_HER"' >> ~/.zshrc && source ~/.zshrc
-```
+| Column ID                   | Navn                        | Eksempel                        |
+|-----------------------------|-----------------------------|---------------------------------|
+| `event_custom_dimension_1`  | Application Name (cd1)      | `"claims_selector"`, `"sales"`  |
+| `event_custom_dimension_2`  | Application Module (cd2)    | Modul innen applikasjonen       |
+| `event_custom_dimension_3`  | Application Submodule (cd3) | Undermodul                      |
+| `event_custom_dimension_4`  | Application Partner (cd4)   | Partner                         |
+| `event_custom_dimension_5`  | Application Version (cd5)   | Appversjon                      |
+| `event_custom_dimension_6`  | Scenario Name (cd6)         | Scenarionavn                    |
+| `event_custom_dimension_7`  | Scenario Step (cd7)         | Steg i scenario                 |
+| `event_custom_dimension_8`  | Scenario Type (cd8)         | Scenariotype                    |
+| `event_custom_dimension_12` | Business Area (cd12)        | Forretningsområde               |
+| `event_custom_dimension_13` | Customer Segment (cd13)     | Kundesegment                    |
+| `event_custom_dimension_14` | Login Status (cd14)         | Innloggingsstatus               |
 
-Legg til i `~/.config/opencode/opencode.jsonc`:
+### Skadedimensjoner
+
+| Column ID                   | Navn                        | Beskrivelse                     |
+|-----------------------------|-----------------------------|---------------------------------|
+| `event_custom_dimension_21` | Processguide ID (cd21)      | Skadeprosess-guide ID           |
+| `event_custom_dimension_22` | Processguide Title (cd22)   | Skadeprosess-guide tittel       |
+| `event_custom_dimension_33` | Claims Incident (cd33)      | Hendelsestype                   |
+| `event_custom_dimension_34` | Claims Accident (cd34)      | Ulykkestype                     |
+| `event_custom_dimension_35` | Claims Object (cd35)        | Skadens objekt                  |
+
+### Hendelse/konverteringsdimensjoner
+
+| Column ID                   | Navn                        | Beskrivelse                     |
+|-----------------------------|-----------------------------|---------------------------------|
+| `event_custom_dimension_40` | Event Name (cd40)           | Hendelsesnavn                   |
+| `event_custom_dimension_44` | Event Type (cd44)           | Hendelsestype                   |
+| `event_custom_dimension_50` | Conversion Name (cd50)      | Konverteringsnavn               |
+
+---
+
+## Vanlige dimensjoner
+
+| Column ID               | Beskrivelse                              |
+|-------------------------|------------------------------------------|
+| `timestamp`             | Tidsstempel (bruk med transformasjoner)  |
+| `device_type`           | Enhetstype (returnerer [id, navn]-par)   |
+| `browser_name`          | Nettlesernavn                            |
+| `operating_system`      | Operativsystem                           |
+| `source`                | Trafikkilde                              |
+| `medium`                | Trafikk-medium                           |
+| `referrer_type`         | Kanal                                    |
+| `location_country_name` | Land                                     |
+| `location_city_name`    | By                                       |
+| `event_url`             | Side-URL                                 |
+| `event_title`           | Sidetittel                               |
+| `local_hour`            | Time på dagen (0–23)                     |
+
+---
+
+## Vanlige metrikker
+
+| Column ID    | Beskrivelse        |
+|--------------|--------------------|
+| `sessions`   | Antall sesjoner    |
+| `page_views` | Sidevisninger      |
+| `visitors`   | Unike besøkende    |
+| `events`     | Antall hendelser   |
+| `bounces`    | Antall avhopp      |
+| `bounce_rate`| Avhoppsrate        |
+
+---
+
+## Bygge spørringer
+
+### Nødvendig rekkefølge
+
+Kall disse før `analytics_query_execute`:
+
+1. `analytics_dimensions_list` — gyldige dimension-IDer
+2. `analytics_metrics_list` — gyldige metrikk-IDer
+3. `analytics_dimensions_details_list` — transformasjonsalternativer
+4. `analytics_metrics_details_list` — metrikk-typer
+
+### Eksempel: daglige sesjoner filtrert på modul
+
 ```json
 {
-  "$schema": "https://opencode.ai/config.json",
-  "model": "github-copilot/claude-sonnet-4.6",
-  "mcp": {
-    "piwik-pro": {
-      "type": "local",
-      "command": ["npx", "-y", "--prefer-offline", "@piwikpro/mcp-server"],
-      "environment": {
-        "PIWIK_PRO_URL": "https://din-instans.piwik.pro",
-        "PIWIK_PRO_ORG_ID": "DIN_ORG_ID",
-        "PIWIK_PRO_CLIENT_ID": "{env:PIWIK_PRO_CLIENT_ID}"
-      },
-      "enabled": true
-    }
-  }
+  "website_id": "f7ebd082-fc5d-471e-925e-88e9a8f4284a",
+  "date_from": "2025-05-26",
+  "date_to": "2025-06-25",
+  "columns": [
+    {"column_id": "timestamp", "transformation_id": "to_date"},
+    {"column_id": "sessions"}
+  ],
+  "filters": {
+    "operator": "and",
+    "conditions": [
+      {
+        "column_id": "event_custom_dimension_2",
+        "condition": {"operator": "eq", "value": "claims_selector"}
+      }
+    ]
+  },
+  "limit": 31,
+  "order_by": [[0, "asc"]]
 }
 ```
 
-**Windows (token direkte i konfig):**
+### Kritiske regler
 
-Legg til i `%APPDATA%\opencode\opencode.jsonc` — erstatt alle verdier:
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "model": "github-copilot/claude-sonnet-4.6",
-  "mcp": {
-    "piwik-pro": {
-      "type": "local",
-      "command": ["npx", "-y", "--prefer-offline", "@piwikpro/mcp-server"],
-      "environment": {
-        "PIWIK_PRO_URL": "https://din-instans.piwik.pro",
-        "PIWIK_PRO_ORG_ID": "DIN_ORG_ID",
-        "PIWIK_PRO_CLIENT_ID": "TOKEN_HER"
-      },
-      "enabled": true
-    }
-  }
-}
-```
+| Regel | Detalj |
+|-------|--------|
+| Bruk `website_id` | Aldri `app_id` |
+| `filters`-struktur | Toppnivå-objekt med `operator` ("and"/"or") og `conditions`-array |
+| Hver betingelse | Har `column_id` + nestet `condition`-objekt med `operator` og `value` |
+| `order_by`-format | `[[kolonneindeks, "asc"\|"desc"]]` — indeks er 0-basert |
+| Metrikker kan ikke transformeres | Kun dimensjoner aksepterer `transformation_id` |
 
-Bytt ut:
-- `https://din-instans.piwik.pro` → instansens faktiske URL
-- `DIN_ORG_ID` → organisasjons-ID-en fra Steg 2
-- `TOKEN_HER` (Windows) → tokenet fra Steg 1
+### Filteroperatorer
 
-Hvis konfigen allerede inneholder en `mcp`-blokk med andre tjenester (GitHub, Jira, Figma), legg til `piwik-pro` som et nytt felt inne i `mcp`-blokken — ikke erstatt eksisterende oppføringer.
+| Type     | Operatorer                                                                    |
+|----------|-------------------------------------------------------------------------------|
+| Streng   | `eq`, `neq`, `contains`, `not_contains`, `starts_with`, `ends_with`, `matches`, `not_matches` |
+| Numerisk | `gt`, `gte`, `lt`, `lte`                                                     |
+| Null     | `empty`, `not_empty`                                                          |
+
+### Tidsstempel-transformasjoner
+
+| Transformasjon       | Granularitet |
+|---------------------|--------------|
+| `to_date`           | Per dag      |
+| `to_start_of_hour`  | Per time     |
+| `to_start_of_week`  | Per uke      |
+| `to_start_of_month` | Per måned    |
 
 ---
 
-## Steg 4 — Restart OpenCode
+## Tilgjengelige MCP-verktøy
 
-**Mac:**
-
-> Du må gjøre to ting:
->
-> **1. Restart terminalen** — lukk og åpne den på nytt så miljøvariabelen lastes.
-> **2. Restart OpenCode** — lukk og åpne på nytt.
->
-> Si ifra her når du er tilbake.
-
-**Windows:**
-
-> Restart OpenCode — lukk og åpne den på nytt.
->
-> Si ifra her når du er tilbake.
+| Verktøy                                 | Beskrivelse                                |
+|-----------------------------------------|--------------------------------------------|
+| `apps_list`                             | List alle trackede apper                   |
+| `analytics_query_execute`               | Kjør en dataspørring                       |
+| `analytics_custom_dimensions_list`      | List custom dimensions for et nettsted     |
+| `analytics_custom_dimensions_get_slots` | Hent slotbruk-statistikk                   |
+| `analytics_dimensions_list`             | List alle tilgjengelige dimensjon-IDer     |
+| `analytics_dimensions_details_list`     | Hent detaljer for spesifikke dimensjoner   |
+| `analytics_metrics_list`                | List alle tilgjengelige metrikker          |
+| `analytics_metrics_details_list`        | Hent detaljer for spesifikke metrikker     |
+| `analytics_goals_list`                  | List mål for et nettsted                   |
+| `analytics_annotations_list`            | List annotasjoner                          |
 
 ---
 
-## Steg 5 — Test tilkoblingen
+## Visualisering
 
-Spør i OpenCode:
+Når du lager dashbord eller visualiseringer:
 
-> "Vis meg en liste over nettsteder/apper i Piwik Pro"
-
-Hvis det fungerer vil du se en liste over nettstedene du har tilgang til i Piwik Pro.
-
-**Eksempler på hva du kan spørre om etter oppsett:**
-- "Hvor mange sidevisninger hadde vi i dag?"
-- "Hvilke sider er mest besøkt denne uken?"
-- "Vis meg antall unike besøkende siste 30 dager for nettsted X"
-- "Hva er fluktfrekvensen på landingssiden?"
-
----
-
-## Feilsøking
-
-**"Unauthorized" eller 401-feil:**
-- Tokenet er feil eller utløpt. Generer et nytt i Piwik Pro og oppdater konfigen.
-- Sjekk at du brukte riktig instans-URL.
-
-**"MCP server not found":**
-- OpenCode er ikke restartet. Lukk og åpne på nytt.
-
-**Mac: tomt svar på `echo $PIWIK_PRO_CLIENT_ID`:**
-- Terminalen er ikke restartet. Lukk og åpne terminalvinduet på nytt.
-- Sjekk at linjen ble lagt til i `~/.zshrc`: `grep PIWIK ~/.zshrc`
-
-**Finner ikke organisasjons-ID:**
-- Logg inn på Piwik Pro. I adressefeltet i nettleseren, se etter en lang ID i URL-en, f.eks.: `https://dittnavn.piwik.pro/administration/organization/<ORG_ID>/...`
+1. Lagre som HTML-fil og åpne med `open`-kommandoen på macOS
+2. Mørkt tema (bakgrunn: `#0a0a1a`) med gradientaksentfarger (`#667eea` til `#764ba2`)
+3. Kombiner gjerne: stolpediagram for daglige data, smultring for enhetsfordeling, varmekart for timemønstre
+4. Legg til oppsummeringskort øverst med nøkkeltall
+5. Ta med hover-tooltips og jevne animasjoner
+6. Marker helger vs. hverdager med ulike farger i stolpediagram
+7. Gjør det responsivt

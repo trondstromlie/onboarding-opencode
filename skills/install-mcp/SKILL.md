@@ -1,6 +1,6 @@
 ---
 name: install-mcp
-description: Hjelper brukeren med å installere MCP-servere i OpenCode. Bruk når noen spør om å installere GitHub MCP, Jira MCP, Figma MCP, eller kombinasjoner. Trigger på ord som "installer mcp", "jeg vil ha jira mcp", "legg til github mcp", "koble til jira", "koble til github", "koble til figma", "sett opp mcp", "figma mcp". Miro MCP og Grafana MCP er ikke tilgjengelig for organisasjonen — si fra om det hvis noen spør.
+description: Hjelper brukeren med å installere MCP-servere i OpenCode. Bruk når noen spør om å installere GitHub MCP, Jira MCP, Figma MCP, Piwik MCP, eller kombinasjoner. Trigger på ord som "installer mcp", "jeg vil ha jira mcp", "legg til github mcp", "koble til jira", "koble til github", "koble til figma", "sett opp mcp", "figma mcp", "koble til piwik", "piwik mcp", "sett opp piwik". Miro MCP og Grafana MCP er ikke tilgjengelig for organisasjonen — si fra om det hvis noen spør.
 ---
 
 # Installer MCP-servere i OpenCode
@@ -33,6 +33,7 @@ Si dette til brukeren:
 > - **GitHub** — lar meg lese og opprette issues, PRs og kode på GitHub
 > - **Jira** — lar meg lese og oppdatere Jira-tickets
 > - **Figma** — lar meg lese design og hjelpe deg å implementere dem i kode
+> - **Piwik Pro** — lar meg hente besøksstatistikk og analysere trafikk
 > - Flere av disse, eller **alle**
 
 ---
@@ -155,6 +156,55 @@ echo 'export FIGMA_API_KEY="TOKEN_HER"' >> ~/.zshrc && source ~/.zshrc
 ```
 
 **Windows:** Tokenet legges direkte inn i konfigen under `environment` (se Steg 3). Ingen kommando nødvendig nå — noter tokenet og bruk det i konfig-steget.
+
+---
+
+### Piwik Pro-token og innstillinger
+
+Si til brukeren:
+
+> Jeg trenger et Piwik Pro API-token. Slik henter du det:
+>
+> 1. Logg inn på Piwik Pro: https://gjensidige.piwik.pro
+> 2. Klikk på **brukernavnet ditt** øverst til høyre
+> 3. Velg **"My Profile"**
+> 4. Klikk på **"API Credentials"**
+> 5. Klikk **"Add credentials"**
+> 6. Gi det et navn — f.eks. `opencode`
+> 7. Kopier **Client ID** og **Client Secret** som vises — de vises bare én gang!
+>
+> Lim inn Client ID og Client Secret her.
+
+Når brukeren har gitt deg begge verdiene, lagre dem:
+
+**macOS/Linux:**
+```bash
+echo 'export PIWIK_PRO_CLIENT_ID="CLIENT_ID_HER"' >> ~/.zshrc
+echo 'export PIWIK_PRO_CLIENT_SECRET="CLIENT_SECRET_HER"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+**Windows:** Verdiene legges direkte inn i konfigen under `environment` (se Steg 3). Ingen kommando nødvendig nå.
+
+**Merk:** Piwik Pro MCP bruker `uvx` (Python-basert), ikke `npx`. Sjekk om `uv` er installert:
+
+```bash
+uv --version
+```
+
+Hvis ikke installert, instruer brukeren:
+
+**macOS/Linux:**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+---
 
 ### Miro
 
@@ -298,7 +348,49 @@ echo 'export FIGMA_API_KEY="TOKEN_HER"' >> ~/.zshrc && source ~/.zshrc
 }
 ```
 
-### Alle tre
+### Bare Piwik Pro
+
+**macOS/Linux:**
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "github-copilot/claude-sonnet-4.6",
+  "mcp": {
+    "piwik-pro": {
+      "type": "local",
+      "command": ["uvx", "piwik-pro-mcp"],
+      "environment": {
+        "PIWIK_PRO_HOST": "gjensidige.piwik.pro",
+        "PIWIK_PRO_CLIENT_ID": "{env:PIWIK_PRO_CLIENT_ID}",
+        "PIWIK_PRO_CLIENT_SECRET": "{env:PIWIK_PRO_CLIENT_SECRET}"
+      },
+      "enabled": true
+    }
+  }
+}
+```
+
+**Windows** (erstatt verdiene med det brukeren ga deg — finn `<brukernavn>` ved å kjøre `$env:USERNAME` i PowerShell):
+```json
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "github-copilot/claude-sonnet-4.6",
+  "mcp": {
+    "piwik-pro": {
+      "type": "local",
+      "command": ["C:\\Users\\<brukernavn>\\.local\\bin\\uvx.exe", "piwik-pro-mcp"],
+      "environment": {
+        "PIWIK_PRO_HOST": "gjensidige.piwik.pro",
+        "PIWIK_PRO_CLIENT_ID": "CLIENT_ID_HER",
+        "PIWIK_PRO_CLIENT_SECRET": "CLIENT_SECRET_HER"
+      },
+      "enabled": true
+    }
+  }
+}
+```
+
+### Alle fire
 
 **macOS/Linux:**
 ```json
@@ -329,6 +421,16 @@ echo 'export FIGMA_API_KEY="TOKEN_HER"' >> ~/.zshrc && source ~/.zshrc
       "command": ["npx", "-y", "--prefer-offline", "figma-developer-mcp", "--stdio"],
       "environment": {
         "FIGMA_API_KEY": "{env:FIGMA_API_KEY}"
+      },
+      "enabled": true
+    },
+    "piwik-pro": {
+      "type": "local",
+      "command": ["uvx", "piwik-pro-mcp"],
+      "environment": {
+        "PIWIK_PRO_HOST": "gjensidige.piwik.pro",
+        "PIWIK_PRO_CLIENT_ID": "{env:PIWIK_PRO_CLIENT_ID}",
+        "PIWIK_PRO_CLIENT_SECRET": "{env:PIWIK_PRO_CLIENT_SECRET}"
       },
       "enabled": true
     }
@@ -365,6 +467,16 @@ echo 'export FIGMA_API_KEY="TOKEN_HER"' >> ~/.zshrc && source ~/.zshrc
       "command": ["npx", "-y", "--prefer-offline", "figma-developer-mcp", "--stdio"],
       "environment": {
         "FIGMA_API_KEY": "TOKEN_HER"
+      },
+      "enabled": true
+    },
+    "piwik-pro": {
+      "type": "local",
+      "command": ["C:\\Users\\<brukernavn>\\.local\\bin\\uvx.exe", "piwik-pro-mcp"],
+      "environment": {
+        "PIWIK_PRO_HOST": "gjensidige.piwik.pro",
+        "PIWIK_PRO_CLIENT_ID": "CLIENT_ID_HER",
+        "PIWIK_PRO_CLIENT_SECRET": "CLIENT_SECRET_HER"
       },
       "enabled": true
     }
@@ -425,6 +537,14 @@ På macOS/Linux kan du i tillegg verifisere miljøvariabelen:
 echo $FIGMA_API_KEY
 ```
 
+**Piwik Pro-test** — spør:
+> "Vis meg en liste over nettsteder i Piwik Pro"
+
+På macOS/Linux kan du i tillegg verifisere miljøvariabelen:
+```bash
+echo $PIWIK_PRO_CLIENT_ID
+```
+
 ---
 
 **Hvis testen feiler:**
@@ -432,6 +552,7 @@ echo $FIGMA_API_KEY
 - "Unauthorized" fra MCP → tokenet er feil eller SSO-autorisering mangler (GitHub). Generer et nytt token og oppdater konfigen.
 - "MCP server not found" → OpenCode er ikke restartet. Lukk og åpne på nytt.
 - macOS/Linux: tomt svar på `echo $TOKEN` → terminalen er ikke restartet, eller verdien ble ikke lagret i `~/.zshrc`. Sjekk filen og prøv igjen.
+- Piwik: "`uvx` not found" → `uv` er ikke installert. Se instruksjoner i Steg 2.
 
 ---
 
