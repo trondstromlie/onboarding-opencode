@@ -212,6 +212,9 @@ Du trenger ikke alltid å kalle alle fire — for kjente dimensjoner og metrikke
 Når du lager dashbord eller visualiseringer basert på Piwik-data:
 
 1. Lagre som HTML-fil og åpne med `open`-kommandoen på macOS / `start`-kommandoen på Windows
-2. Velg visningsformat etter datatype: stolpediagram for daglige serier, smultring for fordelinger (enhet, kanal), varmekart for timemønstre
-3. Legg til oppsummeringskort øverst med de viktigste nøkkeltallene
-4. Ta med hover-tooltips og marker helger vs. hverdager der det gir mening
+2. Bruk mørkt tema (bakgrunn: `#0a0a1a`) med gradientaksentfarger (`#667eea` til `#764ba2`)
+3. Kombiner gjerne: stolpediagram for daglige data, smultring for enhetsfordeling, varmekart for timemønstre
+4. Legg til oppsummeringskort øverst med nøkkeltall
+5. Ta med hover-tooltips og jevne animasjoner
+6. Marker helger vs. hverdager med ulike farger i stolpediagram
+7. Gjør det responsivt
