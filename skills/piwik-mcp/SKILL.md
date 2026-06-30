@@ -1,11 +1,13 @@
 ---
 name: piwik-mcp
-description: Bruk denne skill-en når noen skal hente eller analysere data fra Piwik Pro — for eksempel sidevisninger, sessjoner, bruksmønstre, konvertering, eller trafikk for en spesifikk app. Inneholder nettstedsnavn, website_id-er, dimensjonsnavn, metrikknavn og hvordan man bygger spørringer mot Piwik MCP. Trigger på "Piwik", "besøksstatistikk", "sidevisninger", "sessjoner", "analysere trafikk", "hente data fra Piwik", "custom dimensions", "gjensidige.no analytics", "produktdata fra Piwik", eller når en produkteier vil forstå bruk av en app uten å kontakte analyseteamet.
+description: Bruk denne skill-en til å hente og analysere data fra Piwik Pro via MCP. Inneholder website_id-er for alle Gjensidige-apper, custom dimensions, metrikker og spørringssyntaks. Trigger på "Piwik", "besøksstatistikk", "sidevisninger", "sessjoner", "trafikk", "analysere bruk", "hente data fra Piwik", "custom dimensions", "gjensidige.no analytics", "produktdata fra Piwik", "hvor mange bruker", "konverteringsrate", eller når noen vil forstå bruksmønstre for en app uten å kontakte analyseteamet. Bruk også når noen spør om trafikk, besøk eller brukeratferd for gjensidige.no, gouda, intranettet eller mobilappen.
 ---
 
 # Piwik Pro Analytics
 
-Denne skill-en gir deg det du trenger for å hente og analysere data fra Piwik Pro via MCP — uten å måtte spørre analyseteamet.
+Denne skill-en gir deg det du trenger for å hente og analysere data fra Piwik Pro via MCP.
+
+**Ikke sikker på hvilken app det gjelder?** Spør brukeren, eller kjør `apps_list` for å liste alle trackede nettsteder med tilhørende `website_id`.
 
 ---
 
@@ -123,14 +125,16 @@ Filtrer på applikasjon, modul og scenario via `event_custom_dimension_X`.
 
 ## Bygge spørringer
 
-### Nødvendig rekkefølge
+### Anbefalt arbeidsflyt
 
-Kall disse før `analytics_query_execute`:
+Før du kaller `analytics_query_execute`, sjekk gyldige IDer og transformasjoner:
 
-1. `analytics_dimensions_list` — gyldige dimension-IDer
+1. `analytics_dimensions_list` — gyldige dimension-IDer for nettstedet
 2. `analytics_metrics_list` — gyldige metrikk-IDer
-3. `analytics_dimensions_details_list` — transformasjonsalternativer
+3. `analytics_dimensions_details_list` — tilgjengelige transformasjoner for dimensjoner
 4. `analytics_metrics_details_list` — metrikk-typer
+
+Du trenger ikke alltid å kalle alle fire — for kjente dimensjoner og metrikker fra tabellene over kan du gå rett til `analytics_query_execute`.
 
 ### Eksempel: daglige sesjoner filtrert på modul
 
@@ -205,12 +209,9 @@ Kall disse før `analytics_query_execute`:
 
 ## Visualisering
 
-Når du lager dashbord eller visualiseringer:
+Når du lager dashbord eller visualiseringer basert på Piwik-data:
 
-1. Lagre som HTML-fil og åpne med `open`-kommandoen på macOS
-2. Mørkt tema (bakgrunn: `#0a0a1a`) med gradientaksentfarger (`#667eea` til `#764ba2`)
-3. Kombiner gjerne: stolpediagram for daglige data, smultring for enhetsfordeling, varmekart for timemønstre
-4. Legg til oppsummeringskort øverst med nøkkeltall
-5. Ta med hover-tooltips og jevne animasjoner
-6. Marker helger vs. hverdager med ulike farger i stolpediagram
-7. Gjør det responsivt
+1. Lagre som HTML-fil og åpne med `open`-kommandoen på macOS / `start`-kommandoen på Windows
+2. Velg visningsformat etter datatype: stolpediagram for daglige serier, smultring for fordelinger (enhet, kanal), varmekart for timemønstre
+3. Legg til oppsummeringskort øverst med de viktigste nøkkeltallene
+4. Ta med hover-tooltips og marker helger vs. hverdager der det gir mening

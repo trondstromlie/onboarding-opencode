@@ -1,6 +1,6 @@
 ---
 name: github-setup
-description: Sett opp GitHub med SSH-nøkkel, autentiser med SSO og aktiver signerte commits. Bruk denne skill-en når noen spør om å "sette opp GitHub", "koble til GitHub", "lage SSH-nøkkel", "SSO GitHub", "signerte commits", "git-oppsett", "autentisere mot GitHub", eller når de får feil som "Permission denied (publickey)" fra GitHub. Trigger også ved "gpg", "git config", "commit signing".
+description: Sett opp GitHub med SSH-nøkkel, autentiser med SSO og aktiver signerte commits. Bruk denne skill-en når noen spør om å "sette opp GitHub", "koble til GitHub", "lage SSH-nøkkel", "SSO GitHub", "signerte commits", "git-oppsett", "autentisere mot GitHub", "sette opp npm for Gjensidige", "installere npm-pakker fra GitHub", ".npmrc", "GPG", "commit signing", eller når de får feil som "Permission denied (publickey)", "401 Unauthorized" fra npm, eller "403 Forbidden" fra GitHub.
 ---
 
 # GitHub SSH-oppsett, SSO og signerte commits
@@ -279,9 +279,23 @@ gpgconf --kill gpg-agent
 
 ## Steg 9 — Gjensidige npm-pakker (.npmrc)
 
-For å kunne installere Gjensidige sine interne npm-pakker må du legge inn GitHub-tokenet ditt i `.npmrc`.
+For å installere Gjensidige sine interne npm-pakker trenger du et GitHub-token med pakketilgang. Dette er **ikke** SSH-nøkkelen fra Steg 2 — det er et eget API-token.
 
-Bruk det samme tokenet du lagde i Steg 3 (det som starter med `ghp_`).
+### 9a — Opprett et GitHub-token (classic)
+
+> 1. Gå til: https://github.com/settings/tokens
+> 2. Klikk **"Generate new token"** → **"Generate new token (classic)"**  
+>    ⚠️ Velg **classic** — ikke "Fine-grained tokens"
+> 3. Gi det et navn — f.eks. `npm-gjensidige`
+> 4. Sett gyldighet til **90 days**
+> 5. Huk av for: **`read:packages`** — gir tilgang til å laste ned npm-pakker fra GitHub
+> 6. Klikk **"Generate token"** nederst
+> 7. Kopier tokenet (starter med `ghp_`) — det vises bare én gang
+> 8. Klikk **"Configure SSO"** → **"Authorize"** ved siden av **Gjensidige**
+
+Uten SSO-autorisering vil du få 401-feil ved `npm install`.
+
+### 9b — Legg tokenet inn i .npmrc
 
 **Mac/Linux:**
 ```bash
@@ -314,5 +328,3 @@ Du skal se:
 @gjensidige:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=ghp_xxxxxxxxxxxxxxxxxxxxxx
 ```
-
-> **Viktig:** Pass på at tokenet har `read:packages`-tilgang på GitHub, og at SSO er autorisert for Gjensidige-organisasjonen (se Steg 4). Uten SSO-autorisering vil du få 401-feil når du kjører `npm install`.
