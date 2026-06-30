@@ -49,11 +49,12 @@ Si til brukeren:
 > 1. Gå til: https://github.com/settings/tokens
 > 2. Klikk **"Generate new token"** og velg **"Generate new token (classic)"**
 > 3. Gi det et navn — f.eks. `opencode`
-> 4. Huk av for: `repo`, `read:org`, `read:user`
-> 5. Klikk **Generate token** nederst
-> 6. Kopier det lange tokenet som vises (starter med `ghp_`)
-> 7. Klikk **"Configure SSO"** ved siden av tokenet
-> 8. Klikk **"Authorize"** ved siden av **Gjensidige** — uten dette får du ikke tilgang til Gjensidiges repoer
+> 4. Sett gyldighet til **90 days** (maks tillatt)
+> 5. Huk av for: **`repo`** og **`workflow`**
+> 6. Klikk **Generate token** nederst
+> 7. Kopier det lange tokenet som vises (starter med `ghp_`)
+> 8. Klikk **"Configure SSO"** ved siden av tokenet
+> 9. Klikk **"Authorize"** ved siden av **Gjensidige** — uten dette får du ikke tilgang til Gjensidiges repoer
 >
 > Lim tokenet inn her, så ordner jeg resten.
 
