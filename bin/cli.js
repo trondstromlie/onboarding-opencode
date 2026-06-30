@@ -2,10 +2,11 @@
 
 import { existsSync, mkdirSync, cpSync, readdirSync, statSync } from "fs";
 import { join, resolve } from "path";
+import { fileURLToPath } from "url";
 import { homedir, platform } from "os";
 import { createInterface } from "readline";
 
-const SKILLS_SRC = resolve(new URL("../skills", import.meta.url).pathname);
+const SKILLS_SRC = fileURLToPath(new URL("../skills", import.meta.url));
 const SKILLS_DEST = join(homedir(), ".agents", "skills");
 
 const SKILLS = readdirSync(SKILLS_SRC).filter((f) =>

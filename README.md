@@ -179,6 +179,17 @@ opencode
 opencode
 ```
 
+**Første gang du starter OpenCode** må du velge modell:
+
+1. Skriv `/models` og trykk Enter
+2. Velg **GitHub Copilot** som provider
+3. Velg **Claude Opus** som modell
+4. Trykk Enter for å bekrefte
+
+Dette lagres til neste gang — du trenger bare gjøre det én gang.
+
+---
+
 Skills er nå tilgjengelige. Skriv én av disse i OpenCode for å komme i gang:
 
 | Hva du vil gjøre | Skriv dette i OpenCode |
