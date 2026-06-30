@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
-import { existsSync, mkdirSync, cpSync, readdirSync, statSync } from "fs";
+import { existsSync, mkdirSync, cpSync, readdirSync, statSync, readFileSync } from "fs";
 import { join, resolve } from "path";
 import { fileURLToPath } from "url";
 import { homedir, platform } from "os";
 import { createInterface } from "readline";
+import { execSync } from "child_process";
 
 const SKILLS_SRC = fileURLToPath(new URL("../skills", import.meta.url));
 const SKILLS_DEST = join(homedir(), ".agents", "skills");
@@ -46,6 +47,37 @@ function prompt(rl, question) {
   return new Promise((resolve) => {
     rl.question(question, (answer) => resolve(answer.trim()));
   });
+}
+
+function checkNpmrc() {
+  const npmrcPath = join(homedir(), ".npmrc");
+  if (!existsSync(npmrcPath)) return false;
+  const contents = readFileSync(npmrcPath, "utf8");
+  return contents.includes("npm.pkg.github.com") && contents.includes("_authToken");
+}
+
+function installGjensidigeSKills() {
+  if (!checkNpmrc()) {
+    log("  ⚠️  Finner ikke GitHub-token i ~/.npmrc.");
+    log("  Gjensidige-skills krever tilgang til GitHub Packages.");
+    log("  Kjør github-setup-skillen i OpenCode for å sette opp .npmrc, og kjør deretter opencode-setup på nytt.\n");
+    return;
+  }
+
+  log("  Laster ned offisielle Gjensidige-skills (gap-onboarding, builders)...");
+  try {
+    if (!isDryRun) {
+      execSync("npx --yes skills add gjensidige/skills", {
+        stdio: "inherit",
+        env: { ...process.env },
+      });
+    } else {
+      log("  (tørrkjøring) ville kjørt: npx skills add gjensidige/skills");
+    }
+  } catch (err) {
+    log(`  ✗ Klarte ikke laste ned Gjensidige-skills: ${err.message}`);
+    log("  Prøv manuelt: npx skills add gjensidige/skills\n");
+  }
 }
 
 async function selectSkills(rl) {
@@ -146,6 +178,9 @@ async function main() {
 
   log(`\nInstallerer ${selected.length} skill(s)...\n`);
   selected.forEach(installSkill);
+
+  log("\n--- Gjensidige offisielle skills ---\n");
+  installGjensidigeSKills();
 
   log("\nFerdig! Start OpenCode på nytt for at skills skal lastes inn.");
   log(
