@@ -1,6 +1,6 @@
 {
   "name": "opencode-setup",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "Installer OpenCode-skills for ikke-utviklere — GitHub, MCP-servere og mer",
   "bin": {
     "opencode-setup": "./bin/cli.js"
