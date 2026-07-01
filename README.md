@@ -169,22 +169,25 @@ Første gang kan det ta litt tid fordi `npx` laster ned verktøyet. Følg instru
 
 ## Steg 4 — Start OpenCode
 
-**Mac:** Åpne Terminal, naviger til en mappe du jobber i, og skriv:
+**Mac:** Åpne Terminal og skriv:
 ```
 opencode
 ```
 
-**Windows:** Åpne PowerShell, naviger til en mappe du jobber i, og skriv:
+**Windows:** Åpne PowerShell og skriv:
 ```powershell
 opencode
 ```
 
-**Første gang du starter OpenCode** må du velge modell:
+**Første gang du starter OpenCode** må du koble til og velge modell:
 
-1. Skriv `/models` og trykk Enter
-2. Velg **GitHub Copilot** som provider
-3. Velg **Claude Opus** som modell
-4. Velg **Default** når du blir spurt om variant
+1. Skriv `/connect` og trykk Enter
+2. Velg **GitHub.com Public**
+3. Logg inn med GitHub-kontoen din når nettleseren åpnes
+4. Skriv `/models` og trykk Enter
+5. Velg **GitHub Copilot** som provider
+6. Velg **Claude Opus** som modell
+7. Velg **Default** når du blir spurt om variant
 
 Dette lagres til neste gang — du trenger bare gjøre det én gang.
 
