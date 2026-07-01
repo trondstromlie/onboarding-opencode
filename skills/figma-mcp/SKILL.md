@@ -1,22 +1,20 @@
 ---
-name: figma-for-designere
-description: Veileder designere og PO i hvordan de bruker Figma MCP i OpenCode — fra å lime inn en Figma-lenke til å stille gode spørsmål og tolke svarene. Bruk når noen spør "hva kan jeg bruke Figma MCP til?", "hvordan funker Figma i OpenCode?", "kan du lese designet mitt?", "hva spør jeg om?", "jeg er designer og vil prøve OpenCode", eller virker usikker på hva de kan bruke Figma-integrasjonen til. Trigger også på "Figma og OpenCode", "lese design", "hente ut farger fra Figma", "beskriv designet", "hvordan fungerer Figma MCP".
+name: figma-mcp
+description: Hjelper designere og produkteiere med å utforske og forstå Figma-filer via MCP — uten å måtte åpne Figma eller be en utvikler om hjelp. Bruk når noen limer inn en Figma-lenke og vil vite hva som er i den, vil ha en oppsummering av en skjerm eller komponent, lurer på hvilke tekster eller farger som brukes, vil sammenligne to versjoner, eller vil beskrive et design til en utvikler. Trigger på "figma", "design", "skjerm", "komponent", "prototype", "lim inn figma-lenke", "hva er i denne figma-filen", "kan du se på designet", "hva står det i figma", "beskriv designet", "hvilke farger", "hvilke tekster", "Figma og OpenCode", "lese design", "hva kan jeg bruke Figma MCP til", "hvordan funker Figma i OpenCode", "jeg er designer og vil prøve OpenCode".
 ---
 
-# Figma MCP for designere
+# Figma MCP
 
-Figma MCP lar OpenCode lese Figma-filene dine direkte. Du slipper å kopiere og lime inn skjermbilder — bare lim inn en lenke, og still spørsmålet ditt.
-
-Denne guiden viser deg hva du kan bruke det til og hvordan du spør for å få gode svar.
+Figma MCP lar OpenCode lese Figma-filene dine direkte. Du slipper å kopiere og lime inn skjermbilder — bare lim inn en lenke og still spørsmålet ditt.
 
 ---
 
 ## Kom i gang — lim inn en lenke
 
-Kopier lenken til en Figma-ramme eller komponent og lim den inn i OpenCode. Lenken ser slik ut:
+Lim inn en lenke til en Figma-fil, ramme eller komponent. Lenken ser typisk slik ut:
 
 ```
-https://www.figma.com/design/ABC123/Prosjektnavn?node-id=1234-5678
+https://www.figma.com/design/ABC123/Mitt-prosjekt?node-id=1234-5678
 ```
 
 **Tips:** Lenk til den spesifikke rammen du vil ha hjelp med — ikke hele filen. Da går det raskere og svarene blir mer presise.
@@ -77,9 +75,7 @@ Lim inn to lenker og spør:
 
 ---
 
-## Slik stiller du gode spørsmål
-
-Figma MCP leser struktur og metadata — ikke piksel-for-piksel som et bilde. Det betyr:
+## Tips for beste resultat
 
 - **Vær konkret** — "hvilke tekster er på denne skjermen?" er bedre enn "fortell meg alt om denne filen"
 - **Still ett spørsmål om gangen** — du får mer presise svar
@@ -90,8 +86,6 @@ Figma MCP leser struktur og metadata — ikke piksel-for-piksel som et bilde. De
 
 ## Hvis Figma MCP ikke er koblet til
 
-Spør OpenCode:
+Sjekk først om Figma MCP er tilgjengelig ved å be brukeren lime inn en Figma-lenke og prøve å hente innholdet. Hvis det feiler eller verktøyet ikke finnes, da er det ikke installert.
 
-> "Kan du hjelpe meg å koble til Figma MCP?"
-
-Da brukes `install-mcp`-skillen til å sette opp tilkoblingen. Du trenger et Figma API-token — det tar ca. 2 minutter å sette opp.
+I så fall: bruk `install-mcp`-skillen til å sette opp Figma MCP. Den tar deg gjennom hele installasjonen steg for steg — inkludert å hente API-token og oppdatere OpenCode-konfigen.

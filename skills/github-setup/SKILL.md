@@ -9,6 +9,57 @@ Denne skill-en setter opp GitHub fra scratch. Gå gjennom stegene i riktig rekke
 
 ---
 
+## Sjekk først — ikke gjør det som allerede er på plass
+
+Før du starter, kjør disse sjekkene og oppsummer hva som allerede er satt opp:
+
+**SSH-nøkkel (Mac):**
+```bash
+ls ~/.ssh/id_ed25519.pub 2>/dev/null && echo "FUNNET" || echo "MANGLER"
+```
+**SSH-nøkkel (Windows):**
+```powershell
+if (Test-Path "$env:USERPROFILE\.ssh\id_ed25519.pub") { "FUNNET" } else { "MANGLER" }
+```
+
+**Git-konfig:**
+```bash
+git config --global user.name && git config --global user.email
+```
+
+**GPG-nøkkel:**
+```bash
+gpg --list-secret-keys --keyid-format=long 2>/dev/null | grep sec || echo "MANGLER"
+```
+
+**Commit-signering:**
+```bash
+git config --global commit.gpgsign && git config --global user.signingkey
+```
+
+**npm for Gjensidige (Mac/Linux):**
+```bash
+grep "npm.pkg.github.com" ~/.npmrc 2>/dev/null && echo "FUNNET" || echo "MANGLER"
+```
+**npm for Gjensidige (Windows):**
+```powershell
+if (Select-String -Path "$env:USERPROFILE\.npmrc" -Pattern "npm.pkg.github.com" -Quiet 2>$null) { "FUNNET" } else { "MANGLER" }
+```
+
+Vis brukeren en kort oppsummering:
+
+> Her er hva jeg fant:
+> ✓ SSH-nøkkel — allerede på plass
+> ✗ Git-konfig — mangler
+> ✓ Signerte commits — allerede satt opp
+> ...
+>
+> Vil du at jeg setter opp det som mangler?
+
+Hopp over alt som allerede er på plass. Kjør aldri et steg på nytt hvis det allerede er fullført, med mindre brukeren eksplisitt ber om det (f.eks. "jeg vil lage en ny SSH-nøkkel").
+
+---
+
 ## Steg 0 — Finn ut hvilket OS brukeren har
 
 Spør:
