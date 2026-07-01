@@ -331,3 +331,73 @@ Du skal se:
 @gjensidige:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=ghp_xxxxxxxxxxxxxxxxxxxxxx
 ```
+
+---
+
+## Steg 8 — Azure CLI (valgfritt — for GenAI-endepunkt)
+
+**Dette steget er valgfritt.** Det trengs kun hvis du skal bruke Gjensidiges interne GenAI-endepunkt (Azure OpenAI). Spør brukeren:
+
+> Skal du bruke Gjensidiges GenAI-endepunkt? (Usikker? Du kan legge det til senere.)
+
+Hvis nei: hopp over.
+
+---
+
+### Mac — Installer az CLI
+
+```bash
+brew install azure-cli
+```
+
+Logg inn:
+```bash
+az login
+```
+
+Nettleseren åpner seg — logg inn med jobbkontoen din.
+
+Sjekk at det virker:
+```bash
+az account show
+```
+
+---
+
+### Windows — Installer az CLI (ingen admin)
+
+**Del 1 — Last ned**
+
+> 1. Gå til: https://aka.ms/installazurecliwindowszipx64
+> 2. Filen lastes ned automatisk (en zip-fil)
+> 3. Pakk ut zip-filen til en mappe — f.eks. `C:\Users\DITTBRUKERNAVN\azure-cli`
+>    (Høyreklikk → "Pakk ut alle..." → velg mappen)
+
+**Del 2 — Legg az i miljøvariabler (Path)**
+
+> 1. Klikk på **Start-menyen**
+> 2. Skriv `rediger miljøvariabler for kontoen din` og trykk Enter
+> 3. Finn linjen som heter **"Path"** i Brukervariabler-listen
+> 4. Klikk på **"Path"** slik at den blir markert (blå)
+> 5. Klikk på **"Rediger..."**
+> 6. Klikk på **"Ny"**
+> 7. Skriv inn stien til azure-cli mappen, f.eks.: `C:\Users\DITTBRUKERNAVN\azure-cli`
+> 8. Klikk **"OK"** — og **"OK"** igjen
+
+**Del 3 — Logg inn**
+
+> Åpne et **nytt PowerShell-vindu** (viktig!) og kjør:
+>
+> ```powershell
+> az login
+> ```
+>
+> Nettleseren åpner seg — logg inn med jobbkontoen din.
+
+**Del 4 — Sjekk at det virker**
+
+```powershell
+az account show
+```
+
+Du skal se kontoinfoen din med subscription og tenant.
