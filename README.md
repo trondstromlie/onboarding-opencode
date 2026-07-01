@@ -193,13 +193,22 @@ Dette lagres til neste gang — du trenger bare gjøre det én gang.
 
 ---
 
-Skills er nå tilgjengelige. Skriv én av disse i OpenCode for å komme i gang:
+Skills er nå tilgjengelige. Det enkleste er å bare skrive:
+
+```
+fortsett oppsett
+```
+
+Da guider OpenCode deg gjennom alt steg for steg — MCP-er, GitHub, SSH og mer.
+
+Du kan også skrive direkte hva du vil gjøre:
 
 | Hva du vil gjøre | Skriv dette i OpenCode |
 |------------------|------------------------|
-| Sette opp GitHub (SSH, SSO, signerte commits) | `sett opp GitHub` |
-| Koble OpenCode til GitHub, Jira eller Figma | `koble til Jira` / `koble til GitHub` / `koble til Figma` |
-| Koble OpenCode til Piwik Pro | `koble til Piwik Pro` |
+| Bli guidet gjennom hele oppsettet | `fortsett oppsett` |
+| Koble til GitHub, Jira, Figma eller Piwik | `koble til Jira` / `koble til GitHub` / `koble til Figma` |
+| Sette opp GitHub SSH og signerte commits | `sett opp GitHub` |
+| Se Figma-design direkte i OpenCode | Lim inn en Figma-lenke |
 
 ---
 
@@ -209,9 +218,11 @@ Skills er instruksjoner som hjelper OpenCode å veilede deg gjennom kompliserte 
 
 | Skill | Hva den gjør |
 |-------|-------------|
-| `github-setup` | Setter opp SSH-nøkkel, kobler til GitHub, SSO og signerte commits |
-| `install-mcp` | Kobler OpenCode til GitHub, Jira og/eller Figma |
-| `piwik-mcp` | Kobler OpenCode til Piwik Pro for analytics-data |
+| `onboarding` | Guider deg gjennom hele oppsettet, husker hvor du er |
+| `install-mcp` | Kobler OpenCode til GitHub, Jira, Figma og/eller Piwik Pro |
+| `github-setup` | Setter opp SSH-nøkkel, SSO og signerte commits |
+| `figma-mcp` | Hjelper deg utforske Figma-design direkte i OpenCode |
+| `piwik-analytics` | Kobler OpenCode til Piwik Pro for besøksstatistikk |
 
 ---
 
