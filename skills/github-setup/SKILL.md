@@ -70,66 +70,38 @@ Bruk svaret til å gi riktige kommandoer gjennom hele flyten.
 
 ---
 
-## Steg 1 — Sjekk om SSH-nøkkel allerede finnes
+## Steg 1 — Sjekk om GitHub allerede er autentisert
 
-**Mac/Linux:**
 ```bash
-ls ~/.ssh/id_ed25519.pub
+gh auth status 2>/dev/null && echo "FUNNET" || echo "MANGLER"
 ```
 
-**Windows (PowerShell):**
-```powershell
-dir $env:USERPROFILE\.ssh\id_ed25519.pub
-```
-
-Hvis filen finnes: hopp til Steg 3 (legg inn i GitHub).
-
-Hvis ikke: gå til Steg 2.
+- Hvis `FUNNET`: merk som fullført, hopp til Steg 3
+- Hvis `MANGLER`: gå til Steg 2
 
 ---
 
-## Steg 2 — Autentiser mot GitHub
+## Steg 2 — Autentiser mot GitHub med gh CLI
 
-Flyten er forskjellig for Mac og Windows.
+`gh` er GitHubs offisielle kommandolinje-verktøy. Det gjør innlogging enkelt — ingen SSH-nøkler, ingen tokens å kopiere manuelt.
 
 ---
 
-### Mac/Linux — SSH-nøkkel
+### Mac/Linux — Installer gh
 
-Først: spør brukeren om e-postadressen de bruker på GitHub. Du trenger den for kommandoen.
-
-> Hva er e-postadressen du bruker på GitHub? (Den du logger inn med — ofte jobbe-eposten din)
-
-Når du har e-posten, gi brukeren den **ferdigformaterte kommandoen** — ikke be dem bytte ut noe selv:
-
-> Åpne en **ny terminalfane** (eller et nytt terminalvindu) og lim inn denne kommandoen:
+> Åpne en **ny terminalfane** og kjør:
 >
 > ```
-> ssh-keygen -t ed25519 -C "brukerens@epost.no"
+> brew install gh
 > ```
 
-**Viktig:** Kommandoen må kjøres i et nytt vindu — ikke i OpenCode.
-
-Når terminalen spør:
-- `Enter file in which to save the key` → trykk **Enter** (standard plassering er bra)
-- `Enter passphrase` → **velg et passord du husker — dette er påkrevd, ikke trykk Enter uten passord**
-- `Enter same passphrase again` → gjenta passordet
-
-Be brukeren bekrefte at det gikk bra:
-
-```bash
-ls ~/.ssh/id_ed25519.pub
-```
-
-Gå deretter til **Steg 3 — Legg SSH-nøkkelen inn i GitHub**.
+Hvis `brew` ikke er installert, se feilsøking nederst.
 
 ---
 
-### Windows — GitHub CLI (gh) med HTTPS
+### Windows — Installer gh (ingen admin)
 
-Windows-brukere uten admin kan ikke installere SSH-agenter. Vi bruker `gh` CLI med HTTPS-innlogging i stedet.
-
-**Del 1 — Last ned gh CLI**
+**Del 1 — Last ned**
 
 > 1. Gå til: https://github.com/cli/cli/releases/latest
 > 2. Finn filen som heter `gh_X.X.X_windows_amd64.zip` og last den ned
@@ -138,7 +110,7 @@ Windows-brukere uten admin kan ikke installere SSH-agenter. Vi bruker `gh` CLI m
 
 **Del 2 — Legg gh i miljøvariabler (Path)**
 
-> 1. Klikk på **Start-menyen** (Windows-ikonet nederst til venstre)
+> 1. Klikk på **Start-menyen**
 > 2. Skriv `rediger miljøvariabler for kontoen din` og trykk Enter
 > 3. Finn linjen som heter **"Path"** i Brukervariabler-listen
 > 4. Klikk på **"Path"** slik at den blir markert (blå)
@@ -147,11 +119,13 @@ Windows-brukere uten admin kan ikke installere SSH-agenter. Vi bruker `gh` CLI m
 > 7. Skriv inn stien til gh-mappen, f.eks.: `C:\Users\DITTBRUKERNAVN\gh\bin`
 > 8. Klikk **"OK"** — og **"OK"** igjen
 
-**Del 3 — Logg inn**
+---
 
-> Åpne et **nytt PowerShell-vindu** (viktig — det gamle ser ikke den nye Path-en) og kjør:
+### Logg inn (begge OS)
+
+> Åpne et **nytt terminalvindu** (viktig — det gamle ser ikke endringene) og kjør:
 >
-> ```powershell
+> ```
 > gh auth login
 > ```
 >
@@ -162,100 +136,44 @@ Windows-brukere uten admin kan ikke installere SSH-agenter. Vi bruker `gh` CLI m
 >
 > En kode vises. Åpne lenken i nettleseren, lim inn koden, og godkjenn.
 
-**Del 4 — Sjekk at det virker**
+### Koble git til gh
 
-```powershell
-gh auth status
 ```
-
-Du skal se `Logged in to github.com`.
-
-**Del 5 — Sett git til å bruke gh for autentisering**
-
-```powershell
 gh auth setup-git
 ```
 
-Dette konfigurerer git til å bruke gh-tokenet for HTTPS — du slipper å skrive passord hver gang.
+Dette konfigurerer git til å bruke gh-tokenet automatisk — du slipper å skrive passord eller håndtere nøkler.
 
-Hopp over Steg 3 og 4 (SSH-nøkkel og SSO) — `gh auth login` håndterer alt. Gå direkte til **Steg 5 — Test tilkoblingen**.
+### Sjekk at det virker
 
----
-
-## Steg 3 — Legg SSH-nøkkelen inn i GitHub
-
-Nå skal vi hente den **offentlige** nøkkelen og legge den inn på GitHub. Det er den som slutter på `.pub` — den er trygg å dele.
-
-Gi brukeren kommandoen og forklar hva som skjer:
-
-> Kjør denne kommandoen i terminalen (det samme vinduet som i forrige steg). Den viser nøkkelen din:
-
-**Mac/Linux:**
-```bash
-cat ~/.ssh/id_ed25519.pub
 ```
-
-**Windows (PowerShell):**
-```powershell
-Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
-```
-
-> Du får tilbake en lang tekst som starter med `ssh-ed25519`. **Kopier hele linjen** — alt fra `ssh-ed25519` til slutten. Det er denne teksten du skal lime inn på GitHub.
-
-Gå så til GitHub:
-
-> 1. Gå til: https://github.com/settings/keys
-> 2. Klikk **"New SSH key"**
-> 3. Gi nøkkelen et navn — f.eks. `min-jobb-pc`
-> 4. Lim inn den kopierte nøkkelen i feltet **"Key"** (hele teksten som starter med `ssh-ed25519`)
-> 5. Klikk **"Add SSH key"**
-
----
-
-## Steg 4 — Aktiver SSO for organisasjonen (kun Mac/SSH)
-
-**Bare for Mac/Linux-brukere som bruker SSH.** Windows-brukere med `gh` kan hoppe over dette.
-
-Hvis GitHub-kontoen er koblet til en organisasjon som bruker SSO (f.eks. Gjensidige):
-
-> 1. Gå tilbake til https://github.com/settings/keys
-> 2. Finn nøkkelen du nettopp la til
-> 3. Klikk **"Configure SSO"** ved siden av nøkkelen
-> 4. Klikk **"Authorize"** ved siden av organisasjonsnavnet
-
-Uten dette steget vil nøkkelen ikke fungere mot organisasjonens repositories.
-
----
-
-## Steg 5 — Test tilkoblingen
-
-**Mac/Linux (SSH):**
-```bash
-ssh -T git@github.com
-```
-
-Forventet svar:
-```
-Hi brukernavn! You've successfully authenticated, but GitHub does not provide shell access.
-```
-
-Hvis du ser `Permission denied (publickey)`: sjekk at nøkkelen ble lagt til riktig i GitHub, og at SSH-agenten kjører (se feilsøking under).
-
-**Windows (gh CLI):**
-```powershell
 gh auth status
 ```
 
-Forventet svar: `Logged in to github.com`. Prøv også å klone et repo for å bekrefte:
-```powershell
-git clone https://github.com/gjensidige/builders-components.git %TEMP%\test-clone
-```
-
-Hvis det fungerer: alt er satt opp riktig. Slett testmappen etterpå.
+Du skal se `Logged in to github.com`. Gå videre til **Steg 3**.
 
 ---
 
-## Steg 6 — Sett opp git-konfig
+## Steg 3 — Test tilkoblingen
+
+Prøv å klone et repo for å bekrefte at alt virker:
+
+**Mac/Linux:**
+```bash
+git clone https://github.com/gjensidige/builders-components.git /tmp/test-clone && rm -rf /tmp/test-clone
+```
+
+**Windows:**
+```powershell
+git clone https://github.com/gjensidige/builders-components.git $env:TEMP\test-clone
+Remove-Item -Recurse -Force $env:TEMP\test-clone
+```
+
+Hvis det fungerer: autentiseringen er på plass.
+
+---
+
+## Steg 4 — Sett opp git-konfig
 
 Sett navn og e-post (brukes i alle commits):
 
@@ -267,7 +185,7 @@ git config --global user.email "din@epost.no"
 
 ---
 
-## Steg 7 — Signerte commits (GPG)
+## Steg 5 — Signerte commits (GPG)
 
 Signerte commits viser en grønn "Verified"-badge på GitHub. Dette krever GPG.
 
@@ -359,7 +277,7 @@ Legg til SSH-nøkkelen som signeringsnøkkel på GitHub:
 
 ---
 
-## Steg 8 — Test at alt fungerer
+## Steg 6 — Test at alt fungerer
 
 Lag en testkommit:
 
@@ -406,7 +324,7 @@ gpgconf --kill gpg-agent
 
 ---
 
-## Steg 9 — Gjensidige npm-pakker (.npmrc)
+## Steg 7 — Gjensidige npm-pakker (.npmrc)
 
 For å installere Gjensidige sine interne npm-pakker trenger du et GitHub-token med pakketilgang. Dette er **ikke** SSH-nøkkelen fra Steg 2 — det er et eget API-token.
 
