@@ -179,11 +179,6 @@ async function main() {
   log(`\nInstallerer ${selected.length} skill(s)...\n`);
   selected.forEach(installSkill);
 
-  if (checkNpmrc()) {
-    log("\n--- Gjensidige offisielle skills ---\n");
-    installGjensidigeSKills();
-  }
-
   log("\nFerdig! Start OpenCode på nytt for at skills skal lastes inn.");
   log(
     "Skriv f.eks. 'sett opp GitHub SSH' i OpenCode for å bruke github-setup-skill-en.\n"
