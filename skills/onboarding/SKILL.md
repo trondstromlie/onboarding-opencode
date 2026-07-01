@@ -23,12 +23,15 @@ Struktur:
 ```json
 {
   "os": "mac" | "windows",
-  "completed": ["ssh", "git-config", "github-mcp", "jira-mcp", "figma-mcp", "piwik-mcp", "npm"],
+  "completed": ["git-config", "github-mcp", "jira-mcp", "figma-mcp", "piwik-mcp", "npm", "ssh", "commit-signing"],
   "skipped": ["piwik-mcp"],
+  "deferred": ["commit-signing"],
   "last_step": "github-mcp",
   "started_at": "2024-01-15"
 }
 ```
+
+`deferred` betyr at brukeren sa "gjør det senere" — spør igjen ved neste økt, men ikke mas.
 
 Les filen ved oppstart. Hvis den ikke finnes, start fra Steg 0.
 
@@ -50,30 +53,7 @@ Ved retur (fremgangsfil finnes):
 
 ---
 
-## Steg 1 — SSH-nøkkel (GitHub-tilkobling)
-
-**Hvorfor:** SSH er passordet maskinen din bruker for å snakke med GitHub. Uten det kan du ikke laste ned eller laste opp kode.
-
-### Sjekk om SSH allerede finnes
-
-**Mac:**
-```bash
-ls ~/.ssh/id_ed25519.pub 2>/dev/null && echo "FUNNET" || echo "MANGLER"
-```
-
-**Windows (PowerShell):**
-```powershell
-if (Test-Path "$env:USERPROFILE\.ssh\id_ed25519.pub") { "FUNNET" } else { "MANGLER" }
-```
-
-- Hvis `FUNNET`: merk `ssh` som fullført, hopp til Steg 2
-- Hvis `MANGLER`: bruk `github-setup`-skillen (Steg 1–5) for å lage og legge inn SSH-nøkkel
-
-Etter fullføring: oppdater fremgangsfilen med `"ssh"` i `completed`.
-
----
-
-## Steg 2 — Git-konfig (navn og e-post)
+## Steg 1 — Git-konfig (navn og e-post)
 
 **Hvorfor:** Git bruker navn og e-post til å merke hvem som har gjort hva i koden.
 
@@ -83,14 +63,14 @@ Etter fullføring: oppdater fremgangsfilen med `"ssh"` i `completed`.
 git config --global user.name && git config --global user.email
 ```
 
-- Hvis begge er satt: merk `git-config` som fullført, hopp til Steg 3
+- Hvis begge er satt: merk `git-config` som fullført, hopp til Steg 2
 - Hvis ikke: bruk `github-setup`-skillen (Steg 6) for å sette navn og e-post
 
 Etter fullføring: oppdater fremgangsfilen med `"git-config"` i `completed`.
 
 ---
 
-## Steg 3 — GitHub MCP
+## Steg 2 — GitHub MCP
 
 **Hvorfor:** GitHub MCP lar OpenCode lese kode, issues og pull requests på GitHub — uten at du trenger å kopiere og lime inn manuelt.
 
@@ -98,14 +78,14 @@ Etter fullføring: oppdater fremgangsfilen med `"git-config"` i `completed`.
 
 Les `~/.config/opencode/opencode.jsonc` og sjekk om det finnes en blokk med `github` under `mcp`.
 
-- Hvis den finnes og `enabled: true`: merk `github-mcp` som fullført, hopp til Steg 4
+- Hvis den finnes og `enabled: true`: merk `github-mcp` som fullført, hopp til Steg 3
 - Hvis ikke: bruk `install-mcp`-skillen og velg GitHub
 
 Etter fullføring: oppdater fremgangsfilen med `"github-mcp"` i `completed`.
 
 ---
 
-## Steg 4 — Jira MCP
+## Steg 3 — Jira MCP
 
 **Hvorfor:** Jira MCP lar OpenCode lese og oppdatere arbeidsoppgavene dine direkte — du slipper å bytte mellom Jira og OpenCode hele tiden.
 
@@ -113,19 +93,19 @@ Etter fullføring: oppdater fremgangsfilen med `"github-mcp"` i `completed`.
 
 Les `~/.config/opencode/opencode.jsonc` og sjekk om det finnes en blokk med `atlassian-jira` under `mcp`.
 
-- Hvis den finnes og `enabled: true`: merk `jira-mcp` som fullført, hopp til Steg 5
+- Hvis den finnes og `enabled: true`: merk `jira-mcp` som fullført, hopp til Steg 4
 - Hvis ikke: spør brukeren
 
 > Bruker du Jira til arbeidsoppgaver? (Hvis du ikke vet, svar ja — de fleste gjør det.)
 
 Hvis ja: bruk `install-mcp`-skillen og velg Jira.
-Hvis nei: merk `jira-mcp` som hoppet over i `skipped`, gå til Steg 5.
+Hvis nei: merk `jira-mcp` som hoppet over i `skipped`, gå til Steg 4.
 
 Etter fullføring: oppdater fremgangsfilen.
 
 ---
 
-## Steg 5 — Figma MCP
+## Steg 4 — Figma MCP
 
 **Hvorfor:** Figma MCP lar OpenCode lese design direkte fra Figma — nyttig hvis du jobber med designere eller skal implementere skjermbilder.
 
@@ -133,17 +113,17 @@ Etter fullføring: oppdater fremgangsfilen.
 
 Les `~/.config/opencode/opencode.jsonc` og sjekk om det finnes en blokk med `figma` under `mcp`.
 
-- Hvis den finnes og `enabled: true`: merk `figma-mcp` som fullført, hopp til Steg 6
+- Hvis den finnes og `enabled: true`: merk `figma-mcp` som fullført, hopp til Steg 5
 - Hvis ikke: spør brukeren
 
 > Jobber du med Figma-design? (Usikker? Si ja — det er lett å hoppe over hvis du ikke trenger det likevel.)
 
 Hvis ja: bruk `install-mcp`-skillen og velg Figma.
-Hvis nei: merk `figma-mcp` som hoppet over, gå til Steg 6.
+Hvis nei: merk `figma-mcp` som hoppet over, gå til Steg 5.
 
 ---
 
-## Steg 6 — Piwik MCP
+## Steg 5 — Piwik MCP
 
 **Hvorfor:** Piwik MCP lar OpenCode hente besøksstatistikk — nyttig hvis du jobber med analyse eller vil forstå hvordan folk bruker en nettside.
 
@@ -151,17 +131,17 @@ Hvis nei: merk `figma-mcp` som hoppet over, gå til Steg 6.
 
 Les `~/.config/opencode/opencode.jsonc` og sjekk om det finnes en blokk med `piwik-pro` under `mcp`.
 
-- Hvis den finnes og `enabled: true`: merk `piwik-mcp` som fullført, hopp til Steg 7
+- Hvis den finnes og `enabled: true`: merk `piwik-mcp` som fullført, hopp til Steg 6
 - Hvis ikke: spør brukeren
 
 > Jobber du med analyse eller statistikk? (Usikker? Du kan alltid legge det til senere.)
 
 Hvis ja: bruk `install-mcp`-skillen og velg Piwik Pro.
-Hvis nei: merk `piwik-mcp` som hoppet over, gå til Steg 7.
+Hvis nei: merk `piwik-mcp` som hoppet over, gå til Steg 6.
 
 ---
 
-## Steg 7 — npm for Gjensidige-pakker
+## Steg 6 — npm for Gjensidige-pakker
 
 **Hvorfor:** Gjensidiges egne kodebiblioteker ligger på GitHub. For å laste dem ned trenger du et eget tilgangstoken.
 
@@ -177,32 +157,85 @@ grep -l "npm.pkg.github.com" ~/.npmrc 2>/dev/null && echo "FUNNET" || echo "MANG
 if (Select-String -Path "$env:USERPROFILE\.npmrc" -Pattern "npm.pkg.github.com" -Quiet 2>$null) { "FUNNET" } else { "MANGLER" }
 ```
 
-- Hvis `FUNNET`: merk `npm` som fullført, hopp til fullføring
+- Hvis `FUNNET`: merk `npm` som fullført, hopp til Steg 7
 - Hvis ikke: spør brukeren
 
 > Skriver du kode som bruker Gjensidiges eget designsystem eller andre interne pakker?
 
 Hvis ja: bruk `github-setup`-skillen (Steg 9) for å sette opp `.npmrc`.
-Hvis nei: merk `npm` som hoppet over, gå til fullføring.
+Hvis nei: merk `npm` som hoppet over, gå til Steg 7.
+
+---
+
+## Steg 7 — SSH-nøkkel (kun hvis GitHub MCP er installert)
+
+**Kun vis dette steget hvis `github-mcp` er i `completed`.**
+
+**Hvorfor:** SSH er passordet maskinen din bruker for å laste ned og laste opp kode direkte fra GitHub — nødvendig hvis du skal jobbe med kode i terminalen.
+
+### Sjekk om SSH allerede finnes
+
+**Mac:**
+```bash
+ls ~/.ssh/id_ed25519.pub 2>/dev/null && echo "FUNNET" || echo "MANGLER"
+```
+
+**Windows (PowerShell):**
+```powershell
+if (Test-Path "$env:USERPROFILE\.ssh\id_ed25519.pub") { "FUNNET" } else { "MANGLER" }
+```
+
+- Hvis `FUNNET`: merk `ssh` som fullført, hopp til Steg 8
+- Hvis `MANGLER`: spør brukeren
+
+> Vil du sette opp SSH-nøkkel nå? Det gjør det enklere å jobbe med kode direkte fra terminalen.
+
+Hvis ja: bruk `github-setup`-skillen (Steg 1–5).
+Hvis nei: merk `ssh` som `deferred`, gå til Steg 8.
+
+**Ved neste økt:** Hvis `ssh` er i `deferred`, spør igjen:
+> Sist gang valgte du å vente med SSH-nøkkel. Vil du sette det opp nå?
+
+Hvis brukeren igjen sier nei: behold i `deferred` og spør igjen neste økt. Hvis de sier "gjør det senere" to ganger på rad, slutt å spørre automatisk — men nevn det i oppsummeringen.
+
+---
+
+## Steg 8 — Signerte commits (kun hvis GitHub MCP er installert)
+
+**Kun vis dette steget hvis `github-mcp` er i `completed`.**
+
+**Hvorfor:** Signerte commits viser en grønn "Verified"-badge på GitHub, som bekrefter at det faktisk er du som har gjort endringen.
+
+Spør brukeren:
+
+> Vil du aktivere signerte commits? Det er valgfritt, men anbefalt. Det viser en grønn "Verified"-badge på GitHub.
+
+Hvis ja: bruk `github-setup`-skillen (Steg 7) for GPG eller SSH-signering.
+Hvis nei: merk `commit-signing` som `deferred`, gå til fullføring.
+
+**Ved neste økt:** Hvis `commit-signing` er i `deferred`, spør igjen:
+> Sist gang valgte du å vente med signerte commits. Vil du sette det opp nå?
+
+Hvis brukeren igjen sier nei: behold i `deferred` og spør igjen neste økt. Hvis de sier "gjør det senere" to ganger på rad, slutt å spørre automatisk — men nevn det i oppsummeringen.
 
 ---
 
 ## Fullføring
 
-Når alle relevante steg er fullført:
+Når alle relevante steg er fullført eller utsatt:
 
 > Du er klar! Her er hva som er satt opp:
-> ✓ SSH-nøkkel (GitHub-tilkobling)
 > ✓ Git-konfig (navn og e-post)
 > ✓ GitHub MCP
 > [liste over det som ble fullført eller hoppet over]
+>
+> [Hvis ssh eller commit-signing er i deferred:]
+> ⏳ SSH-nøkkel og/eller signerte commits er ikke satt opp ennå — jeg spør igjen neste gang.
 >
 > Nå kan du begynne å bruke OpenCode skikkelig. Prøv for eksempel å spørre:
 > - "Vis meg mine åpne Jira-tickets"
 > - "Hva skjer i GitHub-repoet mitt?"
 > - Lim inn en Figma-lenke og spør om innholdet
-
-Oppdater fremgangsfilen med alle fullførte steg.
 
 ---
 
