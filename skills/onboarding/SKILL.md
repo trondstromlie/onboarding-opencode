@@ -252,3 +252,18 @@ Eksempler på hva de kan mene:
 | "er jeg ferdig" | Les fremgangsfilen og oppsummer hva som gjenstår |
 
 Aldri foreslå å installere noe som allerede er installert. Aldri start på nytt hvis fremgang finnes.
+
+---
+
+## Gjensidige offisielle skills (valgfritt, kun hvis npm er satt opp)
+
+Når brukeren har fullført npm-steget (`.npmrc` med GitHub-token), kan du nevne:
+
+> Gjensidige har også egne offisielle skills — blant annet for GAP-onboarding og Builders designsystem. Vil du installere dem?
+
+Hvis ja:
+```bash
+npx --yes skills add gjensidige/skills
+```
+
+Hvis nei eller npm ikke er satt opp: ikke nevn det. Dette er et bonussteg for de som er klare for det.
