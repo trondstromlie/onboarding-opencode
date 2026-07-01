@@ -184,7 +184,7 @@ opencode
 1. Skriv `/models` og trykk Enter
 2. Velg **GitHub Copilot** som provider
 3. Velg **Claude Opus** som modell
-4. Velg **"Set as default"** når du blir spurt
+4. Trykk Enter for å bekrefte
 
 Dette lagres til neste gang — du trenger bare gjøre det én gang.
 
