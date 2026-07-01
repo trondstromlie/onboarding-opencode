@@ -9,6 +9,27 @@ Følg denne flyten nøyaktig. Still ett spørsmål om gangen. Vent på svar før
 
 ---
 
+## Sjekk først — ikke installer det som allerede er på plass
+
+Før du gjør noe annet: les `~/.config/opencode/opencode.jsonc` og sjekk hvilke MCP-blokker som allerede finnes under `mcp`.
+
+Lag en liste over hva som er installert og hva som mangler:
+
+| Tjeneste | Nøkkel i konfig | Status |
+|---|---|---|
+| GitHub | `github` | installert / mangler |
+| Jira | `atlassian-jira` | installert / mangler |
+| Figma | `figma` | installert / mangler |
+| Piwik Pro | `piwik-pro` | installert / mangler |
+
+Hvis brukeren ba om å installere noe som allerede er der, si fra:
+
+> Det ser ut som [tjeneste] allerede er koblet til. Vil du teste at det virker, eller er det noe som ikke fungerer som det skal?
+
+Ikke gå videre med installasjon for tjenester som allerede er satt opp. Hopp direkte til de som mangler.
+
+---
+
 ## Steg 0 — Finn ut hvilket OS brukeren har
 
 Før du gjør noe annet, sjekk hvilket operativsystem brukeren kjører. Spør hvis du ikke vet:
