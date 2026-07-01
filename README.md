@@ -183,7 +183,7 @@ opencode
 
 1. Skriv `/connect` og trykk Enter
 2. Velg **GitHub.com Public**
-3. Logg inn med GitHub-kontoen din når nettleseren åpnes
+3. En boks vises med en lenke og en kode. Åpne lenken i nettleseren, lim inn koden, og godkjenn tilkoblingen
 4. Skriv `/models` og trykk Enter
 5. Velg **GitHub Copilot** som provider
 6. Velg **Claude Opus** som modell
