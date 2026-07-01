@@ -7,11 +7,12 @@ Dette repoet vedlikeholdes av folk med ulik teknisk bakgrunn, ofte via AI. Regle
 ## Git-regler
 
 1. **Push aldri direkte til main** — main har branch protection. Lag alltid en branch og PR.
-2. **Spør alltid brukeren før du lager en ny branch** — ikke lag brancher automatisk. Forklar hva branchen er til og spør om det er OK.
-3. **Én branch per endring** — aldri gjenbruk en branch til flere uavhengige endringer. Lag en ny branch for hver ting du jobber med.
-4. **Versjonsbump er en egen branch** — `npm version patch` skal alltid skje på en egen branch, aldri blandes med feature-endringer.
-5. **Ikke legg feature-commits på en version-branch** — det fører til at endringer mistes ved squash-merge.
-6. **Bruk squash-merge** — alle PRs merges med squash for å holde historikken ren.
+2. **Sjekk branch-status før du gjør noe** — er current branch merget? Har den en åpen PR? Hvis brukeren begynner på noe nytt, spør: "Skal jeg lage en ny branch for dette?"
+3. **Lag alltid PR ved push** — hver gang du pusher til en branch, lag en PR hvis det ikke finnes en allerede.
+4. **Én branch per endring** — aldri gjenbruk en branch til flere uavhengige endringer. Lag en ny branch for hver ting du jobber med.
+5. **Versjonsbump er en egen branch** — `npm version patch` skal alltid skje på en egen branch, aldri blandes med feature-endringer.
+6. **Ikke legg feature-commits på en version-branch** — det fører til at endringer mistes ved squash-merge.
+7. **Bruk squash-merge** — alle PRs merges med squash for å holde historikken ren.
 
 ### Riktig rekkefølge for endring + publisering:
 
