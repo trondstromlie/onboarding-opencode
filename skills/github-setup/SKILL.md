@@ -88,7 +88,13 @@ Hvis ikke: gå til Steg 2.
 
 ---
 
-## Steg 2 — Lag SSH-nøkkel
+## Steg 2 — Autentiser mot GitHub
+
+Flyten er forskjellig for Mac og Windows.
+
+---
+
+### Mac/Linux — SSH-nøkkel
 
 Først: spør brukeren om e-postadressen de bruker på GitHub. Du trenger den for kommandoen.
 
@@ -96,17 +102,9 @@ Først: spør brukeren om e-postadressen de bruker på GitHub. Du trenger den fo
 
 Når du har e-posten, gi brukeren den **ferdigformaterte kommandoen** — ikke be dem bytte ut noe selv:
 
-**Mac/Linux:**
 > Åpne en **ny terminalfane** (eller et nytt terminalvindu) og lim inn denne kommandoen:
 >
 > ```
-> ssh-keygen -t ed25519 -C "brukerens@epost.no"
-> ```
-
-**Windows:**
-> Åpne et **nytt PowerShell-vindu** og lim inn denne kommandoen:
->
-> ```powershell
 > ssh-keygen -t ed25519 -C "brukerens@epost.no"
 > ```
 
@@ -119,15 +117,68 @@ Når terminalen spør:
 
 Be brukeren bekrefte at det gikk bra:
 
-**Mac/Linux:**
 ```bash
 ls ~/.ssh/id_ed25519.pub
 ```
 
-**Windows (PowerShell):**
+Gå deretter til **Steg 3 — Legg SSH-nøkkelen inn i GitHub**.
+
+---
+
+### Windows — GitHub CLI (gh) med HTTPS
+
+Windows-brukere uten admin kan ikke installere SSH-agenter. Vi bruker `gh` CLI med HTTPS-innlogging i stedet.
+
+**Del 1 — Last ned gh CLI**
+
+> 1. Gå til: https://github.com/cli/cli/releases/latest
+> 2. Finn filen som heter `gh_X.X.X_windows_amd64.zip` og last den ned
+> 3. Pakk ut zip-filen til en mappe — f.eks. `C:\Users\DITTBRUKERNAVN\gh`
+>    (Høyreklikk → "Pakk ut alle..." → velg mappen)
+
+**Del 2 — Legg gh i miljøvariabler (Path)**
+
+> 1. Klikk på **Start-menyen** (Windows-ikonet nederst til venstre)
+> 2. Skriv `rediger miljøvariabler for kontoen din` og trykk Enter
+> 3. Finn linjen som heter **"Path"** i Brukervariabler-listen
+> 4. Klikk på **"Path"** slik at den blir markert (blå)
+> 5. Klikk på **"Rediger..."**
+> 6. Klikk på **"Ny"**
+> 7. Skriv inn stien til gh-mappen, f.eks.: `C:\Users\DITTBRUKERNAVN\gh\bin`
+> 8. Klikk **"OK"** — og **"OK"** igjen
+
+**Del 3 — Logg inn**
+
+> Åpne et **nytt PowerShell-vindu** (viktig — det gamle ser ikke den nye Path-en) og kjør:
+>
+> ```powershell
+> gh auth login
+> ```
+>
+> Velg:
+> - **GitHub.com**
+> - **HTTPS**
+> - **Login with a web browser**
+>
+> En kode vises. Åpne lenken i nettleseren, lim inn koden, og godkjenn.
+
+**Del 4 — Sjekk at det virker**
+
 ```powershell
-dir $env:USERPROFILE\.ssh\id_ed25519.pub
+gh auth status
 ```
+
+Du skal se `Logged in to github.com`.
+
+**Del 5 — Sett git til å bruke gh for autentisering**
+
+```powershell
+gh auth setup-git
+```
+
+Dette konfigurerer git til å bruke gh-tokenet for HTTPS — du slipper å skrive passord hver gang.
+
+Hopp over Steg 3 og 4 (SSH-nøkkel og SSO) — `gh auth login` håndterer alt. Gå direkte til **Steg 5 — Test tilkoblingen**.
 
 ---
 
@@ -161,7 +212,9 @@ Gå så til GitHub:
 
 ---
 
-## Steg 4 — Aktiver SSO for organisasjonen (hvis nødvendig)
+## Steg 4 — Aktiver SSO for organisasjonen (kun Mac/SSH)
+
+**Bare for Mac/Linux-brukere som bruker SSH.** Windows-brukere med `gh` kan hoppe over dette.
 
 Hvis GitHub-kontoen er koblet til en organisasjon som bruker SSO (f.eks. Gjensidige):
 
@@ -176,22 +229,29 @@ Uten dette steget vil nøkkelen ikke fungere mot organisasjonens repositories.
 
 ## Steg 5 — Test tilkoblingen
 
-**Mac/Linux:**
+**Mac/Linux (SSH):**
 ```bash
 ssh -T git@github.com
 ```
 
-**Windows (PowerShell):**
-```powershell
-ssh -T git@github.com
-```
-
-Forventet svar (det er OK selv om det sier "permission denied" til "you've successfully authenticated"):
+Forventet svar:
 ```
 Hi brukernavn! You've successfully authenticated, but GitHub does not provide shell access.
 ```
 
 Hvis du ser `Permission denied (publickey)`: sjekk at nøkkelen ble lagt til riktig i GitHub, og at SSH-agenten kjører (se feilsøking under).
+
+**Windows (gh CLI):**
+```powershell
+gh auth status
+```
+
+Forventet svar: `Logged in to github.com`. Prøv også å klone et repo for å bekrefte:
+```powershell
+git clone https://github.com/gjensidige/builders-components.git %TEMP%\test-clone
+```
+
+Hvis det fungerer: alt er satt opp riktig. Slett testmappen etterpå.
 
 ---
 
