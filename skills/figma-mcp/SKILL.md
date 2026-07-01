@@ -86,12 +86,6 @@ Lim inn to lenker og spør:
 
 ## Hvis Figma MCP ikke er koblet til
 
-Spør OpenCode:
+Sjekk først om Figma MCP er tilgjengelig ved å be brukeren lime inn en Figma-lenke og prøve å hente innholdet. Hvis det feiler eller verktøyet ikke finnes, da er det ikke installert.
 
-> "Kan du hjelpe meg å koble til Figma MCP?"
-
-Da brukes `install-mcp`-skillen til å sette opp tilkoblingen. Du trenger et Figma API-token — det tar ca. 2 minutter å sette opp:
-
-1. Gå til Figma → klikk navnet ditt øverst til venstre → **Settings** → **Security**
-2. Scroll ned og klikk **"Generate new API key"**
-3. Gi den et navn (f.eks. `opencode`) og kopier nøkkelen — den vises bare én gang
+I så fall: bruk `install-mcp`-skillen til å sette opp Figma MCP. Den tar deg gjennom hele installasjonen steg for steg — inkludert å hente API-token og oppdatere OpenCode-konfigen.
