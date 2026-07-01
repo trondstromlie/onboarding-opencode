@@ -185,112 +185,68 @@ git config --global user.email "din@epost.no"
 
 ---
 
-## Steg 5 — Signerte commits (GPG)
+## Steg 5 — Signerte commits (kun Mac)
 
-Signerte commits viser en grønn "Verified"-badge på GitHub. Dette krever GPG.
+**Hopp over dette steget for Windows-brukere** — Windows uten admin har ingen god måte å cache passphrase på, og brukeren vil bli spurt ved hver commit. Vi dropper signering for Windows inntil videre.
 
-### 7a — Sjekk om GPG er installert
+Signerte commits viser en grønn "Verified"-badge på GitHub.
 
-**Mac:**
-```bash
-gpg --version
-```
-Hvis ikke installert:
-```bash
-brew install gnupg
-```
-Hvis `brew` ikke er installert, se feilsøking.
+### 5a — Lag SSH-nøkkel for signering
 
-**Windows (PowerShell):**
-```powershell
-gpg --version
-```
-Hvis ikke installert, last ned fra https://www.gpg4win.org/ og kjør installeren.
+Spør brukeren om e-postadressen de bruker på GitHub (hvis du ikke allerede har den).
 
-> **Windows uten admin:** Gpg4win krever dessverre admin. Alternativet er å bruke GitHub sin SSH-signering i stedet (se Steg 7c).
-
-### 7b — Lag GPG-nøkkel
-
-**Mac/Linux og Windows:**
-```bash
-gpg --full-generate-key
-```
-
-Velg:
-- Key type: `1` (RSA and RSA)
-- Key size: `4096`
-- Expiry: `0` (utløper aldri)
-- Navn og e-post (bruk samme e-post som på GitHub)
-- Passord: velg noe du husker
-
-Finn nøkkelens ID:
-```bash
-gpg --list-secret-keys --keyid-format=long
-```
-
-Kopier ID-en som vises etter `sec rsa4096/` (de 16 tegnene).
-
-Eksporter offentlig nøkkel:
-```bash
-gpg --armor --export DIN_NOKKEL_ID
-```
-
-Legg inn på GitHub:
-> 1. Gå til https://github.com/settings/gpg/new
-> 2. Lim inn nøkkelen
-> 3. Klikk **"Add GPG key"**
-
-Aktiver signing i git:
-```bash
-git config --global user.signingkey DIN_NOKKEL_ID
-git config --global commit.gpgsign true
-```
-
-**Mac — fortell git hvor GPG er:**
-```bash
-git config --global gpg.program $(which gpg)
-```
-
-### 7c — Alternativ: SSH-signering (Windows uten admin)
-
-Hvis GPG ikke er mulig (f.eks. Windows uten admin), bruk SSH-nøkkelen til signering i stedet:
+Gi ferdig kommando:
 
 ```bash
-git config --global gpg.format ssh
-git config --global user.signingkey ~/.ssh/id_ed25519.pub
-git config --global commit.gpgsign true
+ssh-keygen -t ed25519 -C "brukerens@epost.no" -f ~/.ssh/signing_key
 ```
 
-**Windows:**
-```powershell
-git config --global gpg.format ssh
-git config --global user.signingkey $env:USERPROFILE\.ssh\id_ed25519.pub
-git config --global commit.gpgsign true
+Når terminalen spør om passphrase: **velg et passord du husker — dette er påkrevd.**
+
+### 5b — Legg nøkkelen i keychain (slippe passord ved hver commit)
+
+```bash
+ssh-add --apple-use-keychain ~/.ssh/signing_key
 ```
 
-Legg til SSH-nøkkelen som signeringsnøkkel på GitHub:
+Dette lagrer passordet i macOS Keychain — du blir spurt én gang, deretter aldri igjen.
+
+### 5c — Legg nøkkelen inn på GitHub som signeringsnøkkel
+
+Vis nøkkelen:
+```bash
+cat ~/.ssh/signing_key.pub
+```
+
+> Kopier hele teksten som starter med `ssh-ed25519`. Gå deretter til GitHub:
+>
 > 1. Gå til https://github.com/settings/keys
 > 2. Klikk **"New SSH key"**
 > 3. Under **Key type**, velg **"Signing Key"**
-> 4. Lim inn den samme nøkkelen som i Steg 3
+> 4. Lim inn nøkkelen
 > 5. Klikk **"Add SSH key"**
 
----
-
-## Steg 6 — Test at alt fungerer
-
-Lag en testkommit:
+### 5d — Konfigurer git
 
 ```bash
-git init /tmp/test-repo
-cd /tmp/test-repo
-echo "test" > test.txt
-git add test.txt
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/signing_key
+git config --global commit.gpgsign true
+```
+
+### 5e — Test
+
+```bash
+mkdir /tmp/test-signing && cd /tmp/test-signing && git init
+echo "test" > test.txt && git add test.txt
 git commit -m "Test signert commit"
 git log --show-signature
 ```
 
-Du skal se `gpg: Good signature` eller `Good "git" signature`.
+Du skal se `Good "git" signature`. Rydd opp etterpå:
+```bash
+rm -rf /tmp/test-signing
+```
 
 ---
 
