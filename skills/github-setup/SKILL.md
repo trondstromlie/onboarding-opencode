@@ -90,29 +90,41 @@ Hvis ikke: gå til Steg 2.
 
 ## Steg 2 — Lag SSH-nøkkel
 
-Be brukeren kjøre (bytt ut e-postadressen med sin GitHub-e-post):
+Først: spør brukeren om e-postadressen de bruker på GitHub. Du trenger den for kommandoen.
+
+> Hva er e-postadressen du bruker på GitHub? (Den du logger inn med — ofte jobbe-eposten din)
+
+Når du har e-posten, gi brukeren den **ferdigformaterte kommandoen** — ikke be dem bytte ut noe selv:
 
 **Mac/Linux:**
-```bash
-ssh-keygen -t ed25519 -C "din@epost.no"
-```
+> Åpne en **ny terminalfane** (eller et nytt terminalvindu) og lim inn denne kommandoen:
+>
+> ```
+> ssh-keygen -t ed25519 -C "brukerens@epost.no"
+> ```
+
+**Windows:**
+> Åpne et **nytt PowerShell-vindu** og lim inn denne kommandoen:
+>
+> ```powershell
+> ssh-keygen -t ed25519 -C "brukerens@epost.no"
+> ```
+
+**Viktig:** Kommandoen må kjøres i et nytt vindu — ikke i OpenCode.
 
 Når terminalen spør:
 - `Enter file in which to save the key` → trykk **Enter** (standard plassering er bra)
 - `Enter passphrase` → **velg et passord du husker — dette er påkrevd, ikke trykk Enter uten passord**
 - `Enter same passphrase again` → gjenta passordet
 
-Bekreft at det gikk bra:
+Be brukeren bekrefte at det gikk bra:
+
+**Mac/Linux:**
 ```bash
 ls ~/.ssh/id_ed25519.pub
 ```
 
 **Windows (PowerShell):**
-```powershell
-ssh-keygen -t ed25519 -C "din@epost.no"
-```
-
-Samme svar på spørsmålene som på Mac — husk at passphrase er påkrevd. Bekreft:
 ```powershell
 dir $env:USERPROFILE\.ssh\id_ed25519.pub
 ```
@@ -121,7 +133,11 @@ dir $env:USERPROFILE\.ssh\id_ed25519.pub
 
 ## Steg 3 — Legg SSH-nøkkelen inn i GitHub
 
-Vis innholdet i den offentlige nøkkelen:
+Nå skal vi hente den **offentlige** nøkkelen og legge den inn på GitHub. Det er den som slutter på `.pub` — den er trygg å dele.
+
+Gi brukeren kommandoen og forklar hva som skjer:
+
+> Kjør denne kommandoen i terminalen (det samme vinduet som i forrige steg). Den viser nøkkelen din:
 
 **Mac/Linux:**
 ```bash
@@ -133,12 +149,14 @@ cat ~/.ssh/id_ed25519.pub
 Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
 ```
 
-Kopier hele linjen som vises (starter med `ssh-ed25519`). Gå så til GitHub:
+> Du får tilbake en lang tekst som starter med `ssh-ed25519`. **Kopier hele linjen** — alt fra `ssh-ed25519` til slutten. Det er denne teksten du skal lime inn på GitHub.
+
+Gå så til GitHub:
 
 > 1. Gå til: https://github.com/settings/keys
 > 2. Klikk **"New SSH key"**
 > 3. Gi nøkkelen et navn — f.eks. `min-jobb-pc`
-> 4. Lim inn nøkkelen i feltet **"Key"**
+> 4. Lim inn den kopierte nøkkelen i feltet **"Key"** (hele teksten som starter med `ssh-ed25519`)
 > 5. Klikk **"Add SSH key"**
 
 ---
