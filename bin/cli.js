@@ -179,8 +179,10 @@ async function main() {
   log(`\nInstallerer ${selected.length} skill(s)...\n`);
   selected.forEach(installSkill);
 
-  log("\n--- Gjensidige offisielle skills ---\n");
-  installGjensidigeSKills();
+  if (checkNpmrc()) {
+    log("\n--- Gjensidige offisielle skills ---\n");
+    installGjensidigeSKills();
+  }
 
   log("\nFerdig! Start OpenCode på nytt for at skills skal lastes inn.");
   log(
