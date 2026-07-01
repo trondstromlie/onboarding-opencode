@@ -70,114 +70,110 @@ Bruk svaret til å gi riktige kommandoer gjennom hele flyten.
 
 ---
 
-## Steg 1 — Sjekk om SSH-nøkkel allerede finnes
+## Steg 1 — Sjekk om GitHub allerede er autentisert
+
+```bash
+gh auth status 2>/dev/null && echo "FUNNET" || echo "MANGLER"
+```
+
+- Hvis `FUNNET`: merk som fullført, hopp til Steg 3
+- Hvis `MANGLER`: gå til Steg 2
+
+---
+
+## Steg 2 — Autentiser mot GitHub med gh CLI
+
+`gh` er GitHubs offisielle kommandolinje-verktøy. Det gjør innlogging enkelt — ingen SSH-nøkler, ingen tokens å kopiere manuelt.
+
+---
+
+### Mac/Linux — Installer gh
+
+> Åpne en **ny terminalfane** og kjør:
+>
+> ```
+> brew install gh
+> ```
+
+Hvis `brew` ikke er installert, se feilsøking nederst.
+
+---
+
+### Windows — Installer gh (ingen admin)
+
+**Del 1 — Last ned**
+
+> 1. Gå til: https://github.com/cli/cli/releases/latest
+> 2. Finn filen som heter `gh_X.X.X_windows_amd64.zip` og last den ned
+> 3. Pakk ut zip-filen til en mappe — f.eks. `C:\Users\DITTBRUKERNAVN\gh`
+>    (Høyreklikk → "Pakk ut alle..." → velg mappen)
+
+**Del 2 — Legg gh i miljøvariabler (Path)**
+
+> 1. Klikk på **Start-menyen**
+> 2. Skriv `rediger miljøvariabler for kontoen din` og trykk Enter
+> 3. Finn linjen som heter **"Path"** i Brukervariabler-listen
+> 4. Klikk på **"Path"** slik at den blir markert (blå)
+> 5. Klikk på **"Rediger..."**
+> 6. Klikk på **"Ny"**
+> 7. Skriv inn stien til gh-mappen, f.eks.: `C:\Users\DITTBRUKERNAVN\gh\bin`
+> 8. Klikk **"OK"** — og **"OK"** igjen
+
+---
+
+### Logg inn (begge OS)
+
+> Åpne et **nytt terminalvindu** (viktig — det gamle ser ikke endringene) og kjør:
+>
+> ```
+> gh auth login
+> ```
+>
+> Velg:
+> - **GitHub.com**
+> - **HTTPS**
+> - **Login with a web browser**
+>
+> En kode vises. Åpne lenken i nettleseren, lim inn koden, og godkjenn.
+
+### Koble git til gh
+
+```
+gh auth setup-git
+```
+
+Dette konfigurerer git til å bruke gh-tokenet automatisk — du slipper å skrive passord eller håndtere nøkler.
+
+### Sjekk at det virker
+
+```
+gh auth status
+```
+
+Du skal se `Logged in to github.com`. Gå videre til **Steg 3**.
+
+---
+
+## Steg 3 — Test tilkoblingen
+
+Prøv å klone et repo for å bekrefte at alt virker:
 
 **Mac/Linux:**
 ```bash
-ls ~/.ssh/id_ed25519.pub
+git clone https://github.com/gjensidige/builders-components.git /tmp/test-clone && rm -rf /tmp/test-clone
 ```
 
-**Windows (PowerShell):**
+**Windows:**
 ```powershell
-dir $env:USERPROFILE\.ssh\id_ed25519.pub
+git clone https://github.com/gjensidige/builders-components.git $env:TEMP\test-clone
+Remove-Item -Recurse -Force $env:TEMP\test-clone
 ```
 
-Hvis filen finnes: hopp til Steg 3 (legg inn i GitHub).
-
-Hvis ikke: gå til Steg 2.
+Hvis det fungerer: autentiseringen er på plass.
 
 ---
 
-## Steg 2 — Lag SSH-nøkkel
-
-Be brukeren kjøre (bytt ut e-postadressen med sin GitHub-e-post):
-
-**Mac/Linux:**
-```bash
-ssh-keygen -t ed25519 -C "din@epost.no"
-```
-
-Når terminalen spør:
-- `Enter file in which to save the key` → trykk **Enter** (standard plassering er bra)
-- `Enter passphrase` → **velg et passord du husker — dette er påkrevd, ikke trykk Enter uten passord**
-- `Enter same passphrase again` → gjenta passordet
-
-Bekreft at det gikk bra:
-```bash
-ls ~/.ssh/id_ed25519.pub
-```
-
-**Windows (PowerShell):**
-```powershell
-ssh-keygen -t ed25519 -C "din@epost.no"
-```
-
-Samme svar på spørsmålene som på Mac — husk at passphrase er påkrevd. Bekreft:
-```powershell
-dir $env:USERPROFILE\.ssh\id_ed25519.pub
-```
-
----
-
-## Steg 3 — Legg SSH-nøkkelen inn i GitHub
-
-Vis innholdet i den offentlige nøkkelen:
-
-**Mac/Linux:**
-```bash
-cat ~/.ssh/id_ed25519.pub
-```
-
-**Windows (PowerShell):**
-```powershell
-Get-Content $env:USERPROFILE\.ssh\id_ed25519.pub
-```
-
-Kopier hele linjen som vises (starter med `ssh-ed25519`). Gå så til GitHub:
-
-> 1. Gå til: https://github.com/settings/keys
-> 2. Klikk **"New SSH key"**
-> 3. Gi nøkkelen et navn — f.eks. `min-jobb-pc`
-> 4. Lim inn nøkkelen i feltet **"Key"**
-> 5. Klikk **"Add SSH key"**
-
----
-
-## Steg 4 — Aktiver SSO for organisasjonen (hvis nødvendig)
-
-Hvis GitHub-kontoen er koblet til en organisasjon som bruker SSO (f.eks. Gjensidige):
-
-> 1. Gå tilbake til https://github.com/settings/keys
-> 2. Finn nøkkelen du nettopp la til
-> 3. Klikk **"Configure SSO"** ved siden av nøkkelen
-> 4. Klikk **"Authorize"** ved siden av organisasjonsnavnet
-
-Uten dette steget vil nøkkelen ikke fungere mot organisasjonens repositories.
-
----
-
-## Steg 5 — Test tilkoblingen
-
-**Mac/Linux:**
-```bash
-ssh -T git@github.com
-```
-
-**Windows (PowerShell):**
-```powershell
-ssh -T git@github.com
-```
-
-Forventet svar (det er OK selv om det sier "permission denied" til "you've successfully authenticated"):
-```
-Hi brukernavn! You've successfully authenticated, but GitHub does not provide shell access.
-```
-
-Hvis du ser `Permission denied (publickey)`: sjekk at nøkkelen ble lagt til riktig i GitHub, og at SSH-agenten kjører (se feilsøking under).
-
----
-
-## Steg 6 — Sett opp git-konfig
+## Steg 4 — Sett opp git-konfig
 
 Sett navn og e-post (brukes i alle commits):
 
@@ -189,112 +185,68 @@ git config --global user.email "din@epost.no"
 
 ---
 
-## Steg 7 — Signerte commits (GPG)
+## Steg 5 — Signerte commits (kun Mac)
 
-Signerte commits viser en grønn "Verified"-badge på GitHub. Dette krever GPG.
+**Hopp over dette steget for Windows-brukere** — Windows uten admin har ingen god måte å cache passphrase på, og brukeren vil bli spurt ved hver commit. Vi dropper signering for Windows inntil videre.
 
-### 7a — Sjekk om GPG er installert
+Signerte commits viser en grønn "Verified"-badge på GitHub.
 
-**Mac:**
-```bash
-gpg --version
-```
-Hvis ikke installert:
-```bash
-brew install gnupg
-```
-Hvis `brew` ikke er installert, se feilsøking.
+### 5a — Lag SSH-nøkkel for signering
 
-**Windows (PowerShell):**
-```powershell
-gpg --version
-```
-Hvis ikke installert, last ned fra https://www.gpg4win.org/ og kjør installeren.
+Spør brukeren om e-postadressen de bruker på GitHub (hvis du ikke allerede har den).
 
-> **Windows uten admin:** Gpg4win krever dessverre admin. Alternativet er å bruke GitHub sin SSH-signering i stedet (se Steg 7c).
-
-### 7b — Lag GPG-nøkkel
-
-**Mac/Linux og Windows:**
-```bash
-gpg --full-generate-key
-```
-
-Velg:
-- Key type: `1` (RSA and RSA)
-- Key size: `4096`
-- Expiry: `0` (utløper aldri)
-- Navn og e-post (bruk samme e-post som på GitHub)
-- Passord: velg noe du husker
-
-Finn nøkkelens ID:
-```bash
-gpg --list-secret-keys --keyid-format=long
-```
-
-Kopier ID-en som vises etter `sec rsa4096/` (de 16 tegnene).
-
-Eksporter offentlig nøkkel:
-```bash
-gpg --armor --export DIN_NOKKEL_ID
-```
-
-Legg inn på GitHub:
-> 1. Gå til https://github.com/settings/gpg/new
-> 2. Lim inn nøkkelen
-> 3. Klikk **"Add GPG key"**
-
-Aktiver signing i git:
-```bash
-git config --global user.signingkey DIN_NOKKEL_ID
-git config --global commit.gpgsign true
-```
-
-**Mac — fortell git hvor GPG er:**
-```bash
-git config --global gpg.program $(which gpg)
-```
-
-### 7c — Alternativ: SSH-signering (Windows uten admin)
-
-Hvis GPG ikke er mulig (f.eks. Windows uten admin), bruk SSH-nøkkelen til signering i stedet:
+Gi ferdig kommando:
 
 ```bash
-git config --global gpg.format ssh
-git config --global user.signingkey ~/.ssh/id_ed25519.pub
-git config --global commit.gpgsign true
+ssh-keygen -t ed25519 -C "brukerens@epost.no" -f ~/.ssh/signing_key
 ```
 
-**Windows:**
-```powershell
-git config --global gpg.format ssh
-git config --global user.signingkey $env:USERPROFILE\.ssh\id_ed25519.pub
-git config --global commit.gpgsign true
+Når terminalen spør om passphrase: **velg et passord du husker — dette er påkrevd.**
+
+### 5b — Legg nøkkelen i keychain (slippe passord ved hver commit)
+
+```bash
+ssh-add --apple-use-keychain ~/.ssh/signing_key
 ```
 
-Legg til SSH-nøkkelen som signeringsnøkkel på GitHub:
+Dette lagrer passordet i macOS Keychain — du blir spurt én gang, deretter aldri igjen.
+
+### 5c — Legg nøkkelen inn på GitHub som signeringsnøkkel
+
+Vis nøkkelen:
+```bash
+cat ~/.ssh/signing_key.pub
+```
+
+> Kopier hele teksten som starter med `ssh-ed25519`. Gå deretter til GitHub:
+>
 > 1. Gå til https://github.com/settings/keys
 > 2. Klikk **"New SSH key"**
 > 3. Under **Key type**, velg **"Signing Key"**
-> 4. Lim inn den samme nøkkelen som i Steg 3
+> 4. Lim inn nøkkelen
 > 5. Klikk **"Add SSH key"**
 
----
-
-## Steg 8 — Test at alt fungerer
-
-Lag en testkommit:
+### 5d — Konfigurer git
 
 ```bash
-git init /tmp/test-repo
-cd /tmp/test-repo
-echo "test" > test.txt
-git add test.txt
+git config --global gpg.format ssh
+git config --global user.signingkey ~/.ssh/signing_key
+git config --global commit.gpgsign true
+```
+
+### 5e — Test
+
+```bash
+mkdir /tmp/test-signing && cd /tmp/test-signing && git init
+echo "test" > test.txt && git add test.txt
 git commit -m "Test signert commit"
 git log --show-signature
 ```
 
-Du skal se `gpg: Good signature` eller `Good "git" signature`.
+Du skal se `Good "git" signature`. Rydd opp etterpå:
+```bash
+rm -rf /tmp/test-signing
+```
 
 ---
 
@@ -328,7 +280,7 @@ gpgconf --kill gpg-agent
 
 ---
 
-## Steg 9 — Gjensidige npm-pakker (.npmrc)
+## Steg 7 — Gjensidige npm-pakker (.npmrc)
 
 For å installere Gjensidige sine interne npm-pakker trenger du et GitHub-token med pakketilgang. Dette er **ikke** SSH-nøkkelen fra Steg 2 — det er et eget API-token.
 
@@ -379,3 +331,73 @@ Du skal se:
 @gjensidige:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=ghp_xxxxxxxxxxxxxxxxxxxxxx
 ```
+
+---
+
+## Steg 8 — Azure CLI (valgfritt — for GenAI-endepunkt)
+
+**Dette steget er valgfritt.** Det trengs kun hvis du skal bruke Gjensidiges interne GenAI-endepunkt (Azure OpenAI). Spør brukeren:
+
+> Skal du bruke Gjensidiges GenAI-endepunkt? (Usikker? Du kan legge det til senere.)
+
+Hvis nei: hopp over.
+
+---
+
+### Mac — Installer az CLI
+
+```bash
+brew install azure-cli
+```
+
+Logg inn:
+```bash
+az login
+```
+
+Nettleseren åpner seg — logg inn med jobbkontoen din.
+
+Sjekk at det virker:
+```bash
+az account show
+```
+
+---
+
+### Windows — Installer az CLI (ingen admin)
+
+**Del 1 — Last ned**
+
+> 1. Gå til: https://aka.ms/installazurecliwindowszipx64
+> 2. Filen lastes ned automatisk (en zip-fil)
+> 3. Pakk ut zip-filen til en mappe — f.eks. `C:\Users\DITTBRUKERNAVN\azure-cli`
+>    (Høyreklikk → "Pakk ut alle..." → velg mappen)
+
+**Del 2 — Legg az i miljøvariabler (Path)**
+
+> 1. Klikk på **Start-menyen**
+> 2. Skriv `rediger miljøvariabler for kontoen din` og trykk Enter
+> 3. Finn linjen som heter **"Path"** i Brukervariabler-listen
+> 4. Klikk på **"Path"** slik at den blir markert (blå)
+> 5. Klikk på **"Rediger..."**
+> 6. Klikk på **"Ny"**
+> 7. Skriv inn stien til azure-cli mappen, f.eks.: `C:\Users\DITTBRUKERNAVN\azure-cli`
+> 8. Klikk **"OK"** — og **"OK"** igjen
+
+**Del 3 — Logg inn**
+
+> Åpne et **nytt PowerShell-vindu** (viktig!) og kjør:
+>
+> ```powershell
+> az login
+> ```
+>
+> Nettleseren åpner seg — logg inn med jobbkontoen din.
+
+**Del 4 — Sjekk at det virker**
+
+```powershell
+az account show
+```
+
+Du skal se kontoinfoen din med subscription og tenant.
