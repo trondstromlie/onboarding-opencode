@@ -232,10 +232,102 @@ Når alle relevante steg er fullført eller utsatt:
 > [Hvis ssh eller commit-signing er i deferred:]
 > ⏳ SSH-nøkkel og/eller signerte commits er ikke satt opp ennå — jeg spør igjen neste gang.
 >
-> Nå kan du begynne å bruke OpenCode skikkelig. Prøv for eksempel å spørre:
+> Nå kan du begynne å bruke OpenCode skikkelig. Vil du ha noen tips til hva du kan gjøre?
+
+Hvis brukeren sier ja, vis tips **basert på hvilke MCP-er de har installert**. Vis bare tips for det som er relevant:
+
+**Hvis GitHub MCP er installert:**
+> - "Vis meg mine åpne pull requests"
+> - "Hva skjer i repoet [reponavn]?"
+> - "Lag en ny issue i [reponavn]"
+> - "Forklar koden i [fil eller repo]"
+> - "Lag et dashboard over aktiviteten i repoet mitt"
+
+Hvis brukeren har GitHub og virker interessert, tilby en live demo:
+
+> Vil du se aktiviteten i et repo? Si meg navnet (f.eks. `gjensidige/sales-web`), så lager jeg et interaktivt dashboard.
+
+Når brukeren deler et reponavn, hent data fra GitHub og generer en **interaktiv HTML-fil**. Lagre lokalt og åpne i nettleseren.
+
+Krav til GitHub HTML-dashboardet:
+- Bruk Chart.js eller lignende (CDN) for animerte grafer
+- Moderne design med glassmorfisme, smooth animasjoner, mørkt tema med Gjensidige-farger
+- Inkluder:
+  - **Commit-aktivitet** — animert heatmap i GitHub-stil (grønne ruter) for siste 30 dager
+  - **PR-oversikt** — donut-chart med åpne / mergede / lukkede, pluss gjennomsnittlig tid til merge
+  - **Åpne PRs som venter** — liste med tittel, hvem som åpnet, og hvor lenge den har ventet (glow-effekt på de som er over 3 dager)
+  - **Topp bidragsytere** — bar-chart med commits per person siste 30 dager
+  - **AI-innsikt** — f.eks. "3 PRs har ventet på review i over en uke", "Onsdag er den mest aktive dagen"
+- Åpne filen automatisk i nettleseren:
+  - Mac: `open github-dashboard.html`
+  - Windows: `start github-dashboard.html`
+
+Målet er det samme som for Jira og Piwik: et wow-øyeblikk.
+
+**Hvis Jira MCP er installert:**
 > - "Vis meg mine åpne Jira-tickets"
-> - "Hva skjer i GitHub-repoet mitt?"
-> - Lim inn en Figma-lenke og spør om innholdet
+> - "Hva er status på [prosjektnøkkel]-123?"
+> - "Legg til en kommentar på [ticket]"
+> - "Lag en ny oppgave i [prosjekt]"
+> - "Lag en oversikt over teamet mitt sitt arbeid"
+
+Hvis brukeren har Jira og virker interessert, tilby en live demo:
+
+> Vil du se hvordan teamet ditt ligger an? Si meg prosjektnøkkelen din (f.eks. `SKADE` eller `MOTOR`), så lager jeg et interaktivt dashboard.
+
+Når brukeren deler prosjektnøkkel, hent data fra Jira og generer en **interaktiv HTML-fil**. Lagre lokalt og åpne i nettleseren.
+
+Krav til Jira HTML-dashboardet:
+- Bruk Chart.js eller lignende (CDN) for animerte grafer
+- Moderne design med glassmorfisme, smooth animasjoner, mørkt tema med Gjensidige-farger
+- Inkluder:
+  - **Status-fordeling** — animert donut-chart (To Do / In Progress / Done) med antall
+  - **Hvem gjør hva** — horisontalt bar-chart per person med tickets fargekodet etter status
+  - **Aldring** — tickets som har stått i same status i over 7 dager markert med rødt glow-effekt
+  - **Aktivitet siste 14 dager** — linjegraf som viser tickets opprettet vs. løst per dag
+  - **Topp-innsikt** — AI-generert oppsummering (f.eks. "5 tickets har stått stille i over 2 uker", "Maria har levert mest denne sprinten")
+- Åpne filen automatisk i nettleseren:
+  - Mac: `open jira-dashboard.html`
+  - Windows: `start jira-dashboard.html`
+
+Målet er det samme som Piwik: et wow-øyeblikk som viser kraften i OpenCode + Jira.
+
+**Hvis Figma MCP er installert:**
+> - Lim inn en Figma-lenke og spør "Hva er på denne skjermen?"
+> - "Hvilke farger brukes i dette designet?"
+> - "Beskriv layouten slik at en utvikler kan bygge den"
+
+**Hvis Piwik MCP er installert:**
+> - "Hvor mange besøk hadde [nettstedet] forrige uke?"
+> - "Hvilke sider er mest besøkt?"
+> - "Vis meg trafikk for de siste 30 dagene"
+> - "Lag en graf over trafikken til [nettsted] den siste måneden"
+
+Hvis brukeren har Piwik og virker interessert, tilby å vise det i praksis med en gang:
+
+> Vil du prøve? Del URL-en til nettsiden du jobber med (f.eks. `https://www.gjensidige.no/kunde/privat/skade/meld-skade`), så henter jeg trafikk-data og lager en interaktiv rapport for deg.
+
+Når brukeren deler en URL, hent data fra Piwik og generer en **interaktiv HTML-fil** med moderne visualisering. Lagre filen lokalt og åpne den i nettleseren.
+
+Krav til HTML-rapporten:
+- Bruk Chart.js eller lignende (CDN) for animerte grafer
+- Moderne design med gradients, glassmorfisme og smooth animasjoner
+- Responsiv — ser bra ut på alle skjermstørrelser
+- Mørkt tema med Gjensidige-farger (brand-grønn: #00543C, lys bakgrunn på kort)
+- Inkluder:
+  - Animert linjegraf med daglig trafikk (hover for detaljer)
+  - Store KPI-kort øverst (totale visninger, snitt per dag, endring i %)
+  - Søylediagram for ukedager (hvilken dag er mest populær)
+  - En kort AI-generert innsikt nederst (f.eks. "Tirsdag er den travleste dagen")
+- Åpne filen automatisk i nettleseren etter generering:
+  - Mac: `open rapport.html`
+  - Windows: `start rapport.html`
+
+Målet er at brukeren skal bli imponert over hva OpenCode kan gjøre — dette er "wow-øyeblikket". De skal kunne dele rapporten med kollegaer.
+
+**Alltid (uansett MCP-er):**
+> - "Forklar denne feilmeldingen: [lim inn feil]"
+> - "Hjelp meg å skrive en e-post om [emne]"
 
 ---
 
