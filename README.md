@@ -169,12 +169,12 @@ Første gang kan det ta litt tid fordi `npx` laster ned verktøyet. Følg instru
 
 ## Steg 4 — Start OpenCode
 
-**Mac:** Åpne Terminal, naviger til en mappe du jobber i, og skriv:
+**Mac:** Åpne Terminal og skriv:
 ```
 opencode
 ```
 
-**Windows:** Åpne PowerShell, naviger til en mappe du jobber i, og skriv:
+**Windows:** Åpne PowerShell og skriv:
 ```powershell
 opencode
 ```
