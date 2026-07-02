@@ -13,14 +13,14 @@ For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet t
 
 ### 1a — Søk om tilgang i IdentityNow
 
-Gå til **https://myaccess.microsoft.com/** og søk om tilgang til:
+1. Gå til Gjensidiges IdentityNow-portal og klikk på **Forespørselssenter**
+2. Søk etter og be om tilgang til følgende:
 
 | Tilgangspakke | Påkrevd | Hvorfor du trenger den |
 |---------------|---------|------------------------|
-| **GitHub Team: Copilot Users** (`ROLE_AAD_GITHUB_COPILOT_USERS`) | Påkrevd | Gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode |
-| **Gjensidige: Github Enterprise** | Påkrevd | Gjør deg til medlem av Gjensidiges GitHub-organisasjon. Skriv teamnavnet ditt i «Business justification»-feltet |
-| **GitHub: Developers** | Anbefalt | Gir skrivetilgang til de fleste repoer. Skriv teamnavn og rolle i kommentarfeltet |
-| **GitHub Team: [ditt team]** | Anbefalt | Gir deg tilgang til teamets repoer. Søk opp `GitHub Team` i tilgangsportalen for å finne riktig tilgangspakke |
+| **ROLE_AAD_GITHUB_COPILOT_USERS** | Påkrevd | Gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode |
+| **PRG-github** | Påkrevd | Gir deg tilgang til Gjensidiges GitHub Enterprise-organisasjon |
+| **PRG_GITHUB_DEVELOPERS** | Anbefalt | Gir skrivetilgang til de fleste repoer |
 
 > Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
 
