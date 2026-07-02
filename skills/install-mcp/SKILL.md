@@ -284,9 +284,9 @@ Les konfig-filen og legg til de nye MCP-blokkene under `"mcp": {}`. Behold event
 
 ---
 
-## Steg 5 — Test at det virker
+## Steg 5 — Test og feilsøk til det virker
 
-Bruk disse testene etter restart:
+Ikke gå videre før hver tjeneste faktisk fungerer. Test én og én.
 
 | Tjeneste | Test |
 |----------|------|
@@ -295,11 +295,89 @@ Bruk disse testene etter restart:
 | Figma | Lim inn en Figma-URL og spør om innholdet |
 | Piwik Pro | Spør: "Vis meg en liste over nettsteder i Piwik Pro" |
 
-**Vanlige feil:**
-- `Unauthorized` → tokenet er feil eller SSO-autorisering mangler (GitHub). Generer nytt token og oppdater konfigen.
-- `MCP server not found` → OpenCode er ikke restartet.
-- macOS/Linux: tomt svar på `echo $TOKEN` → terminalen er ikke restartet, eller verdien ble ikke lagret i `~/.zshrc`.
-- `uvx not found` → `uv` er ikke installert. Se instruksjoner i Steg 2 (Piwik).
+**Viktig: hvis noe ikke fungerer, gi ikke opp — gå gjennom feilsøkingssteget under og prøv igjen.**
+
+---
+
+## Steg 6 — Feilsøking (gjør dette hvis noe ikke virker)
+
+Jobb deg gjennom disse punktene i rekkefølge. Gjør ett tiltak om gangen, test på nytt, og fortsett til det virker.
+
+### "MCP server not found" eller ingen respons
+
+1. **Har du restartet OpenCode?** OpenCode må restartes for at endringer i konfigen skal tre i kraft.
+   - Lukk OpenCode helt og åpne den på nytt
+   - Test på nytt
+
+2. **Er konfigen skrevet riktig?** Les `~/.config/opencode/opencode.jsonc` og sjekk:
+   - Finnes MCP-blokken under `"mcp": {}`?
+   - Er JSON-en gyldig (ingen manglende kommaer, feil parenteser)?
+   - Er `"enabled": true` satt?
+   - Fiks eventuelle feil og restart OpenCode på nytt
+
+### "Unauthorized" eller "403 Forbidden"
+
+**GitHub:**
+1. Er tokenet SSO-autorisert? Gå til https://github.com/settings/tokens, finn tokenet og klikk **"Configure SSO"** → **"Authorize"** ved siden av **Gjensidige**
+2. Er tokenet utløpt? Sjekk utløpsdato på https://github.com/settings/tokens — generer nytt hvis nødvendig
+3. Oppdater konfigen med nytt token og restart OpenCode
+
+**Jira:**
+1. Er e-postadressen riktig? Sjekk i Jira ved å klikke profilbildet øverst til høyre
+2. Er API-tokenet gyldig? Gå til https://id.atlassian.com/manage-profile/security/api-tokens og generer et nytt
+3. Er domenenavnet riktig? Det skal bare være det som står før `.atlassian.net` (f.eks. `gjensidige`, ikke `gjensidige.atlassian.net`)
+4. Oppdater konfigen og restart
+
+**Figma:**
+1. Er tokenet utløpt eller slettet? Gå til https://www.figma.com → Settings → Security og generer et nytt
+2. Oppdater konfigen og restart
+
+**Piwik:**
+1. Er Client ID og Client Secret korrekte? De vises bare én gang — gå til https://gjensidige.piwik.pro → My Profile → API Credentials og lag nye
+2. Oppdater konfigen og restart
+
+### macOS/Linux: token er ikke tilgjengelig i OpenCode
+
+Sjekk om tokenet er lagret i shell-miljøet:
+```bash
+echo $GITHUB_TOKEN
+```
+Hvis det er tomt:
+1. Sjekk at `~/.zshrc` inneholder `export GITHUB_TOKEN="..."` — åpne filen og se etter
+2. Kjør `source ~/.zshrc` i terminalen
+3. Restart terminalen helt (lukk og åpne nytt vindu)
+4. Restart OpenCode
+
+Bruk **bash** hvis du bruker bash i stedet for zsh:
+```bash
+echo $SHELL   # sjekk hvilken shell du bruker
+```
+Hvis outputen er `/bin/bash`, lagre i `~/.bashrc` i stedet for `~/.zshrc`.
+
+### "uvx not found" (Piwik)
+
+`uv` er ikke installert. Installer det:
+- **macOS/Linux:** `curl -LsSf https://astral.sh/uv/install.sh | sh` — restart terminalen etterpå
+- **Windows:** `powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"` — restart PowerShell etterpå
+
+Verifiser at det fungerte:
+```bash
+uvx --version
+```
+
+Restart OpenCode og test på nytt.
+
+### Windows: finner ikke uvx-stien
+
+Finn riktig sti:
+```powershell
+where.exe uvx
+```
+Kopier stien som vises og bruk den i konfigen i stedet for `C:\Users\<brukernavn>\.local\bin\uvx.exe`.
+
+### Fortsatt ikke løst?
+
+Kopier feilmeldingen du ser og lim den inn her — så feilsøker vi videre sammen. Ikke gi opp; de fleste problemer har en enkel løsning.
 
 ---
 
