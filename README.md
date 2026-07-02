@@ -78,6 +78,8 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 3. Svar `J` eller `Y` hvis du blir spurt om å bekrefte.
 
+> **Ingenting skjer etter at du limer inn?** Det er normalt — hvis det ikke dukker opp en rød feilmelding, har kommandoen fungert. Du kan gå videre til neste steg.
+
 Dette gjelder kun din bruker og krever ikke admin.
 
 #### 2b — Installer Node.js (ingen admin)
@@ -97,7 +99,7 @@ Dette gjelder kun din bruker og krever ikke admin.
 5. Velg **"Pakk ut alle..."** fra menyen som dukker opp
 6. Et vindu åpner seg. Der står det en mappe-sti. **Slett det som står der** og skriv inn:  
    `C:\Users\DITTBRUKERNAVN\nodejs`  
-   *(bytt ut `DITTBRUKERNAVN` med ditt eget brukernavn — det samme som står i adressefeltet i Filutforsker)*
+   *(bytt ut `DITTBRUKERNAVN` med brukernavnet ditt på denne PC-en — det er ofte en kortform, en kode med bokstaver og tall, eller et datamaskinnavn, ikke nødvendigvis det fulle navnet ditt. Du finner det i adressefeltet i Filutforsker når du er inne i `C:\Users\`)*
 7. Klikk **"Pakk ut"**
 8. Vent til utpakkingen er ferdig. Det åpner seg kanskje en ny mappe automatisk — det er OK.
 
@@ -163,7 +165,15 @@ npx opencode-setup
 npx opencode-setup
 ```
 
-Første gang kan det ta litt tid fordi `npx` laster ned verktøyet. Følg instruksjonene som vises. Du kan velge hvilke skills du vil installere, eller installere alle.
+Første gang vil `npx` laste ned verktøyet og spørre:
+
+```
+Need to install the following packages:
+opencode-setup@x.x.x
+Ok to proceed? (y)
+```
+
+Skriv `y` og trykk **Enter** for å fortsette. Følg instruksjonene som vises. Du kan velge hvilke skills du vil installere, eller installere alle.
 
 ---
 
