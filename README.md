@@ -258,6 +258,45 @@ Du kan også skrive direkte hva du vil gjøre:
 
 ---
 
+## Hva kan jeg gjøre nå?
+
+Her er eksempler på hva du kan spørre OpenCode om etter at MCP-ene er koblet til:
+
+### GitHub
+```
+Vis meg åpne pull requests jeg er bedt om å reviewe
+```
+```
+Lag en ny branch og opprett en PR for endringene mine
+```
+```
+Hva er status på pipeline for PR #42?
+```
+
+### Figma
+```
+[lim inn en Figma-lenke]
+```
+```
+Hva er fargene og typografien som brukes i dette designet?
+```
+```
+Lag en React-komponent basert på denne Figma-seksjonen
+```
+
+### Piwik
+```
+Hvor mange besøkende har appen vår hatt siste 7 dager?
+```
+```
+Hvilke sider har høyest bounce rate denne måneden?
+```
+```
+Sammenlign trafikk denne uken mot forrige uke
+```
+
+---
+
 ## Hva er skills?
 
 Skills er instruksjoner som hjelper OpenCode å veilede deg gjennom kompliserte oppsett steg for steg.
