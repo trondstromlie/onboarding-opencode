@@ -13,7 +13,7 @@ For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet t
 
 ### 1a — Søk om tilgang i IdentityNow
 
-1. Gå til Gjensidiges IdentityNow-portal og klikk på **Forespørselssenter**
+1. Gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**
 2. Søk etter og be om tilgang til følgende:
 
 | Tilgangspakke | Påkrevd | Hvorfor du trenger den |
