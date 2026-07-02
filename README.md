@@ -5,16 +5,45 @@ Når skills er installert, kan du be OpenCode om å sette opp GitHub, koble til 
 
 ---
 
-## Steg 1 — Søk om tilganger
+## Steg 1 — Koble GitHub-kontoen din til Gjensidige
 
-Før du gjør noe annet, må du ha disse tilgangene på plass. Søk om tilgang selv på **https://myaccess.microsoft.com/**
+> **Har du allerede tilgang til Gjensidiges GitHub-organisasjon?** Hopp videre til Steg 2.
+
+For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet til Gjensidiges organisasjon. Følg disse stegene:
+
+### 1a — Søk om tilgang i IdentityNow
+
+1. Gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**
+2. Søk etter og be om tilgang til følgende:
 
 | Tilgangspakke | Påkrevd | Hvorfor du trenger den |
 |---------------|---------|------------------------|
-| **GitHub Team: Copilot Users** (`ROLE_AAD_GITHUB_COPILOT_USERS`) | Påkrevd | Gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode |
-| **GitHub Team: [ditt team]** | Anbefalt | Gir deg tilgang til teamets repoer på GitHub. Søk opp `GitHub Team` i tilgangsportalen for å finne riktig tilgangspakke for ditt team |
+| **ROLE_AAD_GITHUB_COPILOT_USERS** | Påkrevd | Gir deg GitHub Copilot-lisens |
+| **PRG-github** | Påkrevd | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
+| **PRG_GITHUB_DEVELOPERS** | Anbefalt | Gir skrivetilgang til de fleste repoer |
 
-> Tilgangene kan ta litt tid å bli aktivert. Fortsett gjerne med installasjon mens du venter.
+> Begge de påkrevde tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode.  
+> Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
+
+### 1b — Klargjør GitHub-kontoen din
+
+Har du ikke en GitHub-konto? Opprett en på **https://github.com/signup**. Bruk gjerne jobb-e-postadressen din (`@gjensidige.no`).
+
+Har du allerede en privat GitHub-konto? Gjør dette for å koble den til Gjensidige:
+
+1. Logg inn på **https://github.com** med din private konto
+2. Gå til **Settings → Emails** og legg til `@gjensidige.no`-adressen din — verifiser den
+3. Aktiver **Two-Factor Authentication** under **Settings → Password and authentication**
+4. Fyll inn navnet ditt under **Settings → Public profile → Name** (påkrevd for å bli med i organisasjonen)
+
+### 1c — Koble til Gjensidiges organisasjon via Azure AD
+
+Når tilgangen fra 1a er godkjent:
+
+1. Gå til **https://github.com/orgs/gjensidige/sso**
+2. Logg inn med din Gjensidige-konto (Azure AD)
+
+Dette knytter din GitHub-bruker til Gjensidiges organisasjon.
 
 ---
 
@@ -191,11 +220,18 @@ opencode
 
 **Første gang du starter OpenCode** må du koble til og velge modell:
 
+**Del 1 — Koble til GitHub**
+
 1. Skriv `/connect` og trykk Enter
 2. Velg **GitHub.com Public**
 3. En boks vises med en lenke og en kode. Åpne lenken i nettleseren, lim inn koden, og godkjenn tilkoblingen
+
+**Del 2 — Velg GitHub Copilot som provider og modell**
+
+> Dette steget er viktig: OpenCode støtter mange AI-leverandører, men her på Gjensidige bruker vi **GitHub Copilot**.
+
 4. Skriv `/models` og trykk Enter
-5. Velg **GitHub Copilot** som provider
+5. Du får opp en liste over tilgjengelige providers — velg **GitHub Copilot**
 6. Velg **Claude Opus** som modell
 7. Velg **Default** når du blir spurt om variant
 
@@ -261,6 +297,15 @@ Lukk terminalen og åpne en ny, og prøv igjen.
 
 **Jeg er usikker — kan jeg bare spørre i OpenCode?**  
 Ja! Etter at du har installert skills, kan du skrive hva du trenger hjelp med og OpenCode vil veilede deg.
+
+**`/models` viser en tom liste eller jeg havner i en loop?**  
+Dette skyldes som regel at GitHub Copilot-lisensen ikke er aktivert. Sjekk følgende:
+1. Har du fått godkjent **både** `ROLE_AAD_GITHUB_COPILOT_USERS` **og** `PRG-github` i IdentityNow?  
+   Copilot-lisensen aktiveres kun når du er medlem av Gjensidiges GitHub-organisasjon — begge tilgangene må være på plass.
+2. Har du fullført SSO-koblingen i **steg 1c** (logget inn på `https://github.com/orgs/gjensidige/sso`)?  
+3. Prøv å skrive `/connect` på nytt i OpenCode og koble til på nytt.
+
+Hvis alt over er i orden og det fortsatt ikke fungerer — ta kontakt med **Trond Strøm-Lie** på Slack.
 
 ---
 
