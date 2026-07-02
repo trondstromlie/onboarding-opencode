@@ -165,7 +165,15 @@ npx opencode-setup
 npx opencode-setup
 ```
 
-Første gang kan det ta litt tid fordi `npx` laster ned verktøyet. Følg instruksjonene som vises. Du kan velge hvilke skills du vil installere, eller installere alle.
+Første gang vil `npx` laste ned verktøyet og spørre:
+
+```
+Need to install the following packages:
+opencode-setup@x.x.x
+Ok to proceed? (y)
+```
+
+Skriv `y` og trykk **Enter** for å fortsette. Følg instruksjonene som vises. Du kan velge hvilke skills du vil installere, eller installere alle.
 
 ---
 
