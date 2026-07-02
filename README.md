@@ -264,7 +264,7 @@ Her er eksempler på hva du kan spørre OpenCode om etter at MCP-ene er koblet t
 
 ### GitHub
 ```
-Lag et visuelt HTML-dashboard over hva teamet har levert siste 4 uker. Vis PRs som er merget, hvem som bidro mest, og en tidslinje over aktivitet. Bruk farger, ikoner og animasjoner — det skal se imponerende ut og gi meg som PO en umiddelbar følelse av fremdrift.
+Lag et visuelt HTML-dashboard over hva teamet har levert siste 4 uker. Vis PRs som er merget, hvem som bidro mest, og en tidslinje over aktivitet. Bruk farger, ikoner og animasjoner — det skal se imponerende ut og gi en umiddelbar følelse av fremdrift.
 ```
 ```
 Lag en interaktiv HTML-side som viser alle åpne issues i repoet vårt. Grupper dem etter tema, vis hvem som eier hva, og gi meg en tydelig status på hva som blokkerer oss. Det skal være enkelt å forstå for noen som ikke er utvikler.
