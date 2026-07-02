@@ -264,13 +264,10 @@ Her er eksempler på hva du kan spørre OpenCode om etter at MCP-ene er koblet t
 
 ### GitHub
 ```
-Vis meg åpne pull requests jeg er bedt om å reviewe
+Lag et visuelt HTML-dashboard over hva teamet har levert siste 4 uker. Vis PRs som er merget, hvem som bidro mest, og en tidslinje over aktivitet. Bruk farger, ikoner og animasjoner — det skal se imponerende ut og gi meg som PO en umiddelbar følelse av fremdrift.
 ```
 ```
-Lag en ny branch og opprett en PR for endringene mine
-```
-```
-Hva er status på pipeline for PR #42?
+Lag en interaktiv HTML-side som viser alle åpne issues i repoet vårt. Grupper dem etter tema, vis hvem som eier hva, og gi meg en tydelig status på hva som blokkerer oss. Det skal være enkelt å forstå for noen som ikke er utvikler.
 ```
 
 ### Figma
@@ -286,10 +283,10 @@ Lag en React-komponent basert på denne Figma-seksjonen
 
 ### Piwik
 ```
-Hvor mange besøkende har appen vår hatt siste 7 dager?
+Lag et imponerende interaktivt HTML-dashboard for trafikken på [URL] siste 30 dager. Vis besøkstrender som animerte grafer, topp-sider, enhetsfordeling og hvilke dager som hadde mest aktivitet. Det skal se ut som noe du ville vist frem i en presentasjon.
 ```
 ```
-Hvilke sider har høyest bounce rate denne måneden?
+Analyser brukeratferden på [URL] og lag en visuell HTML-rapport som viser hvor brukerne faller av, hvilke sider som presterer best, og hva vi bør prioritere å forbedre. Presenter det med farger og grafer — ikke bare tabeller.
 ```
 ```
 Sammenlign trafikk denne uken mot forrige uke
