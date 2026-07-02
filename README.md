@@ -5,16 +5,44 @@ Når skills er installert, kan du be OpenCode om å sette opp GitHub, koble til 
 
 ---
 
-## Steg 1 — Søk om tilganger
+## Steg 1 — Koble GitHub-kontoen din til Gjensidige
 
-Før du gjør noe annet, må du ha disse tilgangene på plass. Søk om tilgang selv på **https://myaccess.microsoft.com/**
+> **Har du allerede tilgang til Gjensidiges GitHub-organisasjon?** Hopp videre til Steg 2.
+
+For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet til Gjensidiges organisasjon. Følg disse stegene:
+
+### 1a — Søk om tilgang i IdentityNow
+
+Gå til **https://myaccess.microsoft.com/** og søk om tilgang til:
 
 | Tilgangspakke | Påkrevd | Hvorfor du trenger den |
 |---------------|---------|------------------------|
 | **GitHub Team: Copilot Users** (`ROLE_AAD_GITHUB_COPILOT_USERS`) | Påkrevd | Gir deg GitHub Copilot-lisens, som er nødvendig for å bruke OpenCode |
-| **GitHub Team: [ditt team]** | Anbefalt | Gir deg tilgang til teamets repoer på GitHub. Søk opp `GitHub Team` i tilgangsportalen for å finne riktig tilgangspakke for ditt team |
+| **Gjensidige: Github Enterprise** | Påkrevd | Gjør deg til medlem av Gjensidiges GitHub-organisasjon. Skriv teamnavnet ditt i «Business justification»-feltet |
+| **GitHub: Developers** | Anbefalt | Gir skrivetilgang til de fleste repoer. Skriv teamnavn og rolle i kommentarfeltet |
+| **GitHub Team: [ditt team]** | Anbefalt | Gir deg tilgang til teamets repoer. Søk opp `GitHub Team` i tilgangsportalen for å finne riktig tilgangspakke |
 
-> Tilgangene kan ta litt tid å bli aktivert. Fortsett gjerne med installasjon mens du venter.
+> Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
+
+### 1b — Klargjør GitHub-kontoen din
+
+Har du ikke en GitHub-konto? Opprett en på **https://github.com/signup**. Bruk gjerne jobb-e-postadressen din (`@gjensidige.no`).
+
+Har du allerede en privat GitHub-konto? Gjør dette for å koble den til Gjensidige:
+
+1. Logg inn på **https://github.com** med din private konto
+2. Gå til **Settings → Emails** og legg til `@gjensidige.no`-adressen din — verifiser den
+3. Aktiver **Two-Factor Authentication** under **Settings → Password and authentication**
+4. Fyll inn navnet ditt under **Settings → Public profile → Name** (påkrevd for å bli med i organisasjonen)
+
+### 1c — Koble til Gjensidiges organisasjon via Azure AD
+
+Når tilgangen fra 1a er godkjent:
+
+1. Gå til **https://github.com/orgs/gjensidige/sso**
+2. Logg inn med din Gjensidige-konto (Azure AD)
+
+Dette knytter din GitHub-bruker til Gjensidiges organisasjon.
 
 ---
 
@@ -191,11 +219,18 @@ opencode
 
 **Første gang du starter OpenCode** må du koble til og velge modell:
 
+**Del 1 — Koble til GitHub**
+
 1. Skriv `/connect` og trykk Enter
 2. Velg **GitHub.com Public**
 3. En boks vises med en lenke og en kode. Åpne lenken i nettleseren, lim inn koden, og godkjenn tilkoblingen
+
+**Del 2 — Velg GitHub Copilot som provider og modell**
+
+> Dette steget er viktig: OpenCode støtter mange AI-leverandører, men her på Gjensidige bruker vi **GitHub Copilot**.
+
 4. Skriv `/models` og trykk Enter
-5. Velg **GitHub Copilot** som provider
+5. Du får opp en liste over tilgjengelige providers — velg **GitHub Copilot**
 6. Velg **Claude Opus** som modell
 7. Velg **Default** når du blir spurt om variant
 
