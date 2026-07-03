@@ -17,16 +17,16 @@ Du trenger to tilganger fra to forskjellige systemer:
 
 **1. MyAccess** — gå til **https://myaccess.microsoft.com**
 
-| Tilgangspakke | Hvorfor du trenger den |
-|---------------|------------------------|
-| **ROLE_AAD_GITHUB_COPILOT_USERS** | Gir deg GitHub Copilot-lisens |
+| Tilgangspakke | Påkrevd | Hvorfor du trenger den |
+|---------------|---------|------------------------|
+| **ROLE_AAD_GITHUB_COPILOT_USERS** | Påkrevd | Gir deg GitHub Copilot-lisens |
 
 **2. IdentityNow** — gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**
 
-| Tilgangspakke | Hvorfor du trenger den |
-|---------------|------------------------|
-| **GitHub Enterprise** | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
-| **PRG_GITHUB_DEVELOPERS** | Gir skrivetilgang til de fleste repoer (anbefalt) |
+| Tilgangspakke | Påkrevd | Hvorfor du trenger den |
+|---------------|---------|------------------------|
+| **GitHub Enterprise** | Påkrevd | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
+| **PRG_GITHUB_DEVELOPERS** | Anbefalt | Gir skrivetilgang til de fleste repoer |
 
 > Begge de påkrevde tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode.  
 > Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
