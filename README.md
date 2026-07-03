@@ -94,6 +94,50 @@ Eller last ned fra: https://opencode.ai
 > **Merk:** Disse instruksjonene er laget for Windows-brukere uten administratortilgang.  
 > Alt installeres i din egen brukerprofil — ingen admin-rettigheter nødvendig.
 
+#### Prøv dette først — automatisk installasjon (enklest)
+
+**Del 1 — Last ned filen**
+
+1. Klikk på denne lenken for å laste ned:  
+   **[Last ned opencode-setup-windows.zip](https://github.com/trondstromlie/onboarding-opencode/releases/latest/download/opencode-setup-windows.zip)**
+2. Nettleseren spør kanskje om du vil beholde filen. Klikk **"Behold"** eller **"Keep"** hvis det dukker opp.
+3. Filen lastes ned til **Nedlastinger**-mappen din. Vent til den er ferdig — det tar noen sekunder.
+
+**Del 2 — Pakk ut filen**
+
+En ZIP-fil er som en konvolutt med innhold inni. Du må åpne konvolutten før du kan bruke innholdet.
+
+1. Trykk på mappeikonet nede på oppgavelinjen (eller trykk **Windows-tast + E**) for å åpne Filutforsker
+2. Klikk på **"Nedlastinger"** i menyen til venstre
+3. Du skal se en fil som heter **`opencode-setup-windows.zip`** — den har et glidelåsikon på seg
+4. **Høyreklikk** på filen (trykk på høyre museknapp)
+5. Velg **"Pakk ut alle..."** fra menyen som dukker opp  
+   *(På engelsk: "Extract All...")*
+6. Et lite vindu åpner seg. Klikk bare på **"Pakk ut"** — du trenger ikke endre noe
+7. En ny mappe åpner seg automatisk med innholdet
+
+**Del 3 — Kjør installasjonen**
+
+Inne i mappen som åpnet seg skal du se en fil som heter **`installer.bat`**.
+
+1. **Dobbeltklikk** på **`installer.bat`**
+
+> **Får du en blå eller gul advarsel fra Windows?**  
+> Windows viser av og til en advarsel når du kjører filer lastet ned fra internett. Dette er normalt.  
+> - Ser du **"Windows beskyttet PC-en din"** (blå boks)? Klikk **"Mer informasjon"** og deretter **"Kjør likevel"**  
+> - Ser du en gul boks som spør om tillatelse? Klikk **"Ja"**
+
+2. Et svart vindu åpner seg og viser hva som skjer. **Ikke lukk dette vinduet** — det jobber i bakgrunnen.
+3. Du ser tekst rulle nedover. Det er normalt. Vent til det stopper og du ser **"Ferdig!"**
+4. Nettleseren din åpner seg automatisk med neste steg.
+
+---
+
+> **Fungerte ikke den automatiske installasjonen?** Følg den manuelle fremgangsmåten under.
+
+<details>
+<summary><strong>Manuell installasjon (backup)</strong></summary>
+
 #### 2a — Tillat kjøring av scripts i PowerShell
 
 Windows blokkerer som standard kjøring av scripts. Dette må gjøres én gang.
@@ -179,6 +223,8 @@ npm install -g opencode-ai
 ```
 
 Vent til installasjonen er ferdig. Du skal se at pakken lastes ned og installeres.
+
+</details>
 
 ---
 
