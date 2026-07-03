@@ -127,8 +127,9 @@ Inne i mappen som åpnet seg skal du se en fil som heter **`installer.bat`**.
 > - Gul boks: Klikk **"Ja"**
 
 2. Et svart vindu åpner seg og viser hva som skjer. **Ikke lukk dette vinduet** — det jobber i bakgrunnen.
-3. Du ser tekst rulle nedover. Det er normalt. Vent til det stopper og du ser **"Ferdig!"**
-4. Nettleseren din åpner seg automatisk med neste steg.
+3. Installasjonen laster ned flere pakker og **kan ta 5–10 minutter** avhengig av internettforbindelsen. Du ser fremgang underveis.
+4. Vent til det stopper og du ser **"Ferdig!"**
+5. Nettleseren din åpner seg automatisk med neste steg.
 
 ---
 
