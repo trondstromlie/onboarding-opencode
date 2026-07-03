@@ -230,12 +230,14 @@ Vent til installasjonen er ferdig. Du skal se at pakken lastes ned og installere
 
 ## Steg 3 — Installer skills
 
+> **Brukte du den automatiske installasjonen (ZIP-filen) på Windows?** Skills ble allerede installert automatisk — hopp videre til Steg 4.
+
 **Mac:**
 ```
 npx opencode-setup
 ```
 
-**Windows (PowerShell):**
+**Windows (manuell installasjon):**
 ```powershell
 npx opencode-setup
 ```
