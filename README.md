@@ -122,10 +122,13 @@ Inne i mappen som åpnet seg skal du se en fil som heter **`installer.bat`**.
 
 1. **Dobbeltklikk** på **`installer.bat`**
 
-> **Får du en blå eller gul advarsel fra Windows?**  
-> Windows viser av og til en advarsel når du kjører filer lastet ned fra internett. Dette er normalt.  
-> - Ser du **"Windows beskyttet PC-en din"** (blå boks)? Klikk **"Mer informasjon"** og deretter **"Kjør likevel"**  
-> - Ser du en gul boks som spør om tillatelse? Klikk **"Ja"**
+> **Får du en advarsel fra Windows?**  
+> Windows viser automatisk en advarsel for alle filer lastet ned fra internett — det betyr ikke at filen er farlig, bare at Windows ikke kjenner den igjen.  
+> Scriptet er trygt å kjøre og laster kun ned kjente verktøy fra offisielle kilder (nodejs.org, github.com, microsoft.com).
+>
+> - Ser du en **blå boks** med teksten "Windows beskyttet PC-en din"?  
+>   Klikk **"Mer informasjon"** (liten tekst nederst til venstre i boksen) — da dukker knappen **"Kjør likevel"** opp. Klikk den.
+> - Ser du en **gul boks** som spør om tillatelse? Klikk **"Ja"**
 
 2. Et svart vindu åpner seg og viser hva som skjer. **Ikke lukk dette vinduet** — det jobber i bakgrunnen.
 3. Du ser tekst rulle nedover. Det er normalt. Vent til det stopper og du ser **"Ferdig!"**
