@@ -36,7 +36,7 @@ Write-Host "                     #####   #######        ############            
 Write-Host "                        -#   #######        #########                        " -ForegroundColor White
 Write-Host "                              +#####         ++                              " -ForegroundColor White
 Write-Host ""
-Write-Host "  Gjensidige Hackathon -- Oppsett av utviklingsverktoey" -ForegroundColor White
+Write-Host "  Legger inn nodvendige pakker for OpenCode..." -ForegroundColor White
 Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
 Write-Host ""
 Start-Sleep -Seconds 1
