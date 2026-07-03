@@ -206,7 +206,7 @@ try {
 
 # ── [3/6] GitHub CLI ──────────────────────────────────────────────────────────
 Invoke-Download $GhUrl "$TempDir\gh.zip" "GitHub CLI $GhVersion"
-Expand-AndMove "$TempDir\gh.zip" $GhDir "GitHub CLI" "gh_*"
+Expand-AndMove "$TempDir\gh.zip" $GhDir "GitHub CLI"
 
 Add-ToUserPath "$GhDir\bin"
 $env:Path = "$env:Path;$GhDir\bin"
