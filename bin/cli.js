@@ -161,16 +161,6 @@ async function main() {
 
   let selected = SKILLS;
 
-  if (!isNonInteractive) {
-    const rl = createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-
-    selected = await selectSkills(rl);
-    rl.close();
-  }
-
   if (selected.length === 0) {
     log("\nIngen skills valgt. Avslutter.");
     process.exit(0);
