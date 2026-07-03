@@ -85,13 +85,21 @@ function Add-ToUserPath($newPath) {
     }
 }
 
+function Show-ProgressBar($current, $total, $width = 40) {
+    $pct     = if ($total -gt 0) { [math]::Min([int]($current * $width / $total), $width) } else { 0 }
+    $pctNum  = if ($total -gt 0) { [math]::Min([int]($current * 100 / $total), 100) } else { 0 }
+    $bar     = "=" * [math]::Max($pct - 1, 0)
+    $arrow   = if ($pct -gt 0 -and $pct -lt $width) { ">" } else { "=" }
+    $empty   = " " * ($width - $pct)
+    Write-Host "`r      [$bar$arrow$empty] $pctNum% ($current/$total MB)   " -NoNewline -ForegroundColor Cyan
+}
+
 function Invoke-Download($url, $outFile, $navn) {
     Write-Step "Laster ned $navn..."
     try {
-        # Hent filstorrelse
         $totalMB = 0
         try {
-            $head = Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing
+            $head  = Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing
             $bytes = [int]$head.Headers["Content-Length"]
             $totalMB = [math]::Round($bytes / 1MB, 0)
         } catch {}
@@ -99,30 +107,31 @@ function Invoke-Download($url, $outFile, $navn) {
         if ($totalMB -gt 0) {
             Write-Host "      Storrelse: ca. $totalMB MB" -ForegroundColor DarkGray
         }
-        Write-Host "      Laster ned" -ForegroundColor DarkGray -NoNewline
 
-        # Last ned i bakgrunnen og vis punkter underveis
         $job = Start-Job -ScriptBlock {
             param($u, $o)
             $ProgressPreference = "SilentlyContinue"
             Invoke-WebRequest -Uri $u -OutFile $o -UseBasicParsing
         } -ArgumentList $url, $outFile
 
+        $spinner = @("|", "/", "-", "\")
+        $si = 0
         while ($job.State -eq "Running") {
-            Write-Host "." -NoNewline -ForegroundColor DarkGray
-            Start-Sleep -Seconds 1
-
-            # Vis hvor mye er lastet ned
             if ((Test-Path $outFile) -and $totalMB -gt 0) {
                 $downloadedMB = [math]::Round((Get-Item $outFile).Length / 1MB, 0)
-                Write-Host " $downloadedMB/$totalMB MB" -NoNewline -ForegroundColor DarkGray
+                Show-ProgressBar $downloadedMB $totalMB
+            } else {
+                Write-Host "`r      $($spinner[$si % 4]) Laster ned...   " -NoNewline -ForegroundColor DarkGray
+                $si++
             }
+            Start-Sleep -Milliseconds 300
         }
 
         Receive-Job $job -ErrorAction Stop | Out-Null
         Remove-Job $job
 
-        Write-Host "" # ny linje etter punktene
+        if ($totalMB -gt 0) { Show-ProgressBar $totalMB $totalMB }
+        Write-Host ""
         Write-Ok "Nedlasting fullfort"
     } catch {
         Write-Host ""
@@ -136,36 +145,56 @@ function Invoke-Download($url, $outFile, $navn) {
 }
 
 function Expand-AndMove($zipPath, $destDir, $navn, $innerDirPattern = $null) {
-    Write-Step "Installerer $navn..."
-    try {
-        $extractTemp = "$TempDir\extract-$navn"
-        Expand-Archive -Path $zipPath -DestinationPath $extractTemp -Force
+    Write-Step "Pakker ut $navn..."
 
-        if ($innerDirPattern) {
-            $inner = Get-ChildItem $extractTemp -Directory | Where-Object { $_.Name -like $innerDirPattern } | Select-Object -First 1
-            if (-not $inner) { throw "Fant ikke mappe som matcher '$innerDirPattern' etter utpakking" }
+    $job = Start-Job -ScriptBlock {
+        param($zip, $destDir, $inner)
+        $extractTemp = $destDir + "-extract"
+        Expand-Archive -Path $zip -DestinationPath $extractTemp -Force
+        if ($inner) {
+            $match = Get-ChildItem $extractTemp -Directory | Where-Object { $_.Name -like $inner } | Select-Object -First 1
+            if (-not $match) { throw "Fant ikke mappe som matcher '$inner' etter utpakking" }
             if (Test-Path $destDir) { Remove-Item $destDir -Recurse -Force }
-            Move-Item $inner.FullName $destDir
+            Move-Item $match.FullName $destDir
         } else {
             if (Test-Path $destDir) { Remove-Item $destDir -Recurse -Force }
             Move-Item $extractTemp $destDir
         }
-        Write-Ok "$navn er installert"
+    } -ArgumentList $zipPath, $destDir, $innerDirPattern
+
+    $spinner = @("|", "/", "-", "\")
+    $si = 0
+    while ($job.State -eq "Running") {
+        Write-Host "`r      $($spinner[$si % 4]) Pakker ut...   " -NoNewline -ForegroundColor DarkGray
+        $si++
+        Start-Sleep -Milliseconds 200
+    }
+
+    try {
+        Receive-Job $job -ErrorAction Stop | Out-Null
     } catch {
-        Write-Fail "Klarte ikke installere $navn`: $_"
+        Remove-Job $job
         Write-Host ""
+        Write-Fail "Klarte ikke pakke ut $navn`: $_"
         Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
         Read-Host "  Trykk Enter for a lukke"
         exit 1
     }
+    Remove-Job $job
+    Write-Host "`r      [========================================] 100%              " -ForegroundColor Cyan
+    Write-Ok "$navn er installert"
 }
 
 # ── klargjør mapper ───────────────────────────────────────────────────────────
 New-Item -ItemType Directory -Force -Path $ToolsDir, $TempDir | Out-Null
 
 # ── [1/6] Node.js ─────────────────────────────────────────────────────────────
-Invoke-Download $NodeUrl "$TempDir\node.zip" "Node.js $NodeVersion"
-Expand-AndMove "$TempDir\node.zip" $NodeDir "Node.js" "node-*"
+if (Test-Path "$NodeDir\node.exe") {
+    Write-Step "Node.js er allerede installert -- hopper over"
+} else {
+    Invoke-Download $NodeUrl "$TempDir\node.zip" "Node.js $NodeVersion"
+    Expand-AndMove "$TempDir\node.zip" $NodeDir "Node.js" "node-*"
+}
 
 Add-ToUserPath $NodeDir
 $npmGlobal = "$env:APPDATA\npm"
@@ -187,8 +216,12 @@ try {
 }
 
 # ── [2/6] Git ─────────────────────────────────────────────────────────────────
-Invoke-Download $GitUrl "$TempDir\git.zip" "Git $GitVersion"
-Expand-AndMove "$TempDir\git.zip" $GitDir "Git"
+if (Test-Path "$GitDir\cmd\git.exe") {
+    Write-Step "Git er allerede installert -- hopper over"
+} else {
+    Invoke-Download $GitUrl "$TempDir\git.zip" "Git $GitVersion"
+    Expand-AndMove "$TempDir\git.zip" $GitDir "Git"
+}
 
 Add-ToUserPath "$GitDir\cmd"
 Add-ToUserPath "$GitDir\bin"
@@ -205,8 +238,12 @@ try {
 }
 
 # ── [3/6] GitHub CLI ──────────────────────────────────────────────────────────
-Invoke-Download $GhUrl "$TempDir\gh.zip" "GitHub CLI $GhVersion"
-Expand-AndMove "$TempDir\gh.zip" $GhDir "GitHub CLI"
+if (Test-Path "$GhDir\bin\gh.exe") {
+    Write-Step "GitHub CLI er allerede installert -- hopper over"
+} else {
+    Invoke-Download $GhUrl "$TempDir\gh.zip" "GitHub CLI $GhVersion"
+    Expand-AndMove "$TempDir\gh.zip" $GhDir "GitHub CLI"
+}
 
 Add-ToUserPath "$GhDir\bin"
 $env:Path = "$env:Path;$GhDir\bin"
@@ -222,14 +259,18 @@ try {
 }
 
 # ── [4/6] Azure CLI ───────────────────────────────────────────────────────────
-Invoke-Download $AzCliUrl "$TempDir\azcli.zip" "Azure CLI $AzCliVersion"
-Expand-AndMove "$TempDir\azcli.zip" $AzCliDir "Azure CLI"
+if (Test-Path "$AzCliDir\bin\az.cmd") {
+    Write-Step "Azure CLI er allerede installert -- hopper over"
+} else {
+    Invoke-Download $AzCliUrl "$TempDir\azcli.zip" "Azure CLI $AzCliVersion"
+    Expand-AndMove "$TempDir\azcli.zip" $AzCliDir "Azure CLI"
 
-if (-not (Test-Path "$AzCliDir\bin\az.cmd")) {
-    Write-Fail "Fant ikke az.cmd etter utpakking av Azure CLI"
-    Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
-    Read-Host "  Trykk Enter for a lukke"
-    exit 1
+    if (-not (Test-Path "$AzCliDir\bin\az.cmd")) {
+        Write-Fail "Fant ikke az.cmd etter utpakking av Azure CLI"
+        Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
+        Read-Host "  Trykk Enter for a lukke"
+        exit 1
+    }
 }
 
 Add-ToUserPath "$AzCliDir\bin"
@@ -246,15 +287,20 @@ try {
 }
 
 # ── [5/6] opencode ────────────────────────────────────────────────────────────
-Write-Step "Installerer OpenCode..."
-try {
-    & "$NodeDir\npm.cmd" install -g opencode-ai
-    Write-Ok "OpenCode er installert"
-} catch {
-    Write-Fail "Klarte ikke installere OpenCode: $_"
-    Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
-    Read-Host "  Trykk Enter for a lukke"
-    exit 1
+$opencodeExe = "$npmGlobal\opencode.cmd"
+if (Test-Path $opencodeExe) {
+    Write-Step "OpenCode er allerede installert -- hopper over"
+} else {
+    Write-Step "Installerer OpenCode..."
+    try {
+        & "$NodeDir\npm.cmd" install -g opencode-ai
+        Write-Ok "OpenCode er installert"
+    } catch {
+        Write-Fail "Klarte ikke installere OpenCode: $_"
+        Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
+        Read-Host "  Trykk Enter for a lukke"
+        exit 1
+    }
 }
 
 # ── [6/6] skills ──────────────────────────────────────────────────────────────
