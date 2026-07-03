@@ -11,16 +11,22 @@ Når skills er installert, kan du be OpenCode om å sette opp GitHub, koble til 
 
 For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet til Gjensidiges organisasjon. Følg disse stegene:
 
-### 1a — Søk om tilgang i IdentityNow
+### 1a — Søk om tilgang
 
-1. Gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**
-2. Søk etter og be om tilgang til følgende:
+Du trenger to tilganger fra to forskjellige systemer:
 
-| Tilgangspakke | Påkrevd | Hvorfor du trenger den |
-|---------------|---------|------------------------|
-| **ROLE_AAD_GITHUB_COPILOT_USERS** | Påkrevd | Gir deg GitHub Copilot-lisens |
-| **PRG-github** | Påkrevd | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
-| **PRG_GITHUB_DEVELOPERS** | Anbefalt | Gir skrivetilgang til de fleste repoer |
+**1. MyAccess** — gå til **https://myaccess.microsoft.com**
+
+| Tilgangspakke | Hvorfor du trenger den |
+|---------------|------------------------|
+| **ROLE_AAD_GITHUB_COPILOT_USERS** | Gir deg GitHub Copilot-lisens |
+
+**2. IdentityNow** — gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**
+
+| Tilgangspakke | Hvorfor du trenger den |
+|---------------|------------------------|
+| **GitHub Enterprise** | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
+| **PRG_GITHUB_DEVELOPERS** | Gir skrivetilgang til de fleste repoer (anbefalt) |
 
 > Begge de påkrevde tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode.  
 > Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
@@ -384,7 +390,7 @@ Ja! Etter at du har installert skills, kan du skrive hva du trenger hjelp med og
 
 **`/models` viser en tom liste eller jeg havner i en loop?**  
 Dette skyldes som regel at GitHub Copilot-lisensen ikke er aktivert. Sjekk følgende:
-1. Har du fått godkjent **både** `ROLE_AAD_GITHUB_COPILOT_USERS` **og** `PRG-github` i IdentityNow?  
+1. Har du fått godkjent **`ROLE_AAD_GITHUB_COPILOT_USERS`** i MyAccess **og** **`GitHub Enterprise`** i IdentityNow?  
    Copilot-lisensen aktiveres kun når du er medlem av Gjensidiges GitHub-organisasjon — begge tilgangene må være på plass.
 2. Har du fullført SSO-koblingen i **steg 1c** (logget inn på `https://github.com/orgs/gjensidige/sso`)?  
 3. Prøv å skrive `/connect` på nytt i OpenCode og koble til på nytt.
