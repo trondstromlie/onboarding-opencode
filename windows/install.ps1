@@ -36,7 +36,7 @@ Write-Host "                     #####   #######        ############            
 Write-Host "                        -#   #######        #########                        " -ForegroundColor White
 Write-Host "                              +#####         ++                              " -ForegroundColor White
 Write-Host ""
-Write-Host "  Legger inn nodvendige pakker for OpenCode..." -ForegroundColor White
+Write-Host "  Gjor meg klar til a installere pakker for deg..." -ForegroundColor White
 Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
 Write-Host ""
 Start-Sleep -Seconds 1
@@ -58,7 +58,7 @@ $GhDir     = "$ToolsDir\gh"
 $AzCliDir  = "$ToolsDir\azcli"
 $GitDir    = "$ToolsDir\git"
 $TempDir   = "$env:TEMP\opencode-install"
-$ReadmeUrl = "https://github.com/trondstromlie/onboarding-opencode#steg-3--installer-skills"
+$ReadmeUrl = "https://github.com/trondstromlie/onboarding-opencode#steg-4--start-opencode"
 
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
@@ -315,7 +315,9 @@ Write-Host "    - OpenCode" -ForegroundColor Green
 Write-Host "    - OpenCode skills" -ForegroundColor Green
 Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
 Write-Host ""
-Write-Host "  Nettleseren apner neste steg automatisk..." -ForegroundColor White
+Write-Host "  Vent litt mens jeg fullforer..." -ForegroundColor White
+Start-Sleep -Seconds 3
+Write-Host "  Sender deg tilbake til oppskriften..." -ForegroundColor White
 Write-Host ""
 Start-Sleep -Seconds 2
 Start-Process $ReadmeUrl
