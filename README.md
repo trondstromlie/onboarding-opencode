@@ -94,6 +94,24 @@ Eller last ned fra: https://opencode.ai
 > **Merk:** Disse instruksjonene er laget for Windows-brukere uten administratortilgang.  
 > Alt installeres i din egen brukerprofil — ingen admin-rettigheter nødvendig.
 
+#### Prøv dette først — automatisk installasjon (enklest)
+
+1. Last ned ZIP-filen: **[Last ned opencode-setup-windows.zip](https://github.com/gjensidige/opencode-setup/releases/latest/download/opencode-setup-windows.zip)**
+2. Åpne **Nedlastinger**-mappen, høyreklikk på ZIP-filen og velg **"Pakk ut alle..."**
+3. Åpne mappen som ble pakket ut
+4. Dobbeltklikk på **`installer.bat`**
+5. Et svart vindu åpner seg og installerer alt automatisk. Ikke lukk det.
+6. Når det er ferdig åpnes nettleseren din automatisk med neste steg.
+
+> **Fikk du en advarsel fra Windows om at filen er ukjent?** Klikk **"Mer informasjon"** og deretter **"Kjør likevel"**. Dette er normalt for scripts som ikke er signert.
+
+---
+
+> **Fungerte ikke den automatiske installasjonen?** Følg den manuelle fremgangsmåten under.
+
+<details>
+<summary><strong>Manuell installasjon (backup)</strong></summary>
+
 #### 2a — Tillat kjøring av scripts i PowerShell
 
 Windows blokkerer som standard kjøring av scripts. Dette må gjøres én gang.
@@ -179,6 +197,8 @@ npm install -g opencode-ai
 ```
 
 Vent til installasjonen er ferdig. Du skal se at pakken lastes ned og installeres.
+
+</details>
 
 ---
 
