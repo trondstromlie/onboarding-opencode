@@ -149,8 +149,10 @@ function Expand-AndMove($zipPath, $destDir, $navn, $innerDirPattern = $null) {
 
     $job = Start-Job -ScriptBlock {
         param($zip, $destDir, $inner)
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
         $extractTemp = $destDir + "-extract"
-        Expand-Archive -Path $zip -DestinationPath $extractTemp -Force
+        if (Test-Path $extractTemp) { Remove-Item $extractTemp -Recurse -Force }
+        [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $extractTemp)
         if ($inner) {
             $match = Get-ChildItem $extractTemp -Directory | Where-Object { $_.Name -like $inner } | Select-Object -First 1
             if (-not $match) { throw "Fant ikke mappe som matcher '$inner' etter utpakking" }
