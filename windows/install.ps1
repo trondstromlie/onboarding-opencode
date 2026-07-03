@@ -189,8 +189,12 @@ function Expand-AndMove($zipPath, $destDir, $navn, $innerDirPattern = $null) {
 New-Item -ItemType Directory -Force -Path $ToolsDir, $TempDir | Out-Null
 
 # ── [1/6] Node.js ─────────────────────────────────────────────────────────────
-Invoke-Download $NodeUrl "$TempDir\node.zip" "Node.js $NodeVersion"
-Expand-AndMove "$TempDir\node.zip" $NodeDir "Node.js" "node-*"
+if (Test-Path "$NodeDir\node.exe") {
+    Write-Step "Node.js er allerede installert -- hopper over"
+} else {
+    Invoke-Download $NodeUrl "$TempDir\node.zip" "Node.js $NodeVersion"
+    Expand-AndMove "$TempDir\node.zip" $NodeDir "Node.js" "node-*"
+}
 
 Add-ToUserPath $NodeDir
 $npmGlobal = "$env:APPDATA\npm"
@@ -212,8 +216,12 @@ try {
 }
 
 # ── [2/6] Git ─────────────────────────────────────────────────────────────────
-Invoke-Download $GitUrl "$TempDir\git.zip" "Git $GitVersion"
-Expand-AndMove "$TempDir\git.zip" $GitDir "Git"
+if (Test-Path "$GitDir\cmd\git.exe") {
+    Write-Step "Git er allerede installert -- hopper over"
+} else {
+    Invoke-Download $GitUrl "$TempDir\git.zip" "Git $GitVersion"
+    Expand-AndMove "$TempDir\git.zip" $GitDir "Git"
+}
 
 Add-ToUserPath "$GitDir\cmd"
 Add-ToUserPath "$GitDir\bin"
@@ -230,8 +238,12 @@ try {
 }
 
 # ── [3/6] GitHub CLI ──────────────────────────────────────────────────────────
-Invoke-Download $GhUrl "$TempDir\gh.zip" "GitHub CLI $GhVersion"
-Expand-AndMove "$TempDir\gh.zip" $GhDir "GitHub CLI"
+if (Test-Path "$GhDir\bin\gh.exe") {
+    Write-Step "GitHub CLI er allerede installert -- hopper over"
+} else {
+    Invoke-Download $GhUrl "$TempDir\gh.zip" "GitHub CLI $GhVersion"
+    Expand-AndMove "$TempDir\gh.zip" $GhDir "GitHub CLI"
+}
 
 Add-ToUserPath "$GhDir\bin"
 $env:Path = "$env:Path;$GhDir\bin"
@@ -247,14 +259,18 @@ try {
 }
 
 # ── [4/6] Azure CLI ───────────────────────────────────────────────────────────
-Invoke-Download $AzCliUrl "$TempDir\azcli.zip" "Azure CLI $AzCliVersion"
-Expand-AndMove "$TempDir\azcli.zip" $AzCliDir "Azure CLI"
+if (Test-Path "$AzCliDir\bin\az.cmd") {
+    Write-Step "Azure CLI er allerede installert -- hopper over"
+} else {
+    Invoke-Download $AzCliUrl "$TempDir\azcli.zip" "Azure CLI $AzCliVersion"
+    Expand-AndMove "$TempDir\azcli.zip" $AzCliDir "Azure CLI"
 
-if (-not (Test-Path "$AzCliDir\bin\az.cmd")) {
-    Write-Fail "Fant ikke az.cmd etter utpakking av Azure CLI"
-    Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
-    Read-Host "  Trykk Enter for a lukke"
-    exit 1
+    if (-not (Test-Path "$AzCliDir\bin\az.cmd")) {
+        Write-Fail "Fant ikke az.cmd etter utpakking av Azure CLI"
+        Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
+        Read-Host "  Trykk Enter for a lukke"
+        exit 1
+    }
 }
 
 Add-ToUserPath "$AzCliDir\bin"
@@ -271,15 +287,20 @@ try {
 }
 
 # ── [5/6] opencode ────────────────────────────────────────────────────────────
-Write-Step "Installerer OpenCode..."
-try {
-    & "$NodeDir\npm.cmd" install -g opencode-ai
-    Write-Ok "OpenCode er installert"
-} catch {
-    Write-Fail "Klarte ikke installere OpenCode: $_"
-    Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
-    Read-Host "  Trykk Enter for a lukke"
-    exit 1
+$opencodeExe = "$npmGlobal\opencode.cmd"
+if (Test-Path $opencodeExe) {
+    Write-Step "OpenCode er allerede installert -- hopper over"
+} else {
+    Write-Step "Installerer OpenCode..."
+    try {
+        & "$NodeDir\npm.cmd" install -g opencode-ai
+        Write-Ok "OpenCode er installert"
+    } catch {
+        Write-Fail "Klarte ikke installere OpenCode: $_"
+        Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
+        Read-Host "  Trykk Enter for a lukke"
+        exit 1
+    }
 }
 
 # ── [6/6] skills ──────────────────────────────────────────────────────────────
