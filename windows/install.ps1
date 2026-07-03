@@ -1,3 +1,67 @@
+# ── logo ──────────────────────────────────────────────────────────────────────
+Clear-Host
+Write-Host ""
+Write-Host "                              .###############-                              " -ForegroundColor White
+Write-Host "                         +##########################-                        " -ForegroundColor White
+Write-Host "                     +#  +##############################                     " -ForegroundColor White
+Write-Host "                  .####  -################################-                  " -ForegroundColor White
+Write-Host "                #######  .###################################                " -ForegroundColor White
+Write-Host "              +########   ############+      -#################              " -ForegroundColor White
+Write-Host "             ##########   ############        ##################.            " -ForegroundColor White
+Write-Host "           +###########   ############        ####################           " -ForegroundColor White
+Write-Host "          #############   ###########         +####################          " -ForegroundColor White
+Write-Host "         ##############.  ##########-         +#####################         " -ForegroundColor White
+Write-Host "        +##############.  #######               -####################        " -ForegroundColor White
+Write-Host "        ###############    -###                   ####################       " -ForegroundColor White
+Write-Host "       ###############+     ++                     ###################       " -ForegroundColor White
+Write-Host "      +###############+                             ###################      " -ForegroundColor White
+Write-Host "      #################           +                 ###################      " -ForegroundColor White
+Write-Host "      ##################        -##                  ##################.     " -ForegroundColor White
+Write-Host "      ##################   ##+#####                   #################-     " -ForegroundColor White
+Write-Host "      ##################   ######+              .      ################-     " -ForegroundColor White
+Write-Host "      ##################   ######                      ################.     " -ForegroundColor White
+Write-Host "      ##################.  ######                #+    ################      " -ForegroundColor White
+Write-Host "      ##################+  -####                 -#     ###############      " -ForegroundColor White
+Write-Host "       ##################   ####                  #-   +##############       " -ForegroundColor White
+Write-Host "       .#################   ####                        +#############       " -ForegroundColor White
+Write-Host "        +################   ###-                    #    ############        " -ForegroundColor White
+Write-Host "         ################   ###                   -   #  ###########         " -ForegroundColor White
+Write-Host "          ###############   ###                       -  ##########          " -ForegroundColor White
+Write-Host "           ##############   ###                          #########           " -ForegroundColor White
+Write-Host "             ############+  +##                    -############-            " -ForegroundColor White
+Write-Host "              ############  .#####-             .+#############              " -ForegroundColor White
+Write-Host "                ##########   ######            ##############                " -ForegroundColor White
+Write-Host "                  -#######   ######+          #############                  " -ForegroundColor White
+Write-Host "                     #####   #######        ############                     " -ForegroundColor White
+Write-Host "                        -#   #######        #########                        " -ForegroundColor White
+Write-Host "                              +#####         ++                              " -ForegroundColor White
+Write-Host ""
+Write-Host "   ██████  ███    ██ ██████   ██████   █████  ██████  ██████  ██ ███    ██  ██████  " -ForegroundColor Blue
+Write-Host "  ██    ██ ████   ██ ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ ██ ████   ██ ██       " -ForegroundColor Blue
+Write-Host "  ██    ██ ██ ██  ██ ██████  ██    ██ ███████ ██████  ██   ██ ██ ██ ██  ██ ██   ███ " -ForegroundColor Blue
+Write-Host "  ██    ██ ██  ██ ██ ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ ██ ██  ██ ██ ██    ██ " -ForegroundColor Blue
+Write-Host "   ██████  ██   ████ ██████   ██████  ██   ██ ██   ██ ██████  ██ ██   ████  ██████  " -ForegroundColor Blue
+Write-Host ""
+Write-Host "  ██████  ██   ██  ██████  ██████  ██      ███████      " -ForegroundColor Cyan
+Write-Host "  ██      ██  ██  ██  ██   ██      ██      ██           " -ForegroundColor Cyan
+Write-Host "  ███████ █████   ██  ██   ██████  ██      ███████      " -ForegroundColor Cyan
+Write-Host "       ██ ██  ██  ██  ██   ██      ██           ██      " -ForegroundColor Cyan
+Write-Host "  ███████ ██   ██  ██████  ██████  ███████ ███████      " -ForegroundColor Cyan
+Write-Host ""
+Write-Host "  ██      ███████  ██████  ██████  ███████ ██████       " -ForegroundColor Cyan
+Write-Host "  ██      ██      ██      ██       ██      ██   ██      " -ForegroundColor Cyan
+Write-Host "  ██      █████   ██  ███ ██  ███  █████   ██████       " -ForegroundColor Cyan
+Write-Host "  ██      ██      ██   ██ ██   ██  ██      ██   ██      " -ForegroundColor Cyan
+Write-Host "  ███████ ███████  ██████  ██████  ███████ ██   ██      " -ForegroundColor Cyan
+Write-Host ""
+Write-Host "  ██████   █████  ██   ██ ██   ██ ███████ ████████  ███████ ██████  " -ForegroundColor Cyan
+Write-Host "  ██   ██ ██   ██ ██  ██  ██  ██  ██         ██     ██      ██   ██ " -ForegroundColor Cyan
+Write-Host "  ██████  ███████ █████   █████   █████      ██     █████   ██████  " -ForegroundColor Cyan
+Write-Host "  ██      ██   ██ ██  ██  ██  ██  ██         ██     ██      ██   ██ " -ForegroundColor Cyan
+Write-Host "  ██      ██   ██ ██   ██ ██   ██ ███████    ██     ███████ ██   ██ " -ForegroundColor Cyan
+Write-Host ""
+Start-Sleep -Seconds 1
+
 # ── konfig ────────────────────────────────────────────────────────────────────
 $NodeVersion  = "24.18.0"
 $GhVersion    = "2.96.0"
