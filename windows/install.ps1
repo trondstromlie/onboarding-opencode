@@ -36,7 +36,7 @@ Write-Host "                     #####   #######        ############            
 Write-Host "                        -#   #######        #########                        " -ForegroundColor White
 Write-Host "                              +#####         ++                              " -ForegroundColor White
 Write-Host ""
-Write-Host "  Gjensidige Hackathon -- Oppsett av utviklingsverktoey" -ForegroundColor White
+Write-Host "  Legger inn nodvendige pakker for OpenCode..." -ForegroundColor White
 Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
 Write-Host ""
 Start-Sleep -Seconds 1
@@ -88,9 +88,44 @@ function Add-ToUserPath($newPath) {
 function Invoke-Download($url, $outFile, $navn) {
     Write-Step "Laster ned $navn..."
     try {
-        Invoke-WebRequest -Uri $url -OutFile $outFile -UseBasicParsing
+        # Hent filstorrelse
+        $totalMB = 0
+        try {
+            $head = Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing
+            $bytes = [int]$head.Headers["Content-Length"]
+            $totalMB = [math]::Round($bytes / 1MB, 0)
+        } catch {}
+
+        if ($totalMB -gt 0) {
+            Write-Host "      Storrelse: ca. $totalMB MB" -ForegroundColor DarkGray
+        }
+        Write-Host "      Laster ned" -ForegroundColor DarkGray -NoNewline
+
+        # Last ned i bakgrunnen og vis punkter underveis
+        $job = Start-Job -ScriptBlock {
+            param($u, $o)
+            $ProgressPreference = "SilentlyContinue"
+            Invoke-WebRequest -Uri $u -OutFile $o -UseBasicParsing
+        } -ArgumentList $url, $outFile
+
+        while ($job.State -eq "Running") {
+            Write-Host "." -NoNewline -ForegroundColor DarkGray
+            Start-Sleep -Seconds 1
+
+            # Vis hvor mye er lastet ned
+            if ((Test-Path $outFile) -and $totalMB -gt 0) {
+                $downloadedMB = [math]::Round((Get-Item $outFile).Length / 1MB, 0)
+                Write-Host " $downloadedMB/$totalMB MB" -NoNewline -ForegroundColor DarkGray
+            }
+        }
+
+        Receive-Job $job -ErrorAction Stop | Out-Null
+        Remove-Job $job
+
+        Write-Host "" # ny linje etter punktene
         Write-Ok "Nedlasting fullfort"
     } catch {
+        Write-Host ""
         Write-Fail "Klarte ikke laste ned $navn. Sjekk internettilkoblingen og prov igjen."
         Write-Host "  Feilmelding: $_" -ForegroundColor DarkRed
         Write-Host ""
