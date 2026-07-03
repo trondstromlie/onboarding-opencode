@@ -88,6 +88,13 @@ function Add-ToUserPath($newPath) {
 function Invoke-Download($url, $outFile, $navn) {
     Write-Step "Laster ned $navn..."
     try {
+        # Hent filstorrelse
+        try {
+            $head = Invoke-WebRequest -Uri $url -Method Head -UseBasicParsing
+            $bytes = [int]$head.Headers["Content-Length"]
+            $mb = [math]::Round($bytes / 1MB, 0)
+            Write-Host "      Storrelse: ca. $mb MB -- dette kan ta litt tid..." -ForegroundColor DarkGray
+        } catch {}
         Invoke-WebRequest -Uri $url -OutFile $outFile -UseBasicParsing
         Write-Ok "Nedlasting fullfort"
     } catch {
