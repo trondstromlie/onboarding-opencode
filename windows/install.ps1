@@ -42,12 +42,6 @@ Write-Host "  ██    ██ ██ ██  ██ ██████  ██ 
 Write-Host "  ██    ██ ██  ██ ██ ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ ██ ██  ██ ██ ██    ██ " -ForegroundColor Blue
 Write-Host "   ██████  ██   ████ ██████   ██████  ██   ██ ██   ██ ██████  ██ ██   ████  ██████  " -ForegroundColor Blue
 Write-Host ""
-Write-Host "  ██████  ███████ ███    ██ ███████ ██ ██████  ██  ██████  ███████  " -ForegroundColor Cyan
-Write-Host "  ██      ██      ████   ██ ██      ██ ██   ██ ██ ██       ██      " -ForegroundColor Cyan
-Write-Host "  ██  ███ █████   ██ ██  ██ ███████ ██ ██   ██ ██ ██   ███ █████   " -ForegroundColor Cyan
-Write-Host "  ██   ██ ██      ██  ██ ██      ██ ██ ██   ██ ██ ██    ██ ██      " -ForegroundColor Cyan
-Write-Host "   ██████ ███████ ██   ████ ███████ ██ ██████  ██  ██████  ███████ " -ForegroundColor Cyan
-Write-Host ""
 Write-Host "  Legger inn nodvendige pakker for hackathon..." -ForegroundColor White
 Write-Host ""
 Write-Host ""
