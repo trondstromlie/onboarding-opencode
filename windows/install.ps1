@@ -42,7 +42,7 @@ Write-Host "  ██    ██ ██ ██  ██ ██████  ██ 
 Write-Host "  ██    ██ ██  ██ ██ ██   ██ ██    ██ ██   ██ ██   ██ ██   ██ ██ ██  ██ ██ ██    ██ " -ForegroundColor Blue
 Write-Host "   ██████  ██   ████ ██████   ██████  ██   ██ ██   ██ ██████  ██ ██   ████  ██████  " -ForegroundColor Blue
 Write-Host ""
-Write-Host "  Legger inn nodvendige pakker for hackathon..." -ForegroundColor White
+Write-Host "  Legger inn nodvendige pakker..." -ForegroundColor White
 Write-Host ""
 Write-Host ""
 Start-Sleep -Seconds 1
