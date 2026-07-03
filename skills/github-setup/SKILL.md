@@ -72,6 +72,24 @@ Bruk svaret til å gi riktige kommandoer gjennom hele flyten.
 
 ## Steg 1 — Sjekk om GitHub allerede er autentisert
 
+Sjekk først hvilke verktøy som er tilgjengelig:
+
+```powershell
+gh --version 2>$null && echo "GH_FUNNET" || echo "GH_MANGLER"
+az --version 2>$null && echo "AZ_FUNNET" || echo "AZ_MANGLER"
+```
+
+Eller på Mac/Linux:
+```bash
+gh --version 2>/dev/null && echo "GH_FUNNET" || echo "GH_MANGLER"
+az --version 2>/dev/null && echo "AZ_FUNNET" || echo "AZ_MANGLER"
+```
+
+- Hvis `GH_FUNNET`: ikke spør om installasjon — hopp rett til innlogging
+- Hvis `AZ_FUNNET`: ikke spør om Azure CLI-installasjon — hopp rett til `az login`
+
+Sjekk deretter om GitHub allerede er autentisert:
+
 ```bash
 gh auth status 2>/dev/null && echo "FUNNET" || echo "MANGLER"
 ```
@@ -89,7 +107,7 @@ gh auth status 2>/dev/null && echo "FUNNET" || echo "MANGLER"
 
 ### Mac/Linux — Installer gh
 
-> Åpne en **ny terminalfane** og kjør:
+> Kun hvis `GH_MANGLER` fra Steg 1. Åpne en **ny terminalfane** og kjør:
 >
 > ```
 > brew install gh
@@ -100,6 +118,8 @@ Hvis `brew` ikke er installert, se feilsøking nederst.
 ---
 
 ### Windows — Installer gh (ingen admin)
+
+> Kun hvis `GH_MANGLER` fra Steg 1. Hvis `gh` allerede er installert — hopp rett til innlogging under.
 
 **Del 1 — Last ned**
 
@@ -336,7 +356,11 @@ Du skal se:
 
 ## Steg 8 — Azure CLI (valgfritt — for GenAI-endepunkt)
 
-**Dette steget er valgfritt.** Det trengs kun hvis du skal bruke Gjensidiges interne GenAI-endepunkt (Azure OpenAI). Spør brukeren:
+**Dette steget er valgfritt.** Det trengs kun hvis du skal bruke Gjensidiges interne GenAI-endepunkt (Azure OpenAI).
+
+Hvis `AZ_FUNNET` fra Steg 1 — hopp rett til `az login`, ikke vis installasjonsinstruksjoner.
+
+Hvis `AZ_MANGLER` — spør brukeren:
 
 > Skal du bruke Gjensidiges GenAI-endepunkt? (Usikker? Du kan legge det til senere.)
 
