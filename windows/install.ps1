@@ -146,45 +146,29 @@ function Invoke-Download($url, $outFile, $navn) {
 
 function Expand-AndMove($zipPath, $destDir, $navn, $innerDirPattern = $null) {
     Write-Step "Pakker ut $navn..."
-
-    $job = Start-Job -ScriptBlock {
-        param($zip, $destDir, $inner)
+    Write-Host "      Dette kan ta litt tid..." -ForegroundColor DarkGray
+    try {
         Add-Type -AssemblyName System.IO.Compression.FileSystem
         $extractTemp = $destDir + "-extract"
         if (Test-Path $extractTemp) { Remove-Item $extractTemp -Recurse -Force }
-        [System.IO.Compression.ZipFile]::ExtractToDirectory($zip, $extractTemp)
-        if ($inner) {
-            $match = Get-ChildItem $extractTemp -Directory | Where-Object { $_.Name -like $inner } | Select-Object -First 1
-            if (-not $match) { throw "Fant ikke mappe som matcher '$inner' etter utpakking" }
+        [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $extractTemp)
+        if ($innerDirPattern) {
+            $match = Get-ChildItem $extractTemp -Directory | Where-Object { $_.Name -like $innerDirPattern } | Select-Object -First 1
+            if (-not $match) { throw "Fant ikke mappe som matcher '$innerDirPattern' etter utpakking" }
             if (Test-Path $destDir) { Remove-Item $destDir -Recurse -Force }
             Move-Item $match.FullName $destDir
         } else {
             if (Test-Path $destDir) { Remove-Item $destDir -Recurse -Force }
             Move-Item $extractTemp $destDir
         }
-    } -ArgumentList $zipPath, $destDir, $innerDirPattern
-
-    $spinner = @("|", "/", "-", "\")
-    $si = 0
-    while ($job.State -eq "Running") {
-        Write-Host "`r      $($spinner[$si % 4]) Pakker ut...   " -NoNewline -ForegroundColor DarkGray
-        $si++
-        Start-Sleep -Milliseconds 200
-    }
-
-    try {
-        Receive-Job $job -ErrorAction Stop | Out-Null
+        Write-Host "      [========================================] 100%" -ForegroundColor Cyan
+        Write-Ok "$navn er installert"
     } catch {
-        Remove-Job $job
-        Write-Host ""
         Write-Fail "Klarte ikke pakke ut $navn`: $_"
         Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
         Read-Host "  Trykk Enter for a lukke"
         exit 1
     }
-    Remove-Job $job
-    Write-Host "`r      [========================================] 100%              " -ForegroundColor Cyan
-    Write-Ok "$navn er installert"
 }
 
 # ── klargjør mapper ───────────────────────────────────────────────────────────
