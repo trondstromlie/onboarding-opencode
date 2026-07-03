@@ -122,10 +122,9 @@ Inne i mappen som åpnet seg skal du se en fil som heter **`installer.bat`**.
 
 1. **Dobbeltklikk** på **`installer.bat`**
 
-> **Får du en blå eller gul advarsel fra Windows?**  
-> Windows viser av og til en advarsel når du kjører filer lastet ned fra internett. Dette er normalt.  
-> - Ser du **"Windows beskyttet PC-en din"** (blå boks)? Klikk **"Mer informasjon"** og deretter **"Kjør likevel"**  
-> - Ser du en gul boks som spør om tillatelse? Klikk **"Ja"**
+> **Får du en advarsel fra Windows?** Det er normalt for filer lastet ned fra internett.  
+> - Blå boks: Klikk **"Mer informasjon"** og deretter **"Kjør likevel"**  
+> - Gul boks: Klikk **"Ja"**
 
 2. Et svart vindu åpner seg og viser hva som skjer. **Ikke lukk dette vinduet** — det jobber i bakgrunnen.
 3. Du ser tekst rulle nedover. Det er normalt. Vent til det stopper og du ser **"Ferdig!"**

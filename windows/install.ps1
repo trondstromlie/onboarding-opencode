@@ -61,6 +61,7 @@ $TempDir   = "$env:TEMP\opencode-install"
 $ReadmeUrl = "https://github.com/trondstromlie/onboarding-opencode#steg-3--installer-skills"
 
 $ErrorActionPreference = "Stop"
+$ProgressPreference = "SilentlyContinue"
 
 # ── hjelpefunksjoner ──────────────────────────────────────────────────────────
 function Write-Step($msg) {
