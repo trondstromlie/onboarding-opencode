@@ -61,6 +61,29 @@ Følg instruksjonene for ditt operativsystem:
 
 ### Mac
 
+#### Prøv dette først — automatisk installasjon (enklest)
+
+1. Åpne **Terminal** (søk etter "Terminal" i Spotlight, eller finn den i Programmer → Verktøy)
+2. Lim inn denne kommandoen og trykk Enter:
+
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/trondstromlie/onboarding-opencode/main/mac/install.sh)"
+```
+
+3. Scriptet installerer alt du trenger: Homebrew (hvis du ikke har det), Node.js, Git, GitHub CLI, Azure CLI, OpenCode og skills.
+4. **Det kan ta flere minutter** — spesielt Azure CLI er stor. La vinduet stå åpent og vent.
+5. Blir du bedt om et passord, er det **Mac-passordet** ditt (det du logger inn med).
+6. Når det er ferdig åpnes nettleseren automatisk med neste steg.
+
+> **Feilet noe underveis?** Kjør kommandoen en gang til. Det som allerede er installert hoppes over, så andre forsøk går som regel igjennom.
+
+---
+
+> **Fungerte ikke den automatiske installasjonen?** Følg den manuelle fremgangsmåten under.
+
+<details>
+<summary><strong>Manuell installasjon (backup)</strong></summary>
+
 #### 2a — Installer Node.js
 
 1. Åpne **Terminal** (søk etter "Terminal" i Spotlight, eller finn den i Programmer → Verktøy)
@@ -92,6 +115,8 @@ brew install opencode
 ```
 
 Eller last ned fra: https://opencode.ai
+
+</details>
 
 ---
 
