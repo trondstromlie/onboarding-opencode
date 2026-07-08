@@ -149,18 +149,20 @@ En ZIP-fil er som en konvolutt med innhold inni. Du må åpne konvolutten før d
 
 **Del 3 — Kjør installasjonen**
 
-Inne i mappen som åpnet seg skal du se en fil som heter **`installer.bat`**.
+Inne i mappen som åpnet seg skal du se en fil som heter **`install.bat`**.
 
-1. **Dobbeltklikk** på **`installer.bat`**
+1. **Dobbeltklikk** på **`install.bat`**
 
 > **Får du en advarsel fra Windows?** Det er normalt for filer lastet ned fra internett.  
 > - Blå boks: Klikk **"Mer informasjon"** og deretter **"Kjør likevel"**  
 > - Gul boks: Klikk **"Ja"**
 
 2. Et svart vindu åpner seg og viser hva som skjer. **Ikke lukk dette vinduet** — det jobber i bakgrunnen.
-3. Installasjonen laster ned flere pakker og **kan ta 5–10 minutter** avhengig av internettforbindelsen. Du ser fremgang underveis.
+3. Installasjonen laster ned flere pakker og **kan ta opptil 10 minutter**. Spesielt utpakkingen av Azure CLI går tregt fordi antivirus skanner alle filene — det ser ut som at det henger, men det jobber. La vinduet stå åpent og vent.
 4. Vent til det stopper og du ser **"Ferdig!"**
 5. Nettleseren din åpner seg automatisk med neste steg.
+
+> **Feilet installasjonen underveis?** Kjør **`install.bat`** en gang til. Det som allerede er installert hoppes over, så andre forsøk går som regel igjennom.
 
 ---
 

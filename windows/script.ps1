@@ -39,7 +39,12 @@ Write-Host ""
 Write-Host "  Gjor meg klar til a installere pakker for deg..." -ForegroundColor White
 Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
 Write-Host ""
-Start-Sleep -Seconds 1
+Write-Host "  NB: Dette kan ta opptil 10 minutter -- spesielt utpakking" -ForegroundColor Yellow
+Write-Host "  av Azure CLI gar tregt fordi antivirus skanner alle filene." -ForegroundColor Yellow
+Write-Host "  La vinduet sta apent og vent. Hvis noe feiler: kjor scriptet" -ForegroundColor Yellow
+Write-Host "  en gang til -- det som allerede er installert hoppes over." -ForegroundColor Yellow
+Write-Host ""
+Start-Sleep -Seconds 2
 
 # ── konfig ────────────────────────────────────────────────────────────────────
 $NodeVersion  = "24.18.0"
@@ -144,28 +149,56 @@ function Invoke-Download($url, $outFile, $navn) {
     }
 }
 
+# Kjorer en fil-operasjon flere ganger. Antivirus (Windows Defender) holder ofte
+# nyutpakkede filer apne mens de skannes, sa Move/Remove kan feile med
+# "being used by another process". Da venter vi litt og prover igjen.
+function Invoke-WithRetry($action, $hva, $attempts = 6, $delayMs = 1500) {
+    for ($i = 1; $i -le $attempts; $i++) {
+        try {
+            & $action
+            return
+        } catch {
+            if ($i -eq $attempts) { throw }
+            Write-Host "      $hva feilet (forsok $i/$attempts) -- prover igjen om noen sekunder..." -ForegroundColor DarkGray
+            Start-Sleep -Milliseconds $delayMs
+        }
+    }
+}
+
 function Expand-AndMove($zipPath, $destDir, $navn, $innerDirPattern = $null) {
     Write-Step "Pakker ut $navn..."
-    Write-Host "      Dette kan ta litt tid..." -ForegroundColor DarkGray
+    Write-Host "      Dette kan ta litt tid (spesielt Azure CLI) -- ikke lukk vinduet." -ForegroundColor DarkGray
     try {
         Add-Type -AssemblyName System.IO.Compression.FileSystem
         $extractTemp = $destDir + "-extract"
-        if (Test-Path $extractTemp) { Remove-Item $extractTemp -Recurse -Force }
-        [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $extractTemp)
+
+        # Selve utpakkingen kan feile hvis antivirus laser en fil midt i.
+        # Da rydder vi opp og prover hele utpakkingen pa nytt om noen sekunder.
+        Invoke-WithRetry {
+            if (Test-Path $extractTemp) { Remove-Item $extractTemp -Recurse -Force }
+            [System.IO.Compression.ZipFile]::ExtractToDirectory($zipPath, $extractTemp)
+        } "Utpakking"
+
+        # Gi antivirus et oyeblikk til a slippe filhandtakene for vi flytter.
+        Start-Sleep -Milliseconds 500
+
         if ($innerDirPattern) {
             $match = Get-ChildItem $extractTemp -Directory | Where-Object { $_.Name -like $innerDirPattern } | Select-Object -First 1
             if (-not $match) { throw "Fant ikke mappe som matcher '$innerDirPattern' etter utpakking" }
-            if (Test-Path $destDir) { Remove-Item $destDir -Recurse -Force }
-            Move-Item $match.FullName $destDir
+            Invoke-WithRetry { if (Test-Path $destDir) { Remove-Item $destDir -Recurse -Force } } "Opprydding"
+            Invoke-WithRetry { Move-Item $match.FullName $destDir } "Flytting"
+            Invoke-WithRetry { if (Test-Path $extractTemp) { Remove-Item $extractTemp -Recurse -Force } } "Opprydding"
         } else {
-            if (Test-Path $destDir) { Remove-Item $destDir -Recurse -Force }
-            Move-Item $extractTemp $destDir
+            Invoke-WithRetry { if (Test-Path $destDir) { Remove-Item $destDir -Recurse -Force } } "Opprydding"
+            Invoke-WithRetry { Move-Item $extractTemp $destDir } "Flytting"
         }
         Write-Host "      [========================================] 100%" -ForegroundColor Cyan
         Write-Ok "$navn er installert"
     } catch {
         Write-Fail "Klarte ikke pakke ut $navn`: $_"
-        Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
+        Write-Host "  Prov a kjore scriptet en gang til -- det som allerede er" -ForegroundColor Yellow
+        Write-Host "  installert hoppes over, sa neste forsok gar ofte igjennom." -ForegroundColor Yellow
+        Write-Host "  Funker det fortsatt ikke: $ReadmeUrl" -ForegroundColor Yellow
         Read-Host "  Trykk Enter for a lukke"
         exit 1
     }
