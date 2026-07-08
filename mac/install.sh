@@ -102,6 +102,8 @@ printf "${GREEN}    - Azure CLI${RESET}\n"
 printf "${GREEN}    - OpenCode${RESET}\n"
 printf "${GREEN}    - OpenCode skills${RESET}\n"
 printf "${GRAY}  -------------------------------------------------------${RESET}\n\n"
-printf "${GREEN}  Sender deg tilbake til oppskriften...${RESET}\n\n"
+printf "${GREEN}  Installasjonen er fullfort som planlagt!${RESET}\n"
+printf "${GREEN}  Du kan na fortsette fra Steg 4 i oppskriften (Start OpenCode).${RESET}\n\n"
+printf "${GREEN}  Apner Steg 4 i oppskriften...${RESET}\n\n"
 sleep 2
 open "$README_URL" 2>/dev/null || true

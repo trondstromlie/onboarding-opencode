@@ -348,9 +348,12 @@ Write-Host "    - OpenCode" -ForegroundColor Green
 Write-Host "    - OpenCode skills" -ForegroundColor Green
 Write-Host "  -------------------------------------------------------" -ForegroundColor DarkGray
 Write-Host ""
+Write-Host "  Installasjonen er fullfort som planlagt!" -ForegroundColor Green
+Write-Host "  Du kan na fortsette fra Steg 4 i oppskriften (Start OpenCode)." -ForegroundColor Green
+Write-Host ""
 Write-Host "  Vent litt mens jeg fullforer..." -ForegroundColor White
 Start-Sleep -Seconds 3
-Write-Host "  Sender deg tilbake til oppskriften..." -ForegroundColor White
+Write-Host "  Apner Steg 4 i oppskriften..." -ForegroundColor White
 Write-Host ""
 Start-Sleep -Seconds 2
 Start-Process $ReadmeUrl
