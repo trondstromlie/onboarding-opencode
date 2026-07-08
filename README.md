@@ -347,10 +347,41 @@ Her er eksempler på hva du kan spørre OpenCode om etter at MCP-ene er koblet t
 
 ### GitHub
 ```
-Lag et visuelt HTML-dashboard over hva teamet har levert siste 4 uker. Vis PRs som er merget, en tidslinje over aktivitet og hvilke områder av koden som har vært mest aktive. Bruk farger, ikoner og animasjoner — det skal gi en umiddelbar følelse av fremdrift.
+Lag et visuelt HTML-dashboard over hva teamet har levert siste 4 uker.
+Vis PRs som er merget, en tidslinje over aktivitet og hvilke områder
+av koden som har vært mest aktive. Bruk farger, ikoner og animasjoner
+— det skal gi en umiddelbar følelse av fremdrift.
 ```
 ```
-Lag en interaktiv HTML-side som viser alle åpne issues i repoet vårt. Grupper dem etter tema og vis en tydelig status på hva som er under arbeid og hva som blokkerer oss. Det skal være enkelt å forstå for noen som ikke er utvikler.
+Lag en interaktiv HTML-side som viser alle åpne issues i repoet vårt.
+Grupper dem etter tema og vis en tydelig status på hva som er under
+arbeid og hva som blokkerer oss. Det skal være enkelt å forstå for
+noen som ikke er utvikler.
+```
+
+### Jira
+```
+Lag et visuelt HTML-dashboard over sprinten vår. Vis hvor mange
+oppgaver som er ferdige, hva som er i gang og hva som ikke er startet
+— som et burndown-diagram og fargede statuskort. Det skal gi et
+umiddelbart bilde av hvordan vi ligger an.
+```
+```
+Lag en interaktiv HTML-oversikt over alle oppgavene som er tildelt
+teamet mitt. Grupper etter person, vis hvem som har mest på bordet,
+og marker tydelig hva som er blokkert eller forsinket.
+```
+```
+Oppsummer alle oppgavene i prosjektet [PROSJEKTNØKKEL] som ble lukket
+denne måneden, og lag en kort statusrapport jeg kan sende til ledelsen
+— i klarspråk, uten sjargong.
+```
+```
+Opprett en ny Jira-oppgave: "[tittel]" med en tydelig beskrivelse
+av hva som skal gjøres og hvorfor
+```
+```
+Vis meg mine åpne oppgaver, sortert etter frist
 ```
 
 ### Figma
@@ -366,13 +397,50 @@ Lag en React-komponent basert på denne Figma-seksjonen
 
 ### Piwik
 ```
-Lag et imponerende interaktivt HTML-dashboard for trafikken på [URL] siste 30 dager. Vis besøkstrender som animerte grafer, topp-sider, enhetsfordeling og hvilke dager som hadde mest aktivitet. Det skal se ut som noe du ville vist frem i en presentasjon.
+Lag et imponerende interaktivt HTML-dashboard for trafikken på [URL]
+siste 30 dager. Vis besøkstrender som animerte grafer, topp-sider,
+enhetsfordeling og hvilke dager som hadde mest aktivitet. Det skal
+se ut som noe du ville vist frem i en presentasjon.
 ```
 ```
-Analyser brukeratferden på [URL] og lag en visuell HTML-rapport som viser hvor brukerne faller av, hvilke sider som presterer best, og hva vi bør prioritere å forbedre. Presenter det med farger og grafer — ikke bare tabeller.
+Analyser brukeratferden på [URL] og lag en visuell HTML-rapport som
+viser hvor brukerne faller av, hvilke sider som presterer best, og
+hva vi bør prioritere å forbedre. Presenter det med farger og grafer
+— ikke bare tabeller.
 ```
 ```
 Sammenlign trafikk denne uken mot forrige uke
+```
+
+### Kombiner flere kilder
+
+Det kraftigste er når OpenCode henter fra flere MCP-er samtidig — for
+eksempel GitHub, Jira og Piwik i samme oversikt.
+
+```
+Lag en interaktiv HTML-tidslinje som kobler sammen de siste commitene
+i repoet vårt med trafikktallene fra Piwik for [URL]. Vis hvordan
+besøk og brukeratferd endrer seg rundt hver leveranse, og koble hver
+commit til Jira-oppgaven den hører til. Bruk farger og grafer så det
+er lett å se hva som ga effekt.
+```
+```
+Lag en statusrapport for sprinten som kombinerer Jira og GitHub:
+vis hvilke Jira-oppgaver som er ferdige, hvilke PRs som hører til
+hver oppgave, og hva som fortsatt gjenstår. Presenter det som en
+visuell HTML-side jeg kan vise frem i sprint-gjennomgangen.
+```
+```
+Analyser de siste leveransene våre: hent merget PRs fra GitHub,
+finn Jira-oppgavene de løser, og sammenhold med trafikk- og
+konverteringstallene fra Piwik. Lag en HTML-rapport som viser hvilke
+leveranser som faktisk flyttet tallene, og hva vi bør prioritere neste.
+```
+```
+Lag en oversikt over hva teamet har levert siste måned: kombiner
+lukkede Jira-oppgaver, merget PRs fra GitHub og trafikkutviklingen
+fra Piwik til én visuell tidslinje i klarspråk — noe jeg kan sende
+til ledelsen.
 ```
 
 ---
