@@ -277,8 +277,10 @@ opencode
 **Del 1 — Koble til GitHub**
 
 1. Skriv `/connect` og trykk Enter
-2. Velg **GitHub.com Public**
+2. Du blir spurt om hvilken GitHub Copilot du vil bruke — **velg `GitHub.com Public`** (den øverste), **ikke** Enterprise
 3. En boks vises med en lenke og en kode. Åpne lenken i nettleseren, lim inn koden, og godkjenn tilkoblingen
+
+> **Viktig:** Velg alltid **Public**, ikke **Enterprise**. Enterprise-varianten fungerer ikke her og gir feil senere når du skal velge modell.
 
 **Del 2 — Velg GitHub Copilot som provider og modell**
 
