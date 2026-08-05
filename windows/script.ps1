@@ -47,9 +47,9 @@ Write-Host ""
 Start-Sleep -Seconds 2
 
 # ── konfig ────────────────────────────────────────────────────────────────────
-$NodeVersion  = "24.18.0"
+$NodeVersion  = "24.19.0"
 $GhVersion    = "2.96.0"
-$AzCliVersion = "2.87.0"
+$AzCliVersion = "2.89.0"
 $GitVersion   = "2.55.0.2"
 
 $NodeUrl  = "https://nodejs.org/dist/v$NodeVersion/node-v$NodeVersion-win-x64.zip"
