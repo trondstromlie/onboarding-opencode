@@ -479,7 +479,8 @@ På Mac heter det Terminal. På Windows heter det PowerShell eller Ledetekst.
 Noen kommandoer tar tid. Vent til du ser en ny linje med en blinkende markør.
 
 **Windows-installasjonen stopper opp eller gir feilmelding underveis?**  
-Scriptet kan av og til henge eller feile, særlig hvis antivirusprogrammet blokkerer nedlastingen. Lukk PowerShell-vinduet og kjør installasjonen på nytt — scriptet hopper over det som allerede er installert og fortsetter der det stoppet.
+Scriptet kan av og til henge eller feile, særlig hvis antivirusprogrammet blokkerer nedlastingen. Lukk PowerShell-vinduet og kjør installasjonen på nytt — scriptet hopper over det som allerede er installert og fortsetter der det stoppet.  
+Hvis det fortsatt ikke løser seg: ta et screenshot av feilmeldingen og send det til Trond, så lager han en fix.
 
 **Jeg får feilmeldingen "command not found: node"?**  
 Node er ikke installert riktig, eller terminalen har ikke blitt restartet etter installasjon.  
