@@ -296,8 +296,13 @@ Add-ToUserPath "$AzCliDir\bin"
 $env:Path = "$env:Path;$AzCliDir\bin"
 
 try {
-    $azVer = & "$AzCliDir\bin\az.cmd" --version 2>&1 | Select-Object -First 1
-    Write-Ok "$azVer er klar"
+    $azOutput = & "$AzCliDir\bin\az.cmd" version --output tsv 2>&1
+    $azVer = ($azOutput | Where-Object { $_ -notmatch "^WARNING" } | Select-Object -First 1)
+    if ($azVer) {
+        Write-Ok "Azure CLI $azVer er klar"
+    } else {
+        throw "Ingen versjonsinfo returnert"
+    }
 } catch {
     Write-Fail "Azure CLI svarer ikke etter installasjon: $_"
     Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
