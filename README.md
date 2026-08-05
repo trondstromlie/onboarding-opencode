@@ -482,6 +482,14 @@ Noen kommandoer tar tid. Vent til du ser en ny linje med en blinkende markør.
 Node er ikke installert riktig, eller terminalen har ikke blitt restartet etter installasjon.  
 Lukk terminalen og åpne en ny, og prøv igjen.
 
+**Jeg får feilmeldingen "running scripts is disabled on this system"?**  
+Windows blokkerer kjøring av PowerShell-scripts som standard. Lim inn denne kommandoen i PowerShell og trykk Enter:
+```
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+Skriv `J` hvis du blir spurt om å bekrefte, og prøv igjen.  
+Merk: bruk alltid **Windows PowerShell** (64-bit) — ikke PowerShell (x86).
+
 **Jeg er usikker — kan jeg bare spørre i OpenCode?**  
 Ja! Etter at du har installert skills, kan du skrive hva du trenger hjelp med og OpenCode vil veilede deg.
 
