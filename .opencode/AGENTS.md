@@ -40,6 +40,19 @@ Aldri hopp over steg. Aldri kombiner steg 1–3 med steg 5–7.
 
 ---
 
+## Windows-release
+
+Hver gang `windows/script.ps1` eller `windows/install.bat` endres:
+1. Bygg ny zip: `cd windows && zip -j opencode-setup-windows.zip script.ps1 install.bat`
+2. Inkluder `windows/opencode-setup-windows.zip` i samme commit som scriptendringen
+3. Etter merge til main: lag ny GitHub Release med neste versjonsnummer og last opp `windows/opencode-setup-windows.zip` som asset
+   ```
+   gh release create vX.Y.Z windows/opencode-setup-windows.zip --title "vX.Y.Z" --notes "..."
+   ```
+4. Releasen er det brukerne laster ned — uten denne steget vil de få gammel versjon
+
+---
+
 ## Etter endringer — sjekk README
 
 Hver gang skills, CLI (`bin/cli.js`) eller onboarding-flyt endres:
