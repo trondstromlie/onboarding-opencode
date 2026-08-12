@@ -35,10 +35,9 @@ Du trenger to tilganger fra to forskjellige systemer:
 | **GitHub Enterprise** | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
 | **PRG_GITHUB_DEVELOPERS** | Gir skrivetilgang til de fleste repoer (anbefalt) |
 
-> Begge de påkrevde tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode.  
 > Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
 
-> **Viktig:** Sjekk at du har fått alle tilgangene du har søkt om før du går videre til neste steg. Logg inn i MyAccess og IdentityNow og bekreft at status er godkjent — ellers stopper det opp senere i oppsettet.
+> **Advarsel:** OpenCode kommer ikke til å virke før alle tilgangene er på plass. Begge de påkrevde tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode. Sjekk status i MyAccess og IdentityNow — du kan installere ferdig i mellomtiden, men vent med å teste OpenCode til tilgangene er godkjent.
 
 ### 1b — Klargjør GitHub-kontoen din
 
