@@ -38,6 +38,8 @@ Du trenger to tilganger fra to forskjellige systemer:
 > Begge de påkrevde tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode.  
 > Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
 
+> **Viktig:** Sjekk at du har fått alle tilgangene du har søkt om før du går videre til neste steg. Logg inn i MyAccess og IdentityNow og bekreft at status er godkjent — ellers stopper det opp senere i oppsettet.
+
 ### 1b — Klargjør GitHub-kontoen din
 
 Har du ikke en GitHub-konto? Opprett en på **https://github.com/signup**. Bruk gjerne jobb-e-postadressen din (`@gjensidige.no`).
