@@ -13,6 +13,13 @@ For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet t
 
 ### 1a — Søk om tilgang
 
+> **Skal du være med på Skadefryd hackaton?** (https://skadefryd.tech/)  
+> Da må du i tillegg søke om denne tilgangen i **MyAccess** (https://myaccess.microsoft.com):
+>
+> | Tilgangspakke | Hvorfor du trenger den |
+> |---------------|------------------------|
+> | **GenAI Small Consumer (Prod)** | Gir tilgang til GenAI-tjenestene som brukes under hackatonet |
+
 Du trenger to tilganger fra to forskjellige systemer:
 
 **1. MyAccess** — gå til **https://myaccess.microsoft.com**
