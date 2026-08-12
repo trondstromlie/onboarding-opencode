@@ -13,6 +13,13 @@ For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet t
 
 ### 1a — Søk om tilgang
 
+> **Skal du være med på Skadefryd hackaton?** (https://skadefryd.tech/)  
+> Da må du i tillegg søke om denne tilgangen i **MyAccess** (https://myaccess.microsoft.com):
+>
+> | Tilgangspakke | Hvorfor du trenger den |
+> |---------------|------------------------|
+> | **GenAI Small Consumer (Prod)** | Gir tilgang til GenAI-tjenestene som brukes under hackatonet |
+
 Du trenger to tilganger fra to forskjellige systemer:
 
 **1. MyAccess** — gå til **https://myaccess.microsoft.com**
@@ -28,8 +35,9 @@ Du trenger to tilganger fra to forskjellige systemer:
 | **GitHub Enterprise** | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
 | **PRG_GITHUB_DEVELOPERS** | Gir skrivetilgang til de fleste repoer (anbefalt) |
 
-> Begge de påkrevde tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode.  
 > Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
+
+> **Advarsel:** OpenCode kommer ikke til å virke før alle tilgangene er på plass. Begge de påkrevde tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode. Sjekk status i MyAccess og IdentityNow — du kan installere ferdig i mellomtiden, men vent med å teste OpenCode til tilgangene er godkjent.
 
 ### 1b — Klargjør GitHub-kontoen din
 
