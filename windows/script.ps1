@@ -48,14 +48,15 @@ Start-Sleep -Seconds 2
 
 # ── konfig ────────────────────────────────────────────────────────────────────
 $NodeVersion  = "24.19.0"
-$GhVersion    = "2.96.0"
-$AzCliVersion = "2.89.0"
-$GitVersion   = "2.55.0.2"
+$GhVersion    = "2.97.0"
+$AzCliVersion = "2.89.1"
+$GitVersion   = "2.55.0.4"
+$GitTag       = "v2.55.0.windows.4"
 
 $NodeUrl  = "https://nodejs.org/dist/v$NodeVersion/node-v$NodeVersion-win-x64.zip"
 $GhUrl    = "https://github.com/cli/cli/releases/download/v$GhVersion/gh_${GhVersion}_windows_amd64.zip"
 $AzCliUrl = "https://azcliprod.blob.core.windows.net/zip/azure-cli-${AzCliVersion}-x64.zip"
-$GitUrl   = "https://github.com/git-for-windows/git/releases/download/v2.55.0.windows.2/MinGit-${GitVersion}-64-bit.zip"
+$GitUrl   = "https://github.com/git-for-windows/git/releases/download/$GitTag/MinGit-${GitVersion}-64-bit.zip"
 
 $ToolsDir  = "$env:USERPROFILE\tools"
 $NodeDir   = "$ToolsDir\nodejs"
@@ -313,18 +314,18 @@ try {
 # ── [5/6] opencode ────────────────────────────────────────────────────────────
 $opencodeExe = "$npmGlobal\opencode.cmd"
 if (Test-Path $opencodeExe) {
-    Write-Step "OpenCode er allerede installert -- hopper over"
+    Write-Step "Oppdaterer OpenCode til nyeste versjon..."
 } else {
     Write-Step "Installerer OpenCode..."
-    try {
-        & "$NodeDir\npm.cmd" install -g opencode-ai
-        Write-Ok "OpenCode er installert"
-    } catch {
-        Write-Fail "Klarte ikke installere OpenCode: $_"
-        Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
-        Read-Host "  Trykk Enter for a lukke"
-        exit 1
-    }
+}
+try {
+    & "$NodeDir\npm.cmd" install -g opencode-ai@latest
+    Write-Ok "OpenCode er installert i nyeste versjon"
+} catch {
+    Write-Fail "Klarte ikke installere OpenCode: $_"
+    Write-Host "  Ga til manuell installasjon: $ReadmeUrl" -ForegroundColor Yellow
+    Read-Host "  Trykk Enter for a lukke"
+    exit 1
 }
 
 # ── [6/6] skills ──────────────────────────────────────────────────────────────

@@ -72,15 +72,18 @@ fi
 # ── [2/3] Verktoy via Homebrew ──────────────────────────────────────────────
 step "Installerer verktoy: Node.js, Git, GitHub CLI, Azure CLI, OpenCode..."
 warn "Dette kan ta noen minutter. La vinduet sta apent."
+brew update >/dev/null 2>&1 || warn "Klarte ikke oppdatere Homebrew-katalogen -- fortsetter."
 for pkg in node git gh azure-cli opencode; do
     if brew list --formula "$pkg" >/dev/null 2>&1; then
-        printf "${GRAY}      %s er allerede installert -- hopper over${RESET}\n" "$pkg"
+        printf "${GRAY}      Oppdaterer %s til nyeste versjon...${RESET}\n" "$pkg"
+        brew upgrade "$pkg" >/dev/null 2>&1 \
+            || printf "${GRAY}      %s er allerede nyeste versjon${RESET}\n" "$pkg"
     else
         printf "${GRAY}      Installerer %s...${RESET}\n" "$pkg"
         brew install "$pkg" || fail "Klarte ikke installere $pkg."
     fi
 done
-ok "Alle verktoy er installert"
+ok "Alle verktoy er installert i nyeste versjon"
 
 # ── [3/3] OpenCode skills ───────────────────────────────────────────────────
 step "Installerer OpenCode skills..."
