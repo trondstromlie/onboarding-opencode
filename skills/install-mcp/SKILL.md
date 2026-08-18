@@ -63,28 +63,24 @@ Hent bare tokens for de tjenestene brukeren valgte.
 
 ### GitHub-token
 
-> Jeg trenger et GitHub-token fra deg. Slik henter du det:
->
-> 1. Gå til: https://github.com/settings/tokens
-> 2. Klikk **"Generate new token"** → **"Generate new token (classic)"**  
->    ⚠️ Velg **classic** — ikke "Fine-grained tokens"
-> 3. Gi det et navn — f.eks. `opencode`
-> 4. Sett gyldighet til **90 days**
-> 5. Huk av for:
->    - **`repo`** — lesetilgang til kode, issues og pull requests
->    - **`workflow`** — tilgang til å se og trigge GitHub Actions
->    - **`read:packages`** — tilgang til å laste ned npm-pakker fra GitHub (trengs hvis du også installerer Gjensidige-pakker via npm)
-> 6. Klikk **Generate token** og kopier tokenet (starter med `ghp_`)
-> 7. Klikk **"Configure SSO"** → **"Authorize"** ved siden av **Gjensidige**
->
-> Lim tokenet inn her, så ordner jeg resten.
+GitHub CLI er allerede installert og autentisert — bruk det til å hente tokenet automatisk. Be brukeren kjøre denne kommandoen:
 
-**macOS/Linux** — lagre i shell-miljøet:
+**macOS/Linux:**
 ```bash
-echo 'export GITHUB_TOKEN="ghp_TOKENET_HER"' >> ~/.zshrc && source ~/.zshrc
+echo "export GITHUB_TOKEN=\"$(gh auth token)\"" >> ~/.zshrc && source ~/.zshrc
 ```
 
-**Windows** — tokenet legges direkte inn i konfigen i Steg 3.
+**Windows:**
+```powershell
+gh auth token
+```
+Kopier outputen (starter med `ghu_` eller `ghp_`) — den brukes direkte i konfigen i Steg 3.
+
+Hvis `gh auth token` gir feil eller tomt svar, betyr det at brukeren ikke er logget inn med `gh`. Be dem kjøre:
+```bash
+gh auth login
+```
+Velg **GitHub.com** og følg instruksjonene, deretter prøv `gh auth token` på nytt.
 
 ---
 
@@ -318,9 +314,9 @@ Jobb deg gjennom disse punktene i rekkefølge. Gjør ett tiltak om gangen, test 
 ### "Unauthorized" eller "403 Forbidden"
 
 **GitHub:**
-1. Er tokenet SSO-autorisert? Gå til https://github.com/settings/tokens, finn tokenet og klikk **"Configure SSO"** → **"Authorize"** ved siden av **Gjensidige**
-2. Er tokenet utløpt? Sjekk utløpsdato på https://github.com/settings/tokens — generer nytt hvis nødvendig
-3. Oppdater konfigen med nytt token og restart OpenCode
+1. Er `gh` fortsatt autentisert? Kjør `gh auth status` — hvis ikke, kjør `gh auth login` på nytt
+2. Hent et ferskt token: kjør `gh auth token` og oppdater konfigen med den nye verdien
+3. Restart OpenCode
 
 **Jira:**
 1. Er e-postadressen riktig? Sjekk i Jira ved å klikke profilbildet øverst til høyre

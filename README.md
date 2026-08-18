@@ -318,6 +318,18 @@ opencode
 
 > **Viktig:** Velg alltid **Public**, ikke **Enterprise**. Enterprise-varianten fungerer ikke her og gir feil senere når du skal velge modell.
 
+> **Går OpenCode tilbake til `/connect` etter at du godkjente i nettleseren?**  
+> Det betyr at GitHub-tokenet ble utstedt ok, men Copilot-lisensen din er ikke aktiv ennå — eller den er ikke koblet til kontoen din riktig. Gjør dette:
+> 1. Sjekk om Copilot-lisensen er aktiv ved å kjøre denne kommandoen i Terminal/PowerShell:
+>    ```
+>    gh api /user/copilot_billing
+>    ```
+>    Ser du `"enabled": true` i svaret? Da er lisensen ok — hopp til punkt 3.  
+>    Får du en feil eller tomt svar? Da mangler lisensen — fortsett til punkt 2.
+> 2. Sjekk at **begge** tilgangene er godkjent: `ROLE_AAD_GITHUB_COPILOT_USERS` (MyAccess) **og** `GitHub Enterprise` (IdentityNow). Tilgangene kan ta tid å aktivere — vent og prøv igjen senere.
+> 3. Sjekk at du har fullført SSO-koblingen: gå til **https://github.com/orgs/gjensidige/sso** og logg inn med Gjensidige-kontoen din
+> 4. Prøv `/connect` på nytt
+
 **Del 2 — Velg GitHub Copilot som provider og modell**
 
 > Dette steget er viktig: OpenCode støtter mange AI-leverandører, men her på Gjensidige bruker vi **GitHub Copilot**.
