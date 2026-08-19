@@ -1,6 +1,6 @@
 {
   "name": "opencode-setup",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Gjør maskinen klar for agentisk koding med OpenCode",
   "bin": {
     "opencode-setup": "./bin/cli.js"
