@@ -29,7 +29,7 @@ Du trenger tre tilganger fra to forskjellige systemer. **Alle tre er påkrevd** 
 | Tilgangspakke | Hvorfor du trenger den |
 |---------------|------------------------|
 | **GitHub Enterprise** | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
-| **PRG_GITHUB_DEVELOPERS** | Gir skrivetilgang til de fleste repoer — **også nødvendig for at Copilot-lisensen skal bli aktivert** |
+| **GitHub Developer** | Gir skrivetilgang til de fleste repoer — **også nødvendig for at Copilot-lisensen skal bli aktivert** |
 
 > Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
 
