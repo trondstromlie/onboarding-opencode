@@ -16,7 +16,7 @@ For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet t
 
 ### 1a — Søk om tilgang
 
-Du trenger tre tilganger fra to forskjellige systemer. **Alle tre er påkrevd** — mangler du én, virker ikke OpenCode:
+Du trenger to påkrevde tilganger fra to forskjellige systemer. En tredje er anbefalt hvis du skal skrive kode til Gjensidiges repoer:
 
 **1. MyAccess** — gå til **https://myaccess.microsoft.com**
 
@@ -29,11 +29,11 @@ Du trenger tre tilganger fra to forskjellige systemer. **Alle tre er påkrevd** 
 | Tilgangspakke | Hvorfor du trenger den |
 |---------------|------------------------|
 | **GitHub Enterprise** | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
-| **GitHub Developer** | Gir skrivetilgang til de fleste repoer — **også nødvendig for at Copilot-lisensen skal bli aktivert** |
+| **GitHub Developer** | Gir skrivetilgang til de fleste repoer — **anbefalt hvis du skal jobbe med kode i Gjensidiges repoer** |
 
 > Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
 
-> **Advarsel:** OpenCode kommer ikke til å virke før alle tilgangene er på plass. Alle tre tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode. Sjekk status i MyAccess og IdentityNow — du kan installere ferdig i mellomtiden, men vent med å teste OpenCode til tilgangene er godkjent.
+> **Advarsel:** OpenCode kommer ikke til å virke før de to påkrevde tilgangene er på plass. Begge må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode. Sjekk status i MyAccess og IdentityNow — du kan installere ferdig i mellomtiden, men vent med å teste OpenCode til tilgangene er godkjent.
 
 **Ekstra tilgang — kun for Skadefryd hackaton**
 
@@ -330,8 +330,9 @@ opencode
 >    Ser du `"enabled": true` i svaret? Da er lisensen ok — hopp til punkt 3.  
 >    Får du en feil eller tomt svar? Da mangler lisensen — fortsett til punkt 2.
 > 2. Sjekk at **begge** tilgangene er godkjent: `ROLE_AAD_GITHUB_COPILOT_USERS` (MyAccess) **og** `GitHub Enterprise` (IdentityNow). Tilgangene kan ta tid å aktivere — vent og prøv igjen senere.
-> 3. Sjekk at du har fullført SSO-koblingen: gå til **https://github.com/orgs/gjensidige/sso** og logg inn med Gjensidige-kontoen din
-> 4. Prøv `/connect` på nytt
+> 3. Gå til **https://github.com/settings/copilot** og se etter seksjonen **"Get Copilot from an organization"**. Klikk **"Ask admin for access"** hvis den vises — dette sender en forespørsel til Gjensidiges GitHub-administrator om å aktivere Copilot for kontoen din. Merk: det kan ta opptil en dag før tilgangen trer i kraft.
+> 4. Sjekk at du har fullført SSO-koblingen: gå til **https://github.com/orgs/gjensidige/sso** og logg inn med Gjensidige-kontoen din
+> 5. Prøv `/connect` på nytt
 
 **Del 2 — Velg GitHub Copilot som provider og modell**
 
