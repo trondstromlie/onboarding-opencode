@@ -57,7 +57,7 @@ Hver gang `windows/script.ps1` eller `windows/install.bat` endres:
 
 Hver gang skills, CLI (`bin/cli.js`) eller onboarding-flyt endres:
 - Les gjennom `.github/README.md` (den fulle guiden) og sjekk at skill-listen, instruksjonene og rekkefølgen fortsatt stemmer.
-- Sjekk om `README.md` i roten — den korte npm-varianten — også må oppdateres. Den viser skill-tabellen.
+- `README.md` i roten er en bevisst minimal npm-variant. Den skal ikke vokse — hold detaljene i `.github/README.md`.
 - Oppdater README i **samme PR** som endringen — ikke i en separat PR etterpå.
 
 ---
