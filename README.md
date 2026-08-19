@@ -1,7 +1,10 @@
-# OpenCode Skills — Kom i gang
+# OpenCode — Kom i gang
 
-Dette er et verktøy som installerer ferdige "skills" (hjelpere) til OpenCode på maskinen din.  
-Når skills er installert, kan du be OpenCode om å sette opp GitHub, koble til Jira/Figma, og mer — OpenCode veileder deg steg for steg og hjelper deg å finne riktig informasjon underveis.
+Denne guiden setter opp **OpenCode** på maskinen din og gjør deg klar for agentisk koding — at du jobber sammen med en AI-agent som kan lese, skrive og kjøre kode for deg.
+
+Du går gjennom fire steg: tilgang til Gjensidiges GitHub, installasjon av Node.js og OpenCode, ferdige "skills" (hjelpere), og til slutt oppstart.
+
+Når alt er på plass, kan du be OpenCode om å sette opp GitHub, koble til Jira/Figma, og mer — OpenCode veileder deg steg for steg og hjelper deg å finne riktig informasjon underveis.
 
 ---
 
@@ -13,7 +16,7 @@ For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet t
 
 ### 1a — Søk om tilgang
 
-Du trenger to tilganger fra to forskjellige systemer:
+Du trenger tre tilganger fra to forskjellige systemer. **Alle tre er påkrevd** — mangler du én, virker ikke OpenCode:
 
 **1. MyAccess** — gå til **https://myaccess.microsoft.com**
 
@@ -26,11 +29,11 @@ Du trenger to tilganger fra to forskjellige systemer:
 | Tilgangspakke | Hvorfor du trenger den |
 |---------------|------------------------|
 | **GitHub Enterprise** | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
-| **PRG_GITHUB_DEVELOPERS** | Gir skrivetilgang til de fleste repoer (anbefalt) |
+| **PRG_GITHUB_DEVELOPERS** | Gir skrivetilgang til de fleste repoer — **også nødvendig for at Copilot-lisensen skal bli aktivert** |
 
 > Tilgangene godkjennes av Team Platform og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
 
-> **Advarsel:** OpenCode kommer ikke til å virke før alle tilgangene er på plass. Begge de påkrevde tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode. Sjekk status i MyAccess og IdentityNow — du kan installere ferdig i mellomtiden, men vent med å teste OpenCode til tilgangene er godkjent.
+> **Advarsel:** OpenCode kommer ikke til å virke før alle tilgangene er på plass. Alle tre tilgangene må være godkjent **og** SSO-koblingen i steg 1c må være gjort før GitHub Copilot fungerer i OpenCode. Sjekk status i MyAccess og IdentityNow — du kan installere ferdig i mellomtiden, men vent med å teste OpenCode til tilgangene er godkjent.
 
 **Ekstra tilgang — kun for Skadefryd hackaton**
 
