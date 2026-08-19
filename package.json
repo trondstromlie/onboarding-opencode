@@ -1,7 +1,7 @@
 {
   "name": "opencode-setup",
   "version": "1.2.1",
-  "description": "Gjør maskinen klar for agentisk koding med OpenCode — oppsett, GitHub, skills og MCP-servere",
+  "description": "Gjør maskinen klar for agentisk koding med OpenCode",
   "bin": {
     "opencode-setup": "./bin/cli.js"
   },
