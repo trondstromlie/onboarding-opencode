@@ -2,7 +2,7 @@
 
 Prosjektinstruksene for dette repoet ligger i **`.opencode/AGENTS.md`** — les og følg den filen.
 
-Kort oppsummert: `opencode-setup` hjelper ikke-utviklere med å sette opp OpenCode og gjøre maskinen klar for agentisk koding — GitHub-tilgang, installasjon, skills og MCP-servere. `README.md` er selve brukerguiden gjennom hele oppsettet; npm-CLI-en i `bin/cli.js` dekker skills-steget og installerer skillsene fra `skills/`.
+Kort oppsummert: `opencode-setup` hjelper ikke-utviklere med å sette opp OpenCode og gjøre maskinen klar for agentisk koding — GitHub-tilgang, installasjon, skills og MCP-servere. `.github/README.md` er selve brukerguiden gjennom hele oppsettet (GitHub viser den på forsiden), mens `README.md` i roten er en kort variant npm viser på pakkesiden. npm-CLI-en i `bin/cli.js` dekker skills-steget og installerer skillsene fra `skills/`.
 
 De viktigste reglene (se AGENTS.md for detaljer):
 - Push aldri direkte til main — lag alltid branch og PR, squash-merge.
