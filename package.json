@@ -13,6 +13,11 @@
   "scripts": {
     "test": "node bin/cli.js --dry-run"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trondstromlie/onboarding-opencode.git"
+  },
+  "homepage": "https://github.com/trondstromlie/onboarding-opencode#readme",
   "keywords": [
     "opencode",
     "skills",
