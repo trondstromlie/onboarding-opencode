@@ -16,6 +16,8 @@ For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet t
 
 ### 1a — Søk om tilgang
 
+> **Merk:** Du må ha en GitHub-konto koblet til Gjensidiges organisasjon før du kan be om Copilot-tilgang. Har du ikke det ennå, start med steg 1b og kom tilbake hit etterpå.
+
 **Copilot-lisens (ny self-service-løsning):**
 
 Gå til **https://ai-hub.gjensidige.io/copilot** og klikk **"Be om tilgang"**. Dette er den enkleste måten å få Copilot-lisens på.
