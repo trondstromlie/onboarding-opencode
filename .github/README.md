@@ -476,6 +476,45 @@ lukkede Jira-oppgaver, merget PRs fra GitHub og trafikkutviklingen
 fra Piwik til én visuell tidslinje i klarspråk — noe jeg kan sende
 til ledelsen.
 ```
+```
+Vi lanserte [feature] den [dato]. Hent Piwik-data for [URL] 2 uker før og 2 uker etter.
+Kombiner med GitHub-commits og Jira-oppgaven. Ble det faktisk bedre? Lag en rapport.
+```
+```
+Hvilke av våre siste 10 leveranser i Jira hadde målbar effekt på trafikk eller
+konvertering i Piwik? Ranger dem og si noe om hvorfor de andre ikke synes i tallene.
+```
+```
+Se på alle Jira-oppgaver som har ligget åpne i mer enn 3 måneder. Krysssjekk med
+Piwik — er problemene de beskriver fortsatt relevante basert på faktisk bruk?
+Lag en anbefaling: lukk, prioriter opp, eller omformuler.
+```
+```
+Hent alle Jira-oppgaver med lav prioritet. Finn ut hvilke av dem som handler om
+sider med høy trafikk i Piwik — de er feilprioritert. Vis meg listen.
+```
+```
+Kombiner Piwik-data for [URL] med åpne Jira-bugs. Tegn opp hvor i brukerreisen
+vi vet at ting svikter — basert på frafall i Piwik og feilrapporter i Jira.
+Presenter som en visuell HTML-flyt.
+```
+```
+Finn de 5 sidene på [URL] med høyest frafall i Piwik. Finnes det Jira-oppgaver,
+GitHub-issues eller PRs som er relevante for disse sidene? Hva er status?
+```
+```
+Se på GitHub-aktivitet og Jira siste sprint. Hvor mye tid gikk til bugs vs.
+ny funksjonalitet vs. teknisk gjeld? Visualiser som et kakediagram i HTML.
+```
+```
+Vi har [X] uker til neste release. Hent alle åpne Jira-oppgaver, estimer ut fra
+historisk gjennomføringstid fra GitHub, og si hva som realistisk kan rekke.
+```
+```
+Hent trafikkdata fra Piwik for [URL] siste 6 måneder. Legg på alle feature-leveranser
+fra Jira og GitHub i samme periode. Lag en tidslinje som viser hva vi gjorde og
+hva som faktisk skjedde med tallene — som en investorpresentasjon.
+```
 
 ---
 
