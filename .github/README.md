@@ -369,7 +369,7 @@ Du kan også skrive direkte hva du vil gjøre:
 | Hva du vil gjøre | Skriv dette i OpenCode |
 |------------------|------------------------|
 | Bli guidet gjennom hele oppsettet | `fortsett oppsett` |
-| Koble til GitHub, Jira, Figma eller Piwik | `koble til Jira` / `koble til GitHub` / `koble til Figma` |
+| Koble til GitHub, Jira, Figma eller Piwik | `koble til Jira` / `koble til GitHub` / `koble til Figma` / `koble til Piwik` |
 | Sette opp GitHub SSH og signerte commits | `sett opp GitHub` |
 | Se Figma-design direkte i OpenCode | Lim inn en Figma-lenke |
 
