@@ -39,7 +39,7 @@ Struktur:
 ```json
 {
   "os": "mac" | "windows",
-  "completed": ["git-config", "github-mcp", "jira-mcp", "figma-mcp", "piwik-mcp", "npm", "ssh", "commit-signing"],
+  "completed": ["git-config", "gh-cli", "github-mcp", "jira-mcp", "figma-mcp", "piwik-mcp", "az-cli", "npm", "ssh", "commit-signing"],
   "skipped": ["piwik-mcp"],
   "deferred": ["commit-signing"],
   "last_step": "github-mcp",
@@ -83,6 +83,53 @@ git config --global user.name && git config --global user.email
 - Hvis ikke: bruk `github-setup`-skillen (Steg 6) for å sette navn og e-post
 
 Etter fullføring: oppdater fremgangsfilen med `"git-config"` i `completed`.
+
+---
+
+## Steg 1b — GitHub CLI (gh)
+
+**Kun vis dette steget hvis `gh` ikke er installert.**
+
+### Sjekk om gh er installert
+
+```bash
+gh --version
+```
+
+- Hvis kommandoen gir output: merk `gh-cli` som fullført, hopp til Steg 2
+- Hvis ikke: installer under
+
+### Installer gh uten admin (Windows)
+
+1. Last ned zip-filen:
+   **https://github.com/cli/cli/releases/download/v2.96.0/gh_2.96.0_windows_amd64.zip**
+2. Pakk ut til `C:\Users\DITTBRUKERNAVN\tools\gh`
+   *(bytt ut `DITTBRUKERNAVN` med ditt brukernavn)*
+3. Legg til i PATH — kjør dette i PowerShell:
+   ```powershell
+   $gh = "$env:USERPROFILE\tools\gh\bin"
+   $current = [Environment]::GetEnvironmentVariable("Path", "User")
+   if ($current -notlike "*$gh*") {
+       [Environment]::SetEnvironmentVariable("Path", "$current;$gh", "User")
+   }
+   $env:Path = "$env:Path;$gh"
+   ```
+4. Logg inn:
+   ```powershell
+   gh auth login
+   ```
+   Velg **GitHub.com** og følg instruksjonene.
+5. Verifiser:
+   ```powershell
+   gh --version
+   ```
+
+### Mac
+
+```bash
+brew install gh
+gh auth login
+```
 
 ---
 
@@ -157,6 +204,52 @@ Les `~/.config/opencode/opencode.jsonc` og sjekk om det finnes en blokk med `piw
 Hvis ja: bruk `install-mcp`-skillen og velg Piwik Pro.
 Hvis nei eller "jeg har ikke tilgang": merk `piwik-mcp` som `skipped` — **spør ikke igjen** med mindre brukeren selv tar det opp.
 Aksepter svaret uten å argumentere eller foreslå at de burde ha det.
+
+---
+
+## Steg 5b — Azure CLI
+
+**Kun vis dette steget hvis brukeren er på Windows og ikke brukte det automatiske ZIP-scriptet.**
+
+**Hvorfor:** Azure CLI brukes til å logge inn på Gjensidiges interne systemer og hente tilganger.
+
+### Sjekk om Azure CLI er installert
+
+```powershell
+az --version
+```
+
+- Hvis kommandoen gir output: merk `az-cli` som fullført, hopp videre
+- Hvis ikke: installer uten admin-rettigheter med zip-metoden under
+
+### Installer Azure CLI uten admin (Windows)
+
+Forklar at de ikke trenger admin — alt legges i brukerprofilen:
+
+1. Last ned zip-filen:
+   **https://azcliprod.blob.core.windows.net/zip/azure-cli-2.89.0-x64.zip**
+2. Pakk ut til `C:\Users\DITTBRUKERNAVN\tools\azcli`
+   *(bytt ut `DITTBRUKERNAVN` med ditt brukernavn)*
+3. Legg til i PATH — kjør dette i PowerShell:
+   ```powershell
+   $azcli = "$env:USERPROFILE\tools\azcli\bin"
+   $current = [Environment]::GetEnvironmentVariable("Path", "User")
+   if ($current -notlike "*$azcli*") {
+       [Environment]::SetEnvironmentVariable("Path", "$current;$azcli", "User")
+   }
+   $env:Path = "$env:Path;$azcli"
+   ```
+4. Verifiser:
+   ```powershell
+   az --version
+   ```
+   Du skal se versjonsnummer — da er Azure CLI klar.
+
+### Mac
+
+```bash
+brew install azure-cli
+```
 
 ---
 
