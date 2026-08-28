@@ -46,7 +46,7 @@ Gå til **https://myaccess.microsoft.com** og søk om:
 
 **Ekstra tilgang — kun for Skadefryd hackaton**
 
-Skal du være med på **Skadefryd hackaton** (https://skadefryd.tech/)? Da må du i tillegg søke om denne tilgangen i **MyAccess**:
+Skal du være med på **Skadefryd hackaton** (https://skadefryd.tech/)? Da må du i tillegg søke om denne tilgangen i **[MyAccess](https://myaccess.microsoft.com)**:
 
 | Tilgangspakke | Hvorfor du trenger den |
 |---------------|------------------------|
@@ -338,7 +338,7 @@ opencode
 >    ```
 >    Ser du `"enabled": true` i svaret? Da er lisensen ok — hopp til punkt 3.  
 >    Får du en feil eller tomt svar? Da mangler lisensen — fortsett til punkt 2.
-> 2. Sjekk at **begge** tilgangene er godkjent: `ROLE_AAD_GITHUB_COPILOT_USERS` (MyAccess) **og** `GitHub Enterprise` (IdentityNow). Tilgangene kan ta tid å aktivere — vent og prøv igjen senere.
+> 2. Sjekk at Copilot-lisensen er på plass: gå til **https://ai-hub.gjensidige.io/copilot** og sjekk statusen din. Har du ikke søkt ennå, klikk **"Be om tilgang"**. Tilgangen kan ta tid å aktivere — vent og prøv igjen senere. Sjekk også at **`GitHub Enterprise`** er godkjent i IdentityNow (https://gjensidige.identitynow.com).
 > 3. Gå til **https://github.com/settings/copilot** og se etter seksjonen **"Get Copilot from an organization"**. Klikk **"Ask admin for access"** hvis den vises — dette sender en forespørsel til Gjensidiges GitHub-administrator om å aktivere Copilot for kontoen din. Merk: det kan ta opptil en dag før tilgangen trer i kraft.
 > 4. Sjekk at du har fullført SSO-koblingen: gå til **https://github.com/orgs/gjensidige/sso** og logg inn med Gjensidige-kontoen din
 > 5. Prøv `/connect` på nytt
@@ -568,7 +568,7 @@ Ja! Etter at du har installert skills, kan du skrive hva du trenger hjelp med og
 
 **`/models` viser en tom liste eller jeg havner i en loop?**  
 Dette skyldes som regel at GitHub Copilot-lisensen ikke er aktivert. Sjekk følgende:
-1. Har du fått godkjent **`ROLE_AAD_GITHUB_COPILOT_USERS`** i MyAccess **og** **`GitHub Enterprise`** i IdentityNow?  
+1. Har du Copilot-lisens? Gå til **[ai-hub.gjensidige.io/copilot](https://ai-hub.gjensidige.io/copilot)** og sjekk statusen. Har du ikke søkt ennå, klikk **"Be om tilgang"**. Sjekk også at **`GitHub Enterprise`** er godkjent i **[IdentityNow](https://gjensidige.identitynow.com)**.  
    Copilot-lisensen aktiveres kun når du er medlem av Gjensidiges GitHub-organisasjon — begge tilgangene må være på plass.
 2. Har du fullført SSO-koblingen i **steg 1c** (logget inn på `https://github.com/orgs/gjensidige/sso`)?  
 3. Prøv å skrive `/connect` på nytt i OpenCode og koble til på nytt.
