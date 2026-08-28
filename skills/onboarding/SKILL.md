@@ -39,7 +39,7 @@ Struktur:
 ```json
 {
   "os": "mac" | "windows",
-  "completed": ["git-config", "github-mcp", "jira-mcp", "figma-mcp", "piwik-mcp", "az-cli", "npm", "ssh", "commit-signing"],
+  "completed": ["git-config", "gh-cli", "github-mcp", "jira-mcp", "figma-mcp", "piwik-mcp", "az-cli", "npm", "ssh", "commit-signing"],
   "skipped": ["piwik-mcp"],
   "deferred": ["commit-signing"],
   "last_step": "github-mcp",
@@ -83,6 +83,53 @@ git config --global user.name && git config --global user.email
 - Hvis ikke: bruk `github-setup`-skillen (Steg 6) for å sette navn og e-post
 
 Etter fullføring: oppdater fremgangsfilen med `"git-config"` i `completed`.
+
+---
+
+## Steg 1b — GitHub CLI (gh)
+
+**Kun vis dette steget hvis `gh` ikke er installert.**
+
+### Sjekk om gh er installert
+
+```bash
+gh --version
+```
+
+- Hvis kommandoen gir output: merk `gh-cli` som fullført, hopp til Steg 2
+- Hvis ikke: installer under
+
+### Installer gh uten admin (Windows)
+
+1. Last ned zip-filen:
+   **https://github.com/cli/cli/releases/download/v2.96.0/gh_2.96.0_windows_amd64.zip**
+2. Pakk ut til `C:\Users\DITTBRUKERNAVN\tools\gh`
+   *(bytt ut `DITTBRUKERNAVN` med ditt brukernavn)*
+3. Legg til i PATH — kjør dette i PowerShell:
+   ```powershell
+   $gh = "$env:USERPROFILE\tools\gh\bin"
+   $current = [Environment]::GetEnvironmentVariable("Path", "User")
+   if ($current -notlike "*$gh*") {
+       [Environment]::SetEnvironmentVariable("Path", "$current;$gh", "User")
+   }
+   $env:Path = "$env:Path;$gh"
+   ```
+4. Logg inn:
+   ```powershell
+   gh auth login
+   ```
+   Velg **GitHub.com** og følg instruksjonene.
+5. Verifiser:
+   ```powershell
+   gh --version
+   ```
+
+### Mac
+
+```bash
+brew install gh
+gh auth login
+```
 
 ---
 
