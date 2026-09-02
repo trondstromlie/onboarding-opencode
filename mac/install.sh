@@ -2,8 +2,12 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # OpenCode-oppsett for Mac
 #
-# Installerer Homebrew (hvis det mangler) og deretter de samme verktoyene som
-# Windows-scriptet: Node.js, Git, GitHub CLI, Azure CLI, OpenCode og skills.
+# Installerer de samme verktoyene som Windows-scriptet: Node.js, Git,
+# GitHub CLI, Azure CLI, OpenCode og skills.
+#
+# Homebrew ma vaere installert forst. Det krever administratortilgang
+# (lase-ikonet i menylinjen), sa scriptet kan ikke gjore det for deg --
+# mangler brew forklarer scriptet hvordan du installerer det.
 #
 # Kjor med en enkelt kommando i Terminal:
 #   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/trondstromlie/onboarding-opencode/main/mac/install.sh)"
@@ -43,14 +47,46 @@ printf "\n"
 sleep 2
 
 # ── [1/3] Homebrew ──────────────────────────────────────────────────────────
+BREW_INSTALL_CMD='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+
+# Homebrew krever administratortilgang. Pa jobb-Macer har du den ikke fast --
+# du ma be om den forst via lase-ikonet i menylinjen oppe til hoyre.
+has_admin() {
+    dsmemberutil checkmembership -U "$(id -un)" -G admin 2>/dev/null | grep -qi "is a member" && return 0
+    id -Gn 2>/dev/null | tr ' ' '\n' | grep -qx admin
+}
+
+homebrew_manual_steps() {
+    printf "\n${YELLOW}  Homebrew ma installeres for hand forst -- det krever administratortilgang.${RESET}\n\n"
+    printf "${CYAN}  Gjor dette:${RESET}\n"
+    printf "    1. Klikk pa ${CYAN}lase-ikonet${RESET} i menylinjen oppe til hoyre (ved klokka)\n"
+    printf "       og gi deg selv administratortilgang.\n"
+    printf "    2. Lim inn denne kommandoen i Terminal og trykk Enter:\n\n"
+    printf "${GREEN}       %s${RESET}\n\n" "$BREW_INSTALL_CMD"
+    printf "    3. Blir du bedt om passord, skriv ${CYAN}nokkelring-passordet${RESET} ditt\n"
+    printf "       (det samme som du logger inn pa Macen med) og godkjenn.\n"
+    printf "       Passordet vises ikke mens du skriver -- det er normalt.\n"
+    printf "    4. Nar Homebrew er ferdig, kjor denne kommandoen en gang til:\n\n"
+    printf "${GREEN}       /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/trondstromlie/onboarding-opencode/main/mac/install.sh)\"${RESET}\n\n"
+    printf "${GRAY}  Mer hjelp: %s${RESET}\n\n" "$README_URL"
+}
+
 if command -v brew >/dev/null 2>&1; then
     step "Homebrew er allerede installert -- hopper over"
-else
+elif [ -x /opt/homebrew/bin/brew ] || [ -x /usr/local/bin/brew ]; then
+    step "Homebrew er allerede installert -- hopper over"
+elif has_admin; then
     step "Installerer Homebrew (pakkeverktoyet for Mac)..."
-    warn "Du kan bli bedt om Mac-passordet ditt underveis."
-    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" \
-        || fail "Klarte ikke installere Homebrew. Sjekk internett og prov igjen."
+    warn "Du kan bli bedt om nokkelring-passordet ditt underveis (Mac-passordet)."
+    if ! /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"; then
+        homebrew_manual_steps
+        exit 1
+    fi
     ok "Homebrew er installert"
+else
+    step "Homebrew mangler, og du har ikke administratortilgang akkurat na"
+    homebrew_manual_steps
+    exit 1
 fi
 
 # Sorg for at brew er tilgjengelig i denne okten (Apple Silicon + Intel).
@@ -60,7 +96,11 @@ elif [ -x /usr/local/bin/brew ]; then
     eval "$(/usr/local/bin/brew shellenv)"
 fi
 
-command -v brew >/dev/null 2>&1 || fail "Finner ikke brew etter installasjon. Lukk Terminal, apne pa nytt og prov igjen."
+if ! command -v brew >/dev/null 2>&1; then
+    printf "\n${RED}  Finner ikke Homebrew (brew) i denne okten.${RESET}\n"
+    homebrew_manual_steps
+    exit 1
+fi
 
 # Legg brew i zsh-profilen sa den er der neste gang ogsa.
 BREW_PREFIX="$(brew --prefix)"

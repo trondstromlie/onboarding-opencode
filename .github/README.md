@@ -82,46 +82,66 @@ Følg instruksjonene for ditt operativsystem:
 
 ### Mac
 
-#### Prøv dette først — automatisk installasjon (enklest)
+Mac-oppsettet er to deler: **først installerer du Homebrew selv** (det krever administratortilgang), **deretter kjører du scriptet** som installerer resten.
 
-1. Åpne **Terminal** (søk etter "Terminal" i Spotlight, eller finn den i Programmer → Verktøy)
-2. Lim inn denne kommandoen og trykk Enter:
+#### 2a — Installer Homebrew (må gjøres først)
 
-```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/trondstromlie/onboarding-opencode/main/mac/install.sh)"
-```
+Homebrew er pakkeverktøyet på Mac — det er dette som henter Node.js, Git og OpenCode. Det kan ikke installeres av scriptet, fordi installasjonen krever administratortilgang som du må gi deg selv.
 
-3. Scriptet installerer alt du trenger: Homebrew (hvis du ikke har det), Node.js, Git, GitHub CLI, Azure CLI, OpenCode og skills.
-4. **Det kan ta flere minutter** — spesielt Azure CLI er stor. La vinduet stå åpent og vent.
-5. Blir du bedt om et passord, er det **Mac-passordet** ditt (det du logger inn med).
-6. Når det er ferdig åpnes nettleseren automatisk med neste steg.
-
-> **Feilet noe underveis?** Kjør kommandoen en gang til. Det som allerede er installert hoppes over, så andre forsøk går som regel igjennom.
-
----
-
-> **Fungerte ikke den automatiske installasjonen?** Følg den manuelle fremgangsmåten under.
-
-<details>
-<summary><strong>Manuell installasjon (backup)</strong></summary>
-
-#### 2a — Installer Node.js
-
-1. Åpne **Terminal** (søk etter "Terminal" i Spotlight, eller finn den i Programmer → Verktøy)
-2. Lim inn denne kommandoen og trykk Enter:
+1. Klikk på **låse-ikonet** i menylinjen øverst til høyre på skjermen (der klokka står), og gi deg selv administratortilgang.
+2. Åpne **Terminal** (søk etter "Terminal" i Spotlight, eller finn den i Programmer → Verktøy)
+3. Lim inn denne kommandoen og trykk Enter:
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-3. Følg instruksjonene på skjermen. Det kan ta noen minutter.
-4. Når Homebrew er ferdig, kjør:
+4. Blir du bedt om passord, skriver du **nøkkelring-passordet** ditt — det samme som du logger inn på Macen med — og godkjenner.  
+   *Passordet vises ikke mens du skriver. Det er normalt — bare skriv og trykk Enter.*
+5. Følg instruksjonene på skjermen. Det kan ta noen minutter.
+6. Sjekk at det fungerte — lim inn dette og trykk Enter:
+
+```
+brew --version
+```
+
+Du skal se noe som `Homebrew 4.x.x`. Får du "command not found", lukk Terminal, åpne den på nytt og prøv igjen.
+
+> **Har du Homebrew fra før?** Da kan du hoppe rett til 2b.
+
+#### 2b — Kjør oppsettscriptet (installerer resten)
+
+1. I samme Terminal-vindu, lim inn denne kommandoen og trykk Enter:
+
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/trondstromlie/onboarding-opencode/main/mac/install.sh)"
+```
+
+2. Scriptet installerer Node.js, Git, GitHub CLI, Azure CLI, OpenCode og skills.
+3. **Det kan ta flere minutter** — spesielt Azure CLI er stor. La vinduet stå åpent og vent.
+4. Blir du bedt om et passord, er det **Mac-passordet** ditt (det du logger inn med).
+5. Når det er ferdig åpnes nettleseren automatisk med neste steg.
+
+> **Feilet noe underveis?** Kjør kommandoen en gang til. Det som allerede er installert hoppes over, så andre forsøk går som regel igjennom.
+>
+> **Sier scriptet at Homebrew mangler?** Da er ikke 2a fullført. Gå tilbake, klikk på låse-ikonet for å få administratortilgang, og kjør Homebrew-kommandoen på nytt.
+
+---
+
+> **Fungerte ikke scriptet i 2b?** Følg den manuelle fremgangsmåten under.
+
+<details>
+<summary><strong>Manuell installasjon (backup)</strong></summary>
+
+Dette forutsetter at du har installert Homebrew i 2a.
+
+#### Installer Node.js
 
 ```
 brew install node
 ```
 
-5. Sjekk at det fungerte:
+Sjekk at det fungerte:
 
 ```
 node --version
@@ -129,7 +149,7 @@ node --version
 
 Du skal se noe som `v24.0.0` eller høyere.
 
-#### 2b — Installer OpenCode
+#### Installer OpenCode
 
 ```
 brew install opencode

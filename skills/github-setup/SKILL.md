@@ -286,10 +286,11 @@ ssh-add $env:USERPROFILE\.ssh\id_ed25519
 Hvis `ssh-agent`-tjenesten ikke er aktiv: Åpne **Tjenester** (services.msc), finn **OpenSSH Authentication Agent**, høyreklikk → **Egenskaper** → sett **Oppstartstype** til **Automatisk**, klikk **Start**.
 
 **brew ikke installert (Mac):**
+Homebrew krever administratortilgang. Klikk først på **låse-ikonet** i menylinjen øverst til høyre og gi deg selv administratortilgang. Kjør deretter:
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-Følg instruksjonene, og kjør deretter `eval "$(/opt/homebrew/bin/brew shellenv)"` for å aktivere det.
+Godkjenn med nøkkelring-passordet (Mac-passordet) når du blir bedt om det — det vises ikke mens du skriver. Kjør deretter `eval "$(/opt/homebrew/bin/brew shellenv)"` for å aktivere det.
 
 **GPG spør om passord ved hver commit (Mac):**
 ```bash
