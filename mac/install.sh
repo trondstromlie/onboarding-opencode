@@ -6,7 +6,7 @@
 # GitHub CLI, Azure CLI, OpenCode og skills.
 #
 # Homebrew ma vaere installert forst. Det krever administratortilgang
-# (lase-ikonet i menylinjen), sa scriptet kan ikke gjore det for deg --
+# (hengelas-ikonet i oppgavelinjen), sa scriptet kan ikke gjore det for deg --
 # mangler brew forklarer scriptet hvordan du installerer det.
 #
 # Kjor med en enkelt kommando i Terminal:
@@ -50,7 +50,7 @@ sleep 2
 BREW_INSTALL_CMD='/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
 
 # Homebrew krever administratortilgang. Pa jobb-Macer har du den ikke fast --
-# du ma be om den forst via lase-ikonet i menylinjen oppe til hoyre.
+# du ma be om den forst via hengelas-ikonet i oppgavelinjen (Privileges).
 has_admin() {
     dsmemberutil checkmembership -U "$(id -un)" -G admin 2>/dev/null | grep -qi "is a member" && return 0
     id -Gn 2>/dev/null | tr ' ' '\n' | grep -qx admin
@@ -59,8 +59,8 @@ has_admin() {
 homebrew_manual_steps() {
     printf "\n${YELLOW}  Homebrew ma installeres for hand forst -- det krever administratortilgang.${RESET}\n\n"
     printf "${CYAN}  Gjor dette:${RESET}\n"
-    printf "    1. Klikk pa ${CYAN}lase-ikonet${RESET} i menylinjen oppe til hoyre (ved klokka)\n"
-    printf "       og gi deg selv administratortilgang.\n"
+    printf "    1. Klikk pa ${CYAN}hengelas-ikonet${RESET} i oppgavelinjen (Privileges)\n"
+    printf "       og be om administratortilgang.\n"
     printf "    2. Lim inn denne kommandoen i Terminal og trykk Enter:\n\n"
     printf "${GREEN}       %s${RESET}\n\n" "$BREW_INSTALL_CMD"
     printf "    3. Blir du bedt om passord, skriv ${CYAN}nokkelring-passordet${RESET} ditt\n"
