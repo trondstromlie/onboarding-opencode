@@ -88,7 +88,7 @@ Mac-oppsettet er to deler: **først installerer du Homebrew selv** (det krever a
 
 Homebrew er pakkeverktøyet på Mac — det er dette som henter Node.js, Git og OpenCode. Det kan ikke installeres av scriptet, fordi installasjonen krever administratortilgang som du må gi deg selv.
 
-1. Klikk på **låse-ikonet** i menylinjen øverst til høyre på skjermen (der klokka står), og gi deg selv administratortilgang.
+1. Klikk på **hengelås-ikonet** i oppgavelinjen (Privileges-verktøyet), og be om administratortilgang.
 2. Åpne **Terminal** (søk etter "Terminal" i Spotlight, eller finn den i Programmer → Verktøy)
 3. Lim inn denne kommandoen og trykk Enter:
 
@@ -124,7 +124,7 @@ Du skal se noe som `Homebrew 4.x.x`. Får du "command not found", lukk Terminal,
 
 > **Feilet noe underveis?** Kjør kommandoen en gang til. Det som allerede er installert hoppes over, så andre forsøk går som regel igjennom.
 >
-> **Sier scriptet at Homebrew mangler?** Da er ikke 2a fullført. Gå tilbake, klikk på låse-ikonet for å få administratortilgang, og kjør Homebrew-kommandoen på nytt.
+> **Sier scriptet at Homebrew mangler?** Da er ikke 2a fullført. Gå tilbake, klikk på hengelås-ikonet i oppgavelinjen (Privileges) for å be om administratortilgang, og kjør Homebrew-kommandoen på nytt.
 
 ---
 
