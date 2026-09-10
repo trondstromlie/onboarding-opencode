@@ -33,12 +33,7 @@ Du må søke om **begge** tilgangene under. Copilot-lisensen aktiveres ikke før
 
 **1. Copilot-lisens** — gå til **https://ai-hub.gjensidige.io/copilot** og klikk **"Be om tilgang"**.
 
-**2. GitHub-medlemskap** — disse tilgangene søker du om i **IdentityNow** (gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**):
-
-| Tilgangspakke | Hvorfor du trenger den |
-|---------------|------------------------|
-| **GitHub Enterprise** | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
-| **GitHub Developer** | Gir skrivetilgang til de fleste repoer — **anbefalt hvis du skal jobbe med kode i Gjensidiges repoer** |
+**2. GitHub Enterprise** — søk om denne i **IdentityNow** (gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**). Den gjør deg til medlem av Gjensidiges GitHub-organisasjon.
 
 > Tilgangene godkjennes og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
 
