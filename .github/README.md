@@ -29,11 +29,11 @@ Har du allerede en privat GitHub-konto? Gjør dette for å koble den til Gjensid
 
 ### 1b — Søk om tilgangene
 
-Du må søke om **begge** tilgangene under. Copilot-lisensen aktiveres ikke før **GitHub Enterprise** er godkjent.
+Du må søke om **begge** tilgangene, og rekkefølgen betyr noe — du kan ikke be om Copilot-lisens før GitHub-kontoen din er medlem av Gjensidiges organisasjon.
 
-**1. Copilot-lisens** — gå til **https://ai-hub.gjensidige.io/copilot** og klikk **"Be om tilgang"**.
+**1. GitHub Enterprise** — søk om denne i **IdentityNow** (gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**). Den gjør deg til medlem av Gjensidiges GitHub-organisasjon.
 
-**2. GitHub Enterprise** — søk om denne i **IdentityNow** (gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**). Den gjør deg til medlem av Gjensidiges GitHub-organisasjon.
+**2. Copilot-lisens** — når GitHub Enterprise er godkjent, gå til **https://ai-hub.gjensidige.io/copilot** og klikk **"Be om tilgang"**.
 
 > Tilgangene godkjennes og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
 
