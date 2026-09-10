@@ -10,15 +10,34 @@ Når alt er på plass, kan du be OpenCode om å sette opp GitHub, koble til Jira
 
 ## Steg 1 — Koble GitHub-kontoen din til Gjensidige
 
-> **Har du allerede tilgang til Gjensidiges GitHub-organisasjon?** Hopp videre til Steg 2.
+For å bruke OpenCode med Gjensidiges repoer trenger du tre ting, og de henger tett sammen. Ta dem i rekkefølge:
 
-For å bruke OpenCode med Gjensidiges repoer trenger du en GitHub-konto koblet til Gjensidiges organisasjon. Følg disse stegene:
+1. **1a** — en GitHub-konto som er klargjort for jobbruk
+2. **1b** — tilgangene: Copilot-lisens **og** GitHub Enterprise
+3. **1c** — SSO-koblingen som knytter kontoen din til Gjensidiges organisasjon
 
-### 1a — Søk om tilgang
+> **Har du allerede både GitHub-konto i Gjensidiges organisasjon og Copilot-lisens?** Hopp videre til Steg 2. Mangler du én av delene, gå gjennom hele Steg 1 — ingen av dem virker alene.
 
-> **Merk:** Du må ha en GitHub-konto koblet til Gjensidiges organisasjon før du kan be om Copilot-tilgang. Har du ikke det ennå, start med steg 1b og kom tilbake hit etterpå.
+### 1a — Klargjør GitHub-kontoen din
 
-**Copilot-lisens (ny self-service-løsning):**
+Dette må gjøres først: du kan ikke søke om Copilot-tilgang i 1b før du har en GitHub-konto på plass.
+
+Har du ikke en GitHub-konto? Opprett en på **https://github.com/signup**. Bruk gjerne jobb-e-postadressen din (`@gjensidige.no`).
+
+Har du allerede en privat GitHub-konto? Gjør dette for å koble den til Gjensidige:
+
+1. Logg inn på **https://github.com** med din private konto
+2. Gå til **Settings → Emails** og legg til `@gjensidige.no`-adressen din — verifiser den
+3. Aktiver **Two-Factor Authentication** under **Settings → Password and authentication**
+4. Fyll inn navnet ditt under **Settings → Public profile → Name** (påkrevd for å bli med i organisasjonen)
+
+Når kontoen er klar, gå videre til 1b og søk om tilgangene.
+
+### 1b — Søk om tilgangene
+
+> **Viktig:** Du må søke om **begge** tilgangene under. Copilot-lisensen alene er ikke nok — den aktiveres ikke før **GitHub Enterprise** er godkjent. Søk om begge nå, i samme slengen.
+
+**1. Copilot-lisens (ny self-service-løsning):**
 
 Gå til **https://ai-hub.gjensidige.io/copilot** og klikk **"Be om tilgang"**. Dette er den enkleste måten å få Copilot-lisens på.
 
@@ -33,7 +52,7 @@ Gå til **https://myaccess.microsoft.com** og søk om:
 
 </details>
 
-**GitHub-medlemskap** — i tillegg trenger du disse tilgangene fra **IdentityNow** (gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**):
+**2. GitHub-medlemskap** — disse tilgangene søker du om i **IdentityNow** (gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**):
 
 | Tilgangspakke | Hvorfor du trenger den |
 |---------------|------------------------|
@@ -52,20 +71,9 @@ Skal du være med på **Skadefryd hackaton** (https://skadefryd.tech/)? Da må d
 |---------------|------------------------|
 | **GenAI Small Consumer (Prod)** | Gir tilgang til GenAI-tjenestene som brukes under hackatonet |
 
-### 1b — Klargjør GitHub-kontoen din
-
-Har du ikke en GitHub-konto? Opprett en på **https://github.com/signup**. Bruk gjerne jobb-e-postadressen din (`@gjensidige.no`).
-
-Har du allerede en privat GitHub-konto? Gjør dette for å koble den til Gjensidige:
-
-1. Logg inn på **https://github.com** med din private konto
-2. Gå til **Settings → Emails** og legg til `@gjensidige.no`-adressen din — verifiser den
-3. Aktiver **Two-Factor Authentication** under **Settings → Password and authentication**
-4. Fyll inn navnet ditt under **Settings → Public profile → Name** (påkrevd for å bli med i organisasjonen)
-
 ### 1c — Koble til Gjensidiges organisasjon via Azure AD
 
-Når tilgangen fra 1a er godkjent:
+Når tilgangene fra 1b er godkjent:
 
 1. Gå til **https://github.com/orgs/gjensidige/sso**
 2. Logg inn med din Gjensidige-konto (Azure AD)
