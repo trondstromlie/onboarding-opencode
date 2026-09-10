@@ -1,6 +1,6 @@
 # OpenCode — Kom i gang
 
-Denne guiden setter opp **OpenCode** på maskinen din og gjør deg klar for agentisk koding — at du jobber sammen med en AI-agent som kan lese, skrive og kjøre kode for deg.
+Denne guiden setter opp **OpenCode** på maskinen din.
 
 Du går gjennom fire steg: tilgang til Gjensidiges GitHub, installasjon av Node.js og OpenCode, ferdige "skills" (hjelpere), og til slutt oppstart.
 
@@ -10,17 +10,13 @@ Når alt er på plass, kan du be OpenCode om å sette opp GitHub, koble til Jira
 
 ## Steg 1 — Koble GitHub-kontoen din til Gjensidige
 
-For å bruke OpenCode med Gjensidiges repoer trenger du tre ting, og de henger tett sammen. Ta dem i rekkefølge:
+Du trenger en GitHub-konto (1a), tilgangene (1b) og SSO-kobling (1c) — i den rekkefølgen.
 
-1. **1a** — en GitHub-konto som er klargjort for jobbruk
-2. **1b** — tilgangene: Copilot-lisens **og** GitHub Enterprise
-3. **1c** — SSO-koblingen som knytter kontoen din til Gjensidiges organisasjon
+> **Har du allerede både GitHub-konto i Gjensidiges organisasjon og Copilot-lisens?** Hopp videre til Steg 2.
 
-> **Har du allerede både GitHub-konto i Gjensidiges organisasjon og Copilot-lisens?** Hopp videre til Steg 2. Mangler du én av delene, gå gjennom hele Steg 1 — ingen av dem virker alene.
+### 1a — Opprett og klargjør GitHub-kontoen din
 
-### 1a — Klargjør GitHub-kontoen din
-
-Dette må gjøres først: du kan ikke søke om Copilot-tilgang i 1b før du har en GitHub-konto på plass.
+Dette må gjøres først — du kan ikke søke om tilgangene i 1b uten en GitHub-konto.
 
 Har du ikke en GitHub-konto? Opprett en på **https://github.com/signup**. Bruk gjerne jobb-e-postadressen din (`@gjensidige.no`).
 
@@ -31,33 +27,13 @@ Har du allerede en privat GitHub-konto? Gjør dette for å koble den til Gjensid
 3. Aktiver **Two-Factor Authentication** under **Settings → Password and authentication**
 4. Fyll inn navnet ditt under **Settings → Public profile → Name** (påkrevd for å bli med i organisasjonen)
 
-Når kontoen er klar, gå videre til 1b og søk om tilgangene.
-
 ### 1b — Søk om tilgangene
 
-> **Viktig:** Du må søke om **begge** tilgangene under. Copilot-lisensen alene er ikke nok — den aktiveres ikke før **GitHub Enterprise** er godkjent. Søk om begge nå, i samme slengen.
+Du må søke om **begge** tilgangene under. Copilot-lisensen aktiveres ikke før **GitHub Enterprise** er godkjent.
 
-**1. Copilot-lisens (ny self-service-løsning):**
+**1. Copilot-lisens** — gå til **https://ai-hub.gjensidige.io/copilot** og klikk **"Be om tilgang"**.
 
-Gå til **https://ai-hub.gjensidige.io/copilot** og klikk **"Be om tilgang"**. Dette er den enkleste måten å få Copilot-lisens på.
-
-<details>
-<summary><strong>Fungerte ikke self-service-løsningen? Prøv den gamle metoden her.</strong></summary>
-
-Gå til **https://myaccess.microsoft.com** og søk om:
-
-| Tilgangspakke | Hvorfor du trenger den |
-|---------------|------------------------|
-| **ROLE_AAD_GITHUB_COPILOT_USERS** | Gir deg GitHub Copilot-lisens |
-
-</details>
-
-**2. GitHub-medlemskap** — disse tilgangene søker du om i **IdentityNow** (gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**):
-
-| Tilgangspakke | Hvorfor du trenger den |
-|---------------|------------------------|
-| **GitHub Enterprise** | Gjør deg til medlem av Gjensidiges GitHub-organisasjon — **uten denne aktiveres ikke Copilot-lisensen** |
-| **GitHub Developer** | Gir skrivetilgang til de fleste repoer — **anbefalt hvis du skal jobbe med kode i Gjensidiges repoer** |
+**2. GitHub Enterprise** — søk om denne i **IdentityNow** (gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**). Den gjør deg til medlem av Gjensidiges GitHub-organisasjon.
 
 > Tilgangene godkjennes og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
 
