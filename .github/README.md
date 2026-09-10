@@ -10,13 +10,11 @@ Når alt er på plass, kan du be OpenCode om å sette opp GitHub, koble til Jira
 
 ## Steg 1 — Koble GitHub-kontoen din til Gjensidige
 
-Du trenger en GitHub-konto (1a), tilgangene (1b) og SSO-kobling (1c) — i den rekkefølgen.
+Fire deler, og rekkefølgen betyr noe: GitHub-konto (1a) → medlemskap i organisasjonen (1b) → SSO-kobling (1c) → Copilot-lisens (1d). Hver del forutsetter den forrige.
 
-> **Har du allerede både GitHub-konto i Gjensidiges organisasjon og Copilot-lisens?** Hopp videre til Steg 2.
+> **Har du allerede GitHub-konto i Gjensidiges organisasjon og Copilot-lisens?** Hopp videre til Steg 2.
 
 ### 1a — Opprett og klargjør GitHub-kontoen din
-
-Dette må gjøres først — du kan ikke søke om tilgangene i 1b uten en GitHub-konto.
 
 Har du ikke en GitHub-konto? Opprett en på **https://github.com/signup**. Bruk gjerne jobb-e-postadressen din (`@gjensidige.no`).
 
@@ -27,17 +25,26 @@ Har du allerede en privat GitHub-konto? Gjør dette for å koble den til Gjensid
 3. Aktiver **Two-Factor Authentication** under **Settings → Password and authentication**
 4. Fyll inn navnet ditt under **Settings → Public profile → Name** (påkrevd for å bli med i organisasjonen)
 
-### 1b — Søk om tilgangene
+### 1b — Søk om GitHub Enterprise
 
-Du må søke om **begge** tilgangene under. Copilot-lisensen aktiveres ikke før **GitHub Enterprise** er godkjent.
+Søk om **GitHub Enterprise** i **IdentityNow** (gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**). Den gjør deg til medlem av Gjensidiges GitHub-organisasjon.
 
-**1. Copilot-lisens** — gå til **https://ai-hub.gjensidige.io/copilot** og klikk **"Be om tilgang"**.
+> Tilgangen godkjennes og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter — men 1c og 1d må vente til den er godkjent.
 
-**2. GitHub Enterprise** — søk om denne i **IdentityNow** (gå til **https://gjensidige.identitynow.com** og klikk på **Forespørselssenter**). Den gjør deg til medlem av Gjensidiges GitHub-organisasjon.
+### 1c — Koble kontoen til Gjensidige via SSO
 
-> Tilgangene godkjennes og kan ta litt tid. Fortsett gjerne med resten av installasjonen mens du venter.
+Når GitHub Enterprise er godkjent:
 
-> **Advarsel:** OpenCode kommer ikke til å virke før tilgangene er på plass. Copilot-lisensen **og** GitHub Enterprise må være godkjent, og SSO-koblingen i steg 1c må være gjort, før GitHub Copilot fungerer i OpenCode. Du kan installere ferdig i mellomtiden, men vent med å teste OpenCode til tilgangene er godkjent.
+1. Gå til **https://github.com/orgs/gjensidige/sso**
+2. Logg inn med din Gjensidige-konto (Azure AD)
+
+Dette knytter GitHub-brukeren din til Gjensidiges organisasjon.
+
+### 1d — Søk om Copilot-lisens
+
+Først når SSO-koblingen i 1c er gjort, kan du be om Copilot-lisens: gå til **https://ai-hub.gjensidige.io/copilot** og klikk **"Be om tilgang"**.
+
+> **Advarsel:** OpenCode kommer ikke til å virke før alt over er på plass — GitHub Enterprise, SSO-koblingen og Copilot-lisensen. Du kan installere ferdig i mellomtiden, men vent med å teste OpenCode til tilgangene er godkjent.
 
 **Ekstra tilgang — kun for Skadefryd hackaton**
 
@@ -46,15 +53,6 @@ Skal du være med på **Skadefryd hackaton** (https://skadefryd.tech/)? Da må d
 | Tilgangspakke | Hvorfor du trenger den |
 |---------------|------------------------|
 | **GenAI Small Consumer (Prod)** | Gir tilgang til GenAI-tjenestene som brukes under hackatonet |
-
-### 1c — Koble til Gjensidiges organisasjon via Azure AD
-
-Når tilgangene fra 1b er godkjent:
-
-1. Gå til **https://github.com/orgs/gjensidige/sso**
-2. Logg inn med din Gjensidige-konto (Azure AD)
-
-Dette knytter din GitHub-bruker til Gjensidiges organisasjon.
 
 ---
 
@@ -572,9 +570,8 @@ Ja! Etter at du har installert skills, kan du skrive hva du trenger hjelp med og
 
 **`/models` viser en tom liste eller jeg havner i en loop?**  
 Dette skyldes som regel at GitHub Copilot-lisensen ikke er aktivert. Sjekk følgende:
-1. Har du Copilot-lisens? Gå til **[ai-hub.gjensidige.io/copilot](https://ai-hub.gjensidige.io/copilot)** og sjekk statusen. Har du ikke søkt ennå, klikk **"Be om tilgang"**. Sjekk også at **`GitHub Enterprise`** er godkjent i **[IdentityNow](https://gjensidige.identitynow.com)**.  
-   Copilot-lisensen aktiveres kun når du er medlem av Gjensidiges GitHub-organisasjon — begge tilgangene må være på plass.
-2. Har du fullført SSO-koblingen i **steg 1c** (logget inn på `https://github.com/orgs/gjensidige/sso`)?  
+1. Er **`GitHub Enterprise`** godkjent i **[IdentityNow](https://gjensidige.identitynow.com)**, og har du fullført SSO-koblingen i **steg 1c** (logget inn på `https://github.com/orgs/gjensidige/sso`)? Begge må være på plass før Copilot-lisensen kan aktiveres.  
+2. Har du Copilot-lisens? Gå til **[ai-hub.gjensidige.io/copilot](https://ai-hub.gjensidige.io/copilot)** og sjekk statusen. Har du ikke søkt ennå, klikk **"Be om tilgang"**.  
 3. Prøv å skrive `/connect` på nytt i OpenCode og koble til på nytt.
 
 Hvis alt over er i orden og det fortsatt ikke fungerer — ta kontakt med **Trond Strøm-Lie** på Slack.
