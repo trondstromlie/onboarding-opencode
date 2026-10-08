@@ -39,7 +39,7 @@ git config --global commit.gpgsign && git config --global user.signingkey
 
 **npm for Gjensidige (Mac/Linux):**
 ```bash
-grep "npm.pkg.github.com" ~/.npmrc 2>/dev/null && echo "FUNNET" || echo "MANGLER"
+grep -q "npm.pkg.github.com" ~/.npmrc 2>/dev/null && echo "FUNNET" || echo "MANGLER"
 ```
 **npm for Gjensidige (Windows):**
 ```powershell
@@ -314,44 +314,65 @@ For å installere Gjensidige sine interne npm-pakker trenger du et GitHub-token 
 > 4. Sett gyldighet til **90 days**
 > 5. Huk av for: **`read:packages`** — gir tilgang til å laste ned npm-pakker fra GitHub
 > 6. Klikk **"Generate token"** nederst
-> 7. Kopier tokenet (starter med `ghp_`) — det vises bare én gang
-> 8. Klikk **"Configure SSO"** → **"Authorize"** ved siden av **Gjensidige**
+> 7. Klikk **"Configure SSO"** → **"Authorize"** ved siden av **Gjensidige**
+> 8. Trykk på kopier-knappen ved siden av tokenet — det vises bare én gang
+>
+> **Ikke lim tokenet inn her i chatten.** Jeg henter det rett fra utklippstavlen din — det er tryggere. Si «kopiert» når du har gjort det.
 
 Uten SSO-autorisering vil du få 401-feil ved `npm install`.
 
+**Tokenet skal aldri stå i chatten.** Det er som et passord. Be aldri brukeren lime det inn — hent det fra utklippstavlen, og skriv aldri ut verdien. Limer brukeren det inn likevel: bruk det, men ikke gjenta det i svaret. Gi en vennlig advarsel for neste gang:
+
+> Takk — jeg har lagret det. Et lite tips til neste gang: bare kopier tokenet, og ikke lim det inn her. Jeg kan hente det rett fra utklippstavlen din, og det er tryggere.
+
+Når brukeren sier «kopiert», sjekk at tokenet ligger der — uten å vise det:
+
+**Mac/Linux:**
+```bash
+pbpaste | tr -d '[:space:]' | grep -qE '^ghp_' && echo "TOKEN_FUNNET" || echo "IKKE_FUNNET"
+```
+
+**Windows (PowerShell):**
+```powershell
+if ((Get-Clipboard -Raw).Trim() -match '^ghp_') { "TOKEN_FUNNET" } else { "IKKE_FUNNET" }
+```
+
+- `TOKEN_FUNNET`: si «Jeg ser tokenet på utklippstavlen din. Jeg lagrer det nå — uten å vise det her.»
+- `IKKE_FUNNET`: si «Jeg finner ikke tokenet på utklippstavlen. Kan du trykke på kopier-knappen én gang til?»
+
 ### 9b — Legg tokenet inn i .npmrc
+
+Tokenet går rett fra utklippstavlen og inn i fila — det havner aldri i chatten.
 
 **Mac/Linux:**
 ```bash
 echo "@gjensidige:registry=https://npm.pkg.github.com" >> ~/.npmrc
-echo "//npm.pkg.github.com/:_authToken=TOKENET_DITT" >> ~/.npmrc
+printf '//npm.pkg.github.com/:_authToken=%s\n' "$(pbpaste | tr -d '[:space:]')" >> ~/.npmrc
+pbcopy < /dev/null
 ```
 
 **Windows (PowerShell):**
 ```powershell
 Add-Content $env:USERPROFILE\.npmrc "@gjensidige:registry=https://npm.pkg.github.com"
-Add-Content $env:USERPROFILE\.npmrc "//npm.pkg.github.com/:_authToken=TOKENET_DITT"
+Add-Content $env:USERPROFILE\.npmrc "//npm.pkg.github.com/:_authToken=$((Get-Clipboard -Raw).Trim())"
+Set-Clipboard -Value $null
 ```
 
-Bytt ut `TOKENET_DITT` med ditt faktiske token (f.eks. `ghp_xxxxxxxxxxxxxxxxxxxxxx`).
+Den siste linjen tømmer utklippstavlen. Si fra: «Jeg har tømt utklippstavlen, så tokenet ikke blir liggende der.»
 
-Bekreft at filen ble riktig:
+Bekreft at filen ble riktig — uten å skrive ut tokenet:
 
 **Mac/Linux:**
 ```bash
-cat ~/.npmrc
+grep -c "npm.pkg.github.com/:_authToken=ghp_" ~/.npmrc
 ```
 
 **Windows:**
 ```powershell
-Get-Content $env:USERPROFILE\.npmrc
+(Select-String -Path $env:USERPROFILE\.npmrc -Pattern "npm.pkg.github.com/:_authToken=ghp_").Count
 ```
 
-Du skal se:
-```
-@gjensidige:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=ghp_xxxxxxxxxxxxxxxxxxxxxx
-```
+Svaret skal være `1`. Bruk aldri `cat` eller `Get-Content` på `.npmrc` — da vises tokenet i chatten.
 
 ---
 
