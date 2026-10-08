@@ -39,7 +39,7 @@ Struktur:
 ```json
 {
   "os": "mac" | "windows",
-  "completed": ["git-config", "gh-cli", "github-mcp", "jira-mcp", "figma-mcp", "piwik-mcp", "az-cli", "npm", "ssh", "commit-signing"],
+  "completed": ["gh-cli", "gh-login", "git-config", "github-mcp", "jira-mcp", "figma-mcp", "piwik-mcp", "az-cli", "npm", "ssh", "commit-signing"],
   "skipped": ["piwik-mcp"],
   "deferred": ["commit-signing"],
   "last_step": "github-mcp",
@@ -69,37 +69,140 @@ Ved retur (fremgangsfil finnes):
 
 ---
 
-## Steg 1 — Git-konfig (navn og e-post)
+## Steg 1 — Logg inn på GitHub (gjør dette først)
 
-**Hvorfor:** Git bruker navn og e-post til å merke hvem som har gjort hva i koden.
+**Hvorfor:** Nesten alt videre i oppsettet trenger at maskinen er logget inn på GitHub. Derfor tar vi det med en gang, rett etter at du vet hvilket OS brukeren har.
 
-### Sjekk om git-konfig er satt
+### Sjekk om brukeren allerede er logget inn
+
+Kjør dette selv — brukeren skal ikke gjøre noe ennå:
 
 ```bash
-git config --global user.name && git config --global user.email
+gh auth status
 ```
 
-- Hvis begge er satt: merk `git-config` som fullført, hopp til Steg 2
-- Hvis ikke: bruk `github-setup`-skillen (Steg 6) for å sette navn og e-post
+- Viser den `Logged in to github.com`: merk `gh-cli` og `gh-login` som fullført, kjør `gh auth setup-git`, og hopp til Steg 1b. Si bare kort: «Du er allerede logget inn på GitHub — fint, da går vi videre.»
+- Sier den at `gh` ikke finnes: installer først (se «Hvis gh mangler» nederst i dette steget), og kom så tilbake hit.
+- Sier den `not logged in` eller lignende: start innloggingen under.
 
-Etter fullføring: oppdater fremgangsfilen med `"git-config"` i `completed`.
+### Slik guider du innloggingen
 
----
+Brukeren har kanskje aldri sett en terminal før. Følg disse reglene:
 
-## Steg 1b — GitHub CLI (gh)
+- **Én ting om gangen.** Send ett lite steg, og vent til brukeren svarer «ok» eller «ferdig» før du sender det neste. Aldri hele lista på en gang.
+- **Korte setninger.** Ingen fagord uten forklaring. Si «vinduet der du skriver kommandoer», ikke «shell» eller «TTY».
+- **Si hva de skal se.** Etter hvert steg: fortell hva som skal dukke opp på skjermen, så de vet at de er på rett vei.
+- **Du kan ikke kjøre innloggingen for dem.** `gh auth login` stiller spørsmål og venter på svar, og det fungerer ikke inne i OpenCode. Brukeren må skrive den i et eget terminalvindu.
 
-**Kun vis dette steget hvis `gh` ikke er installert.**
+Send stegene under ett og ett. Teksten i sitatene er det du sier til brukeren — bruk gjerne dine egne ord, men hold det like kort.
 
-### Sjekk om gh er installert
+**1. Åpne et nytt vindu**
+
+Mac:
+> Nå skal vi logge deg inn på GitHub. Det tar et par minutter.
+>
+> Først: åpne et nytt terminalvindu.
+> Trykk **Cmd + mellomrom**, skriv **Terminal**, og trykk **Enter**.
+>
+> Si fra når vinduet er åpent.
+
+Windows:
+> Nå skal vi logge deg inn på GitHub. Det tar et par minutter.
+>
+> Først: åpne et nytt PowerShell-vindu.
+> Klikk på **Start**, skriv **PowerShell**, og trykk **Enter**.
+>
+> Si fra når vinduet er åpent.
+
+**2. Skriv kommandoen**
+
+> Kopier denne linjen, lim den inn i det nye vinduet, og trykk **Enter**:
+>
+> ```
+> gh auth login --hostname github.com --git-protocol https --web --clipboard
+> ```
+>
+> Si fra hva som skjer.
+
+**3. Spørsmål om Git**
+
+> Nå spør den: `Authenticate Git with your GitHub credentials? (Y/n)`
+>
+> Trykk bare **Enter**. Det betyr «ja».
+
+**4. Koden**
+
+> Nå skal du se en linje som ser omtrent slik ut:
+>
+> `! First copy your one-time code: ABCD-1234`
+>
+> Det er en engangskode. Den er allerede kopiert for deg, så du trenger ikke skrive den ned.
+>
+> Trykk **Enter** én gang til. Da åpnes nettleseren.
+
+**5. I nettleseren**
+
+> Nå er du på en GitHub-side i nettleseren.
+>
+> Er du ikke logget inn på GitHub der, logger du inn først.
+>
+> Trykk **Continue** hvis du ser den knappen.
+
+**6. Skriv inn koden**
+
+> Lim inn koden: trykk **Cmd + V** (Mac) eller **Ctrl + V** (Windows).
+> Virker ikke det, skriv den av fra terminalvinduet — de åtte tegnene, f.eks. `ABCD-1234`.
+>
+> Trykk **Continue**.
+
+**7. Gi tilgang**
+
+> Nå ser du en side der det står **Authorize GitHub CLI**.
+>
+> Ser du **gjensidige** i lista med en **Authorize**-knapp ved siden av? Trykk på den først.
+>
+> Trykk så den grønne knappen **Authorize github**.
+
+Hvis GitHub ber om passord eller tofaktorkode igjen, si at det er normalt og at de bare skal fylle det inn.
+
+**8. Ferdig i nettleseren**
+
+> Står det **Congratulations, you're all set!**? Da er du ferdig i nettleseren.
+>
+> Gå tilbake til terminalvinduet. Der skal det stå `Logged in as` og brukernavnet ditt.
+>
+> Du kan lukke det vinduet nå.
+
+### Sjekk at det virker
+
+Kjør dette selv:
+
+```bash
+gh auth status
+gh auth setup-git
+```
+
+- `Logged in to github.com`: merk `gh-cli` og `gh-login` som fullført. Si: «Nå er du logget inn på GitHub. Det var det vanskeligste — resten går fortere.» Gå til Steg 1b.
+- Fortsatt ikke logget inn: spør hva brukeren så på skjermen, og ta det derfra. Se feilsøking under.
+
+### Når noe går galt
+
+| Brukeren sier | Hva det betyr | Hva du sier |
+|---|---|---|
+| «command not found» / «gh er ikke gjenkjent» | gh er ikke installert, eller vinduet ble åpnet før installasjonen | Lukk vinduet, åpne et nytt, og prøv igjen. Hjelper ikke det: installer (se under). |
+| Nettleseren åpnet seg ikke | Ikke farlig | «Åpne nettleseren selv og gå til **github.com/login/device**.» |
+| «Koden er utløpt» / «expired» | Koden varer bare noen minutter | «Gå til terminalvinduet, trykk **Ctrl + C**, og lim inn kommandoen på nytt.» |
+| Ser ikke **gjensidige** på Authorize-siden | Kontoen er ikke koblet til Gjensidige ennå | Det er Steg 1 i guiden (README): GitHub Enterprise og SSO. Innloggingen virker likevel — gå videre, men si fra at Gjensidige-repoer ikke blir tilgjengelige før det er ordnet. |
+
+### Hvis gh mangler
+
+Windows-zip-scriptet installerer `gh` automatisk, så dette trengs sjelden. Sjekk:
 
 ```bash
 gh --version
 ```
 
-- Hvis kommandoen gir output: merk `gh-cli` som fullført, hopp til Steg 2
-- Hvis ikke: installer under
-
-### Installer gh uten admin (Windows)
+**Windows (uten admin):**
 
 1. Last ned zip-filen:
    **https://github.com/cli/cli/releases/download/v2.96.0/gh_2.96.0_windows_amd64.zip**
@@ -114,22 +217,35 @@ gh --version
    }
    $env:Path = "$env:Path;$gh"
    ```
-4. Logg inn:
-   ```powershell
-   gh auth login
-   ```
-   Velg **GitHub.com** og følg instruksjonene.
-5. Verifiser:
+4. Verifiser:
    ```powershell
    gh --version
    ```
 
-### Mac
+**Mac:**
 
 ```bash
 brew install gh
-gh auth login
 ```
+
+Når `gh --version` gir svar: merk `gh-cli` som fullført og gå tilbake til innloggingen over.
+
+---
+
+## Steg 1b — Git-konfig (navn og e-post)
+
+**Hvorfor:** Git bruker navn og e-post til å merke hvem som har gjort hva i koden.
+
+### Sjekk om git-konfig er satt
+
+```bash
+git config --global user.name && git config --global user.email
+```
+
+- Hvis begge er satt: merk `git-config` som fullført, hopp til Steg 2
+- Hvis ikke: bruk `github-setup`-skillen (Steg 6) for å sette navn og e-post
+
+Etter fullføring: oppdater fremgangsfilen med `"git-config"` i `completed`.
 
 ---
 
