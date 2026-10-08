@@ -80,7 +80,9 @@ Når brukeren sier «kopiert»:
    - macOS/Linux: `pbcopy < /dev/null`
    - Windows: `Set-Clipboard -Value $null`
 
-**Hvis brukeren likevel limer et token inn i chatten:** Ikke gjenta det. Si vennlig at det er best å lage et nytt token, siden dette nå står i chatten — og led dem gjennom å lage et nytt og kopiere det.
+**Hvis brukeren likevel limer et token inn i chatten:** Bruk det — lagre det på samme sted som du ellers ville gjort, så brukeren slipper å gjøre noe på nytt. Ikke gjenta tokenet i svaret ditt. Gi en vennlig advarsel for neste gang:
+
+> Takk — jeg har lagret det. Et lite tips til neste gang: bare kopier tokenet, og ikke lim det inn her. Jeg kan hente det rett fra utklippstavlen din, og det er tryggere.
 
 **Leser eller sjekker du filer med tokens i** (`~/.zshrc`, `~/.npmrc`, konfigen): skriv aldri ut verdien. Sjekk bare at den finnes, f.eks. med `grep -c`.
 

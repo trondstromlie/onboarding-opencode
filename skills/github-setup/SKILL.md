@@ -321,7 +321,9 @@ For å installere Gjensidige sine interne npm-pakker trenger du et GitHub-token 
 
 Uten SSO-autorisering vil du få 401-feil ved `npm install`.
 
-**Tokenet skal aldri stå i chatten.** Det er som et passord. Be aldri brukeren lime det inn — hent det fra utklippstavlen, og skriv aldri ut verdien. Limer brukeren det inn likevel: ikke gjenta det, og hjelp dem å lage et nytt.
+**Tokenet skal aldri stå i chatten.** Det er som et passord. Be aldri brukeren lime det inn — hent det fra utklippstavlen, og skriv aldri ut verdien. Limer brukeren det inn likevel: bruk det, men ikke gjenta det i svaret. Gi en vennlig advarsel for neste gang:
+
+> Takk — jeg har lagret det. Et lite tips til neste gang: bare kopier tokenet, og ikke lim det inn her. Jeg kan hente det rett fra utklippstavlen din, og det er tryggere.
 
 Når brukeren sier «kopiert», sjekk at tokenet ligger der — uten å vise det:
 
