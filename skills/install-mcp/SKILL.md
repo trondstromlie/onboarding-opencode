@@ -44,6 +44,61 @@ Før du gjør noe annet, sjekk hvilket operativsystem brukeren kjører. Spør hv
 
 ---
 
+## Tokens skal aldri limes inn i chatten
+
+Et token er som et passord. Det skal ikke stå i chatten — der kan det bli lagret og vist igjen senere. Derfor ber du **aldri** brukeren lime inn et token her. Du henter det selv fra utklippstavlen.
+
+Slik sier du det til brukeren når de skal kopiere et token:
+
+> Trykk på kopier-knappen ved siden av tokenet.
+>
+> **Ikke lim det inn her i chatten.** Jeg henter det rett fra utklippstavlen din — det er tryggere.
+>
+> Si «kopiert» når du har gjort det.
+
+Når brukeren sier «kopiert»:
+
+1. **Sjekk at det ligger noe der — uten å vise det.** Skriv aldri ut selve verdien.
+
+   macOS/Linux:
+   ```bash
+   pbpaste | tr -d '[:space:]' | grep -qE '^PREFIKS' && echo "TOKEN_FUNNET" || echo "IKKE_FUNNET"
+   ```
+   Windows:
+   ```powershell
+   if ((Get-Clipboard -Raw).Trim() -match '^PREFIKS') { "TOKEN_FUNNET" } else { "IKKE_FUNNET" }
+   ```
+   Bytt `PREFIKS` med starten på tokenet (står ved hver tjeneste under). Har tokenet ingen fast start, bruk `.{20,}` — det sjekker bare at det er langt nok.
+
+2. **Fortell brukeren hva du ser:**
+   - `TOKEN_FUNNET`: «Jeg ser tokenet på utklippstavlen din. Jeg lagrer det nå — uten å vise det her.»
+   - `IKKE_FUNNET`: «Jeg finner ikke tokenet på utklippstavlen. Kan du trykke på kopier-knappen én gang til?» Ikke be dem lime det inn.
+
+3. **Lagre det rett fra utklippstavlen** med kommandoen som står ved hver tjeneste. Tokenet går fra utklippstavlen og rett inn i fila — det havner aldri i chatten.
+
+4. **Tøm utklippstavlen etterpå**, og si fra: «Jeg har tømt utklippstavlen, så tokenet ikke blir liggende der.»
+   - macOS/Linux: `pbcopy < /dev/null`
+   - Windows: `Set-Clipboard -Value $null`
+
+**Hvis brukeren likevel limer et token inn i chatten:** Ikke gjenta det. Si vennlig at det er best å lage et nytt token, siden dette nå står i chatten — og led dem gjennom å lage et nytt og kopiere det.
+
+**Leser eller sjekker du filer med tokens i** (`~/.zshrc`, `~/.npmrc`, konfigen): skriv aldri ut verdien. Sjekk bare at den finnes, f.eks. med `grep -c`.
+
+### Windows: slik havner tokenet i konfigen
+
+På Windows står tokenet direkte i konfigen. Skriv konfigen med en tydelig plassholder (f.eks. `FIGMA_TOKEN_HER`) slik du ellers ville gjort. Bytt så plassholderen med tokenet fra utklippstavlen — i PowerShell, så du aldri ser verdien:
+
+```powershell
+$p = "$env:APPDATA\opencode\opencode.jsonc"
+$t = (Get-Clipboard -Raw).Trim()
+$innhold = [IO.File]::ReadAllText($p).Replace("FIGMA_TOKEN_HER", $t)
+[IO.File]::WriteAllText($p, $innhold, (New-Object Text.UTF8Encoding $false))
+```
+
+Bytt `FIGMA_TOKEN_HER` med plassholderen for tjenesten. Har tjenesten to hemmeligheter (Piwik), gjør du én om gangen: kopier, bytt, kopier neste, bytt.
+
+---
+
 ## Steg 1 — Spør hva de vil installere
 
 > Hva vil du koble til?
@@ -63,24 +118,29 @@ Hent bare tokens for de tjenestene brukeren valgte.
 
 ### GitHub-token
 
-GitHub CLI er allerede installert og autentisert — bruk det til å hente tokenet automatisk. Be brukeren kjøre denne kommandoen:
+GitHub CLI er allerede installert og autentisert. Da trenger brukeren ikke kopiere noe — du henter tokenet selv, rett inn i fila. Kjør aldri `gh auth token` alene, for da skrives tokenet ut i chatten.
 
 **macOS/Linux:**
 ```bash
 echo "export GITHUB_TOKEN=\"$(gh auth token)\"" >> ~/.zshrc && source ~/.zshrc
 ```
 
-**Windows:**
+**Windows:** skriv GitHub-blokken i Steg 3 med plassholderen `GITHUB_TOKEN_HER`, og bytt den så rett fra `gh`:
 ```powershell
-gh auth token
+$p = "$env:APPDATA\opencode\opencode.jsonc"
+$innhold = [IO.File]::ReadAllText($p).Replace("GITHUB_TOKEN_HER", (gh auth token).Trim())
+[IO.File]::WriteAllText($p, $innhold, (New-Object Text.UTF8Encoding $false))
 ```
-Kopier outputen (starter med `ghu_` eller `ghp_`) — den brukes direkte i konfigen i Steg 3.
 
-Hvis `gh auth token` gir feil eller tomt svar, betyr det at brukeren ikke er logget inn med `gh`. Be dem kjøre:
+Sjekk først at brukeren er logget inn — uten å skrive ut tokenet:
+```bash
+gh auth status
+```
+Hvis brukeren ikke er logget inn, be dem kjøre dette i et eget terminalvindu:
 ```bash
 gh auth login
 ```
-Velg **GitHub.com** og følg instruksjonene, deretter prøv `gh auth token` på nytt.
+Velg **GitHub.com** og følg instruksjonene, og sjekk `gh auth status` på nytt.
 
 ---
 
@@ -93,7 +153,9 @@ Hvis ikke fra før — be brukeren om tre ting:
 **1. Jira API-token:**
 > 1. Gå til: https://id.atlassian.com/manage-profile/security/api-tokens
 > 2. Klikk **"Opprett API-token"**, gi det navn `opencode`, varighet **1 år**
-> 3. Kopier tokenet
+> 3. Trykk **Kopier** — men ikke lim det inn i chatten. Si «kopiert», så henter jeg det fra utklippstavlen.
+
+Følg «Tokens skal aldri limes inn i chatten» over. Jira-tokens starter med `ATATT`.
 
 **2. E-postadresse** (samme som jobbinnlogging):
 > Finn den i Jira ved å klikke profilbildet øverst til høyre.
@@ -101,15 +163,15 @@ Hvis ikke fra før — be brukeren om tre ting:
 **3. Jira-domenenavn:**
 > Se på nettleseradressen — det er det som står før `.atlassian.net`
 
-**macOS/Linux** — lagre i shell-miljøet:
+**macOS/Linux** — lagre i shell-miljøet (tokenet hentes rett fra utklippstavlen):
 ```bash
-echo 'export ATLASSIAN_API_TOKEN="TOKEN_HER"' >> ~/.zshrc
+printf 'export ATLASSIAN_API_TOKEN="%s"\n' "$(pbpaste | tr -d '[:space:]')" >> ~/.zshrc
 echo 'export ATLASSIAN_USER_EMAIL="EPOST_HER"' >> ~/.zshrc
 echo 'export ATLASSIAN_SITE_NAME="SITENAVN_HER"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-**Windows** — verdiene legges direkte inn i konfigen i Steg 3.
+**Windows** — verdiene legges direkte inn i konfigen i Steg 3. Tokenet byttes inn fra utklippstavlen (plassholder `JIRA_TOKEN_HER`).
 
 ---
 
@@ -117,14 +179,16 @@ source ~/.zshrc
 
 > 1. Gå til https://www.figma.com → klikk navn øverst til venstre → **Settings** → **Security**
 > 2. Klikk **"Lag ny API-nøkkel"**, gi den navn `opencode`, minst lesetilgang til filer
-> 3. Kopier nøkkelen (starter med `figd_`) — vises bare én gang
+> 3. Kopier nøkkelen — den vises bare én gang. Ikke lim den inn i chatten. Si «kopiert», så henter jeg den fra utklippstavlen.
+
+Følg «Tokens skal aldri limes inn i chatten» over. Figma-nøkler starter med `figd_`.
 
 **macOS/Linux:**
 ```bash
-echo 'export FIGMA_API_KEY="figd_TOKEN_HER"' >> ~/.zshrc && source ~/.zshrc
+printf 'export FIGMA_API_KEY="%s"\n' "$(pbpaste | tr -d '[:space:]')" >> ~/.zshrc && source ~/.zshrc
 ```
 
-**Windows** — tokenet legges direkte inn i konfigen i Steg 3.
+**Windows** — tokenet byttes inn i konfigen i Steg 3 fra utklippstavlen (plassholder `FIGMA_TOKEN_HER`).
 
 ---
 
@@ -133,16 +197,25 @@ echo 'export FIGMA_API_KEY="figd_TOKEN_HER"' >> ~/.zshrc && source ~/.zshrc
 > 1. Logg inn på https://gjensidige.piwik.pro
 > 2. Klikk brukernavnet øverst til høyre → **My Profile** → **API Credentials**
 > 3. Klikk **"Add credentials"**, gi det navn `opencode`
-> 4. Kopier **Client ID** og **Client Secret** — vises bare én gang!
+> 4. La siden stå åpen — **Client Secret** vises bare én gang.
+
+Ta én verdi om gangen via utklippstavlen (se «Tokens skal aldri limes inn i chatten» over). Ingen av dem har fast start, så sjekk med `.{20,}`.
+
+> Kopier **Client ID** først. Ikke lim den inn her — si «kopiert».
 
 **macOS/Linux:**
 ```bash
-echo 'export PIWIK_PRO_CLIENT_ID="CLIENT_ID_HER"' >> ~/.zshrc
-echo 'export PIWIK_PRO_CLIENT_SECRET="CLIENT_SECRET_HER"' >> ~/.zshrc
+printf 'export PIWIK_PRO_CLIENT_ID="%s"\n' "$(pbpaste | tr -d '[:space:]')" >> ~/.zshrc
+```
+
+> Kopier så **Client Secret**. Si «kopiert» igjen.
+
+```bash
+printf 'export PIWIK_PRO_CLIENT_SECRET="%s"\n' "$(pbpaste | tr -d '[:space:]')" >> ~/.zshrc
 source ~/.zshrc
 ```
 
-**Windows** — verdiene legges direkte inn i konfigen i Steg 3.
+**Windows** — verdiene byttes inn i konfigen i Steg 3 fra utklippstavlen, én om gangen (plassholdere `PIWIK_ID_HER` og `PIWIK_SECRET_HER`).
 
 Sjekk også om `uv` er installert (Piwik bruker `uvx`, ikke `npx`):
 ```bash
@@ -181,12 +254,12 @@ Les konfig-filen og legg til de nye MCP-blokkene under `"mcp": {}`. Behold event
   "enabled": true
 }
 ```
-**GitHub** — Windows (bytt ut `TOKEN_HER`):
+**GitHub** — Windows (plassholderen byttes fra `gh`, se Steg 2):
 ```json
 "github": {
   "type": "local",
   "command": ["npx", "-y", "--prefer-offline", "@modelcontextprotocol/server-github"],
-  "environment": { "GITHUB_PERSONAL_ACCESS_TOKEN": "TOKEN_HER" },
+  "environment": { "GITHUB_PERSONAL_ACCESS_TOKEN": "GITHUB_TOKEN_HER" },
   "enabled": true
 }
 ```
@@ -206,7 +279,7 @@ Les konfig-filen og legg til de nye MCP-blokkene under `"mcp": {}`. Behold event
   "enabled": true
 }
 ```
-**Jira** — Windows (bytt ut verdiene):
+**Jira** — Windows (bytt ut site og e-post; tokenet byttes fra utklippstavlen):
 ```json
 "atlassian-jira": {
   "type": "local",
@@ -214,7 +287,7 @@ Les konfig-filen og legg til de nye MCP-blokkene under `"mcp": {}`. Behold event
   "environment": {
     "ATLASSIAN_SITE_NAME": "SITENAVN_HER",
     "ATLASSIAN_USER_EMAIL": "EPOST_HER",
-    "ATLASSIAN_API_TOKEN": "TOKEN_HER"
+    "ATLASSIAN_API_TOKEN": "JIRA_TOKEN_HER"
   },
   "enabled": true
 }
@@ -231,12 +304,12 @@ Les konfig-filen og legg til de nye MCP-blokkene under `"mcp": {}`. Behold event
   "enabled": true
 }
 ```
-**Figma** — Windows (bytt ut `TOKEN_HER`):
+**Figma** — Windows (plassholderen byttes fra utklippstavlen):
 ```json
 "figma": {
   "type": "local",
   "command": ["npx", "-y", "--prefer-offline", "figma-developer-mcp", "--stdio"],
-  "environment": { "FIGMA_API_KEY": "TOKEN_HER" },
+  "environment": { "FIGMA_API_KEY": "FIGMA_TOKEN_HER" },
   "enabled": true
 }
 ```
@@ -256,15 +329,15 @@ Les konfig-filen og legg til de nye MCP-blokkene under `"mcp": {}`. Behold event
   "enabled": true
 }
 ```
-**Piwik Pro** — Windows (finn brukernavn med `$env:USERNAME`, bytt ut verdiene):
+**Piwik Pro** — Windows (finn brukernavn med `$env:USERNAME`; ID og secret byttes fra utklippstavlen):
 ```json
 "piwik-pro": {
   "type": "local",
   "command": ["C:\\Users\\<brukernavn>\\.local\\bin\\uvx.exe", "piwik-pro-mcp"],
   "environment": {
     "PIWIK_PRO_HOST": "gjensidige.piwik.pro",
-    "PIWIK_PRO_CLIENT_ID": "CLIENT_ID_HER",
-    "PIWIK_PRO_CLIENT_SECRET": "CLIENT_SECRET_HER"
+    "PIWIK_PRO_CLIENT_ID": "PIWIK_ID_HER",
+    "PIWIK_PRO_CLIENT_SECRET": "PIWIK_SECRET_HER"
   },
   "enabled": true
 }
@@ -315,28 +388,28 @@ Jobb deg gjennom disse punktene i rekkefølge. Gjør ett tiltak om gangen, test 
 
 **GitHub:**
 1. Er `gh` fortsatt autentisert? Kjør `gh auth status` — hvis ikke, kjør `gh auth login` på nytt
-2. Hent et ferskt token: kjør `gh auth token` og oppdater konfigen med den nye verdien
+2. Hent et ferskt token slik som i Steg 2 — rett inn i fila, aldri skrevet ut i chatten
 3. Restart OpenCode
 
 **Jira:**
 1. Er e-postadressen riktig? Sjekk i Jira ved å klikke profilbildet øverst til høyre
 2. Er API-tokenet gyldig? Gå til https://id.atlassian.com/manage-profile/security/api-tokens og generer et nytt
 3. Er domenenavnet riktig? Det skal bare være det som står før `.atlassian.net` (f.eks. `gjensidige`, ikke `gjensidige.atlassian.net`)
-4. Oppdater konfigen og restart
+4. Oppdater konfigen via utklippstavlen (ikke chatten) og restart
 
 **Figma:**
 1. Er tokenet utløpt eller slettet? Gå til https://www.figma.com → Settings → Security og generer et nytt
-2. Oppdater konfigen og restart
+2. Oppdater konfigen via utklippstavlen (ikke chatten) og restart
 
 **Piwik:**
 1. Er Client ID og Client Secret korrekte? De vises bare én gang — gå til https://gjensidige.piwik.pro → My Profile → API Credentials og lag nye
-2. Oppdater konfigen og restart
+2. Oppdater konfigen via utklippstavlen (ikke chatten) og restart
 
 ### macOS/Linux: token er ikke tilgjengelig i OpenCode
 
-Sjekk om tokenet er lagret i shell-miljøet:
+Sjekk om tokenet er lagret i shell-miljøet — uten å skrive det ut:
 ```bash
-echo $GITHUB_TOKEN
+[ -n "$GITHUB_TOKEN" ] && echo "SATT" || echo "TOMT"
 ```
 Hvis det er tomt:
 1. Sjekk at `~/.zshrc` inneholder `export GITHUB_TOKEN="..."` — åpne filen og se etter
